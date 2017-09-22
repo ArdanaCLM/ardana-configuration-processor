@@ -1,0 +1,234 @@
+erlang_cookie: AjO9goDPQwlZPbyEpmTtN
+erlang_cookie__is_secure: false
+erlang_cookie__metadata:
+- clusters:
+  - cluster1
+  component: rabbitmq
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+haproxy_stats_password: sljLQ3xFbFC
+haproxy_stats_password__is_secure: false
+haproxy_stats_password__metadata:
+- clusters:
+  - cluster1
+  component: ip-cluster
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+ardana_internal_ca:
+  private: '-----BEGIN RSA PRIVATE KEY-----
+
+    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
+
+    -----END RSA PRIVATE KEY-----'
+  public: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCYuL/vC14LE+k5UdW5S+8wim2UavUJxMTa/M6Pl3dAPPAhsuX6qc8yJrrVfo1nF+F/KdOCd4p1/kY0L3X/sS1CsBGp0387rWpc0ucMMXdwlY7/YtsW83i96yhqk2CbSywbT/rmn5hEvuH7l4vg2sJs4QqMEorl91lAHvMAC0cOoyKenDmVf4zUFXtDGlSRkvV9dKpdqqeplzcUpY52lR0zl/lu2gUipjvWj3vv2tnM4iN4erNcFZXGlnCjWlnDRhe2o3jdIJXnUaGCOo4Y4k+Qpp1mAJvwp2PvzQmf7cI2FzE47njc5+ybLS+Jgqp2rPEuoaoyLXz+UgTObrtSjvm18IaqNoiwTHGTUT7JMxiuNg097+toYm7jIFL91VJjE2Z+9LM5y58cbZcLDPLjd7nhJp88T3McmgMjv4agV3HAp68QMUBIIYNvnQ+cTYcCrBbmK/ATEBZaGdMqWczXuoNL1huQCkH4FyK5m93BKI0nVQzOtw9gLdiKKeKOM1GhVyuBD7aZ6boiN2PRRwJZnpVg35I/uzI/fBAzs9YDH2mstuEIocM/TTT22QffgqqrJMlI8QyXzuh1O3tMuhsQQo3B/AnO22rNXol1iFw4Ij2flCWGz6EpCnOV8dYM1PzDapvojBWfIwSvDClV+3EmOhRKqvXhvPr26JIQaShAVVNByQ==
+    Generated Ardana internal CA
+ardana_internal_ca__is_secure: false
+ardana_internal_ca__metadata:
+- clusters:
+  - cluster1
+  component: ardana-ca
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+keepalive_vrrp_password: N0svZ6J
+keepalive_vrrp_password__is_secure: false
+keepalive_vrrp_password__metadata:
+- clusters:
+  - cluster1
+  component: ip-cluster
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+keepalived_vrrp_index: 0
+keepalived_vrrp_index__is_secure: false
+keepalived_vrrp_index__metadata:
+- clusters:
+  - cluster1
+  component: ip-cluster
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+keystone_admin_pwd: PEQzO1hCCM
+keystone_admin_pwd__is_secure: false
+keystone_admin_pwd__metadata:
+- clusters:
+  - cluster1
+  component: keystone-api
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+keystone_admin_token: cGURbqlDW5GN
+keystone_admin_token__is_secure: false
+keystone_admin_token__metadata:
+- clusters:
+  - cluster1
+  component: keystone-api
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+keystone_demo_pwd: QYVHlv6Lv
+keystone_demo_pwd__is_secure: false
+keystone_demo_pwd__metadata:
+- clusters:
+  - cluster1
+  component: keystone-api
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+mysql_admin_password: bpN8PMBl6s
+mysql_admin_password__is_secure: false
+mysql_admin_password__metadata:
+- clusters:
+  - cluster1
+  component: keystone
+  consumes: mysql
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+mysql_cluster_name: BWta0XkjH
+mysql_cluster_name__is_secure: false
+mysql_cluster_name__metadata:
+- clusters:
+  - cluster1
+  component: mysql
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+mysql_clustercheck_pwd: IQFEHfPwP9a
+mysql_clustercheck_pwd__is_secure: false
+mysql_clustercheck_pwd__metadata:
+- clusters:
+  - cluster1
+  component: mysql
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+mysql_root_pwd: Jv4RTYeGZCc
+mysql_root_pwd__is_secure: false
+mysql_root_pwd__metadata:
+- clusters:
+  - cluster1
+  component: mysql
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+mysql_sst_password: wY4MSPhOZe
+mysql_sst_password__is_secure: false
+mysql_sst_password__metadata:
+- clusters:
+  - cluster1
+  component: mysql
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+ops_mon_mdb_password: QHQ2jM9Z7h
+ops_mon_mdb_password__is_secure: false
+ops_mon_mdb_password__metadata:
+- clusters:
+  - cluster1
+  component: operations
+  consumes: mysql
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+rmq_keystone_password: vDbzs7ak5uU
+rmq_keystone_password__is_secure: false
+rmq_keystone_password__metadata:
+- clusters:
+  - cluster1
+  component: keystone
+  consumes: rabbitmq
+  consuming-cp: control-plane-1
+  cp: control-plane-1
+rmq_service_password: a2WBQjjMv
+rmq_service_password__is_secure: false
+rmq_service_password__metadata:
+- clusters:
+  - cluster1
+  component: rabbitmq
+  consuming-cp: control-plane-1
+  cp: control-plane-1

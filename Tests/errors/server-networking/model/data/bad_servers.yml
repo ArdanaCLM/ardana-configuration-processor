@@ -1,0 +1,434 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  regions:
+    - name: region2
+      includes:
+        - control-plane: control-plane-2
+          services:
+            - all
+
+  services:
+    - name: test-service
+      mnemonic: TEST
+      service-class: test
+      description: "Test"
+      network-tag-schema:
+      - name: test-tag-net2
+        schema: {}
+      - name: test-tag-net2.required
+        schema: {}
+      - name: test-tag.required
+        schema: {}
+      - name: test-tag.expected
+        schema: {}
+
+  service-components:
+    - name: test-component
+      mnemonic: TEST-COMP
+      service: test-service
+      network-tags:
+      - name: test-tag-net2
+      - name: test-tag-net2.required
+        required: "Must be defined"
+      - name: test-tag.required
+        required: "Must be defined"
+      - name: test-tag.expected
+        expected: "Should be defined"
+
+  server-groups:
+    - name: UBER-CLOUD
+      server-groups:
+        - CLOUD
+        - GROUP-6
+      networks:
+        - NET-2
+        - NET-3
+        - NET-4
+        - NET-5
+        - NET-7
+        - NET-8
+    - name: GROUP-6
+      server-groups:
+        - GROUP-6-1
+        - GROUP-6-2
+    - name: GROUP-6-1
+      networks:
+        - NET-6-1
+    - name: GROUP-6-2
+      networks:
+        - NET-6-2
+
+  control-planes:
+    - name: control-plane-2
+      control-plane-prefix: cp2
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - any
+      clusters:
+        - name: cluster2
+          cluster-prefix: c2
+          server-role:
+            - DUP-CIDR-1-ROLE
+          min-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+
+        - name: cluster3
+          cluster-prefix: c3
+          server-role:
+            - MULTI-CIDR-ROLE
+          min-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+
+        - name: cluster4
+          cluster-prefix: c4
+          server-role:
+            - DUP-CIDR-2-ROLE
+          min-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+
+        - name: cluster5
+          cluster-prefix: c5
+          server-role:
+            - DUP-CIDR-3-ROLE
+          min-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+
+        - name: cluster6
+          cluster-prefix: c6
+          server-role:
+            - DUP-CIDR-4-ROLE
+          min-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+
+        - name: cluster7
+          cluster-prefix: c7
+          failure-zones:
+            - GROUP-6
+          server-role:
+            - MISSING-NETWORK
+          min-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+
+        - name: cluster8
+          cluster-prefix: c8
+          server-role:
+            - MULTI-HOSTNAME
+          min-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+            - test-component
+
+  network-groups:
+    - name: NET-GROUP-2
+      hostname-suffix: grp2
+      tags:
+       - test-tag-net2
+       - test-tag-net2.required
+
+    - name: NET-GROUP-3
+      hostname-suffix: grp3
+
+    - name: NET-GROUP-4
+      hostname-suffix: grp4
+
+    - name: NET-GROUP-5
+      hostname-suffix: grp5
+
+    - name: NET-GROUP-6
+      hostname-suffix: grp6
+
+    - name: NET-GROUP-7
+      hostname-suffix: grp7
+      hostname: true
+      routes:
+        - default
+
+    - name: NET-GROUP-8
+      hostname-suffix: grp8
+      routes:
+        - default
+
+  networks:
+    - name: NET-2
+      vlanid: 3365
+      tagged-vlan: true
+      cidr: 10.0.00.0/24
+      addresses:
+         - 10.0.0.20-10.0.0.39
+      gateway-ip: 10.0.0.1
+      network-group: NET-GROUP-2
+
+    - name: NET-3
+      vlanid: 3365
+      tagged-vlan: true
+      cidr: 10.0.0.1/24
+      addresses:
+         - 10.0.0.40-10.0.0.59
+      gateway-ip: 10.0.0.1
+      network-group: NET-GROUP-3
+
+    - name: NET-4
+      vlanid: 3366
+      tagged-vlan: true
+      cidr: 10.0.0.1/24
+      addresses:
+         - 10.0.0.60-10.0.0.79
+      gateway-ip: 10.0.0.1
+      network-group: NET-GROUP-4
+
+    - name: NET-5
+      vlanid: 3365
+      tagged-vlan: true
+      cidr: 11.0.0.1/24
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP-5
+
+    - name: NET-6-1
+      vlanid: 3367
+      tagged-vlan: true
+      cidr: 12.0.0.1/24
+      gateway-ip: 12.0.0.1
+      network-group: NET-GROUP-6
+
+    - name: NET-6-2
+      vlanid: 3368
+      tagged-vlan: true
+      cidr: 12.0.1.1/24
+      gateway-ip: 12.0.1.1
+      network-group: NET-GROUP-6
+
+    - name: NET-7
+      vlanid: 3369
+      tagged-vlan: true
+      cidr: 14.0.0.1/24
+      gateway-ip: 14.0.0.1
+      network-group: NET-GROUP-7
+
+    - name: NET-8
+      vlanid: 3370
+      tagged-vlan: true
+      cidr: 15.0.0.1/24
+      gateway-ip: 15.0.0.1
+      network-group: NET-GROUP-8
+
+  nic-mappings:
+    - name: NIC-MAPPING-2
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:07:00.0"
+        - logical-name: hed2
+          type: simple-port
+          bus-address: "0000:08:00.0"
+
+  interface-models:
+
+    # Dup cidr on same interface, same vlan
+    - name: DUP-CIDR-1
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+          network-groups:
+            - NET-GROUP
+        - name: hed2
+          device:
+            name: hed2
+          forced-network-groups:
+            - NET-GROUP-2
+            - NET-GROUP-3
+
+    # Dup cidr on differnt interfaces, differnt vlans
+    - name: DUP-CIDR-2
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+          network-groups:
+            - NET-GROUP
+          forced-network-groups:
+            - NET-GROUP-2
+        - name: hed2
+          device:
+            name: hed2
+          forced-network-groups:
+            - NET-GROUP-4
+
+    # Dup cidr on differnet interfaces, same vlans
+    - name: DUP-CIDR-3
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+          network-groups:
+            - NET-GROUP
+          forced-network-groups:
+            - NET-GROUP-2
+        - name: hed2
+          device:
+            name: hed2
+          forced-network-groups:
+            - NET-GROUP-3
+
+    # Dup cidr on same interfaces, differnt vlans
+    - name: DUP-CIDR-4
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+          network-groups:
+            - NET-GROUP
+        - name: hed2
+          device:
+            name: hed2
+          forced-network-groups:
+            - NET-GROUP-2
+            - NET-GROUP-4
+
+    # diff cidr on same interfaces, same vlans
+    - name: MULTI-CIDR
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+          network-groups:
+            - NET-GROUP
+        - name: hed2
+          device:
+            name: hed2
+          forced-network-groups:
+            - NET-GROUP-2
+            - NET-GROUP-5
+
+    # No server network
+    - name: NO-SERVER-NETWORK
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+          network-groups:
+            - NET-GROUP-6
+
+    # Multi hostame and default route
+    - name: MULTI-HOSTNAME
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+          network-groups:
+            - NET-GROUP
+          forced-network-groups:
+            - NET-GROUP-7
+            - NET-GROUP-8
+
+  server-roles:
+    - name: DUP-CIDR-1-ROLE
+      interface-model: DUP-CIDR-1
+      disk-model: SERVER-DISKS
+
+    - name: DUP-CIDR-2-ROLE
+      interface-model: DUP-CIDR-2
+      disk-model: SERVER-DISKS
+
+    - name: DUP-CIDR-3-ROLE
+      interface-model: DUP-CIDR-3
+      disk-model: SERVER-DISKS
+
+    - name: DUP-CIDR-4-ROLE
+      interface-model: DUP-CIDR-4
+      disk-model: SERVER-DISKS
+
+    - name: MULTI-CIDR-ROLE
+      interface-model: MULTI-CIDR
+      disk-model: SERVER-DISKS
+
+    - name: MISSING-NETWORK
+      interface-model: NO-SERVER-NETWORK
+      disk-model: SERVER-DISKS
+
+    - name: MULTI-HOSTNAME
+      interface-model: MULTI-HOSTNAME
+      disk-model: SERVER-DISKS
+
+  servers:
+    - id: dup-cidr-1
+      ip-addr: 192.168.10.4
+      role: DUP-CIDR-1-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-2
+
+    - id: dup-cidr-2
+      ip-addr: 192.168.10.5
+      role: DUP-CIDR-2-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-2
+
+    - id: dup-cidr-3
+      ip-addr: 192.168.10.6
+      role: DUP-CIDR-3-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-2
+
+    - id: dup-cidr-4
+      ip-addr: 192.168.10.7
+      role: DUP-CIDR-4-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-2
+
+    - id: multi-cidr
+      ip-addr: 192.168.10.8
+      role: MULTI-CIDR-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-2
+
+    - id: address-in-use
+      ip-addr: 192.168.10.9
+      role: MULTI-CIDR-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-2
+
+    - id: missing-network
+      ip-addr: 12.0.0.10
+      role: MISSING-NETWORK
+      server-group: GROUP-6-2
+      nic-mapping: NIC-MAPPING-2
+
+    - id: multi-hostname
+      ip-addr: 192.168.10.10
+      role: MULTI-HOSTNAME
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-2

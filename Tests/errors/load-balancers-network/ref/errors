@@ -1,0 +1,10 @@
+#   cloud-cplite-2.0          ERR: Load Balancer providers on different networks
+The following servers provide the 'ip-cluster' service for load balancer 'lbext' in network group 'NET-GROUP' but are on different networks:
+    lbtestnet-cp2-c1-m1-net:  network NET-2-1
+    lbtestnet-cp2-c1-m2-net:  network NET-2-2
+
+#   cloud-cplite-2.0          ERR: Load Balancer providers on different networks
+The following servers provide the 'ip-cluster' service for load balancer 'lb' in network group 'NET-GROUP' but are on different networks:
+    lbtestnet-cp2-c1-m1-net:  network NET-2-1
+    lbtestnet-cp2-c1-m2-net:  network NET-2-2
+

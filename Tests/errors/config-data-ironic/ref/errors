@@ -1,0 +1,1 @@
+#   config-data-2.0           ERR: Error in ironic configuration data 'NO-CLEANING_NETWORK': neutron cleaning network 'guest-network' not defined in neutron configuration data

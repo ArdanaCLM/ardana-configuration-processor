@@ -1,0 +1,11 @@
+#   control-planes-2.0        WRN: other-cp: Use of 'member-groups' is deprecated, Use 'clusters' instead.
+#   control-planes-2.0        WRN: other-cp:cluster1: Component Warning 1
+#   control-planes-2.0        WRN: other-cp:cluster1: Component Warning 2
+#   control-planes-2.0        WRN: bad-control-plane: Use of 'member-groups' is deprecated, Use 'clusters' instead.
+#   control-planes-2.0        WRN: Control Plane 'bad-control-plane': Use of 'resource-nodes' is deprecated, Use 'resources' instead.
+#   control-planes-2.0        WRN: None of the services ['eon'] for configuration data 'NOT-IN-SCOPE' are in scope for the context 'bad-control-plane:cluster1' so this data will not be used.
+#   control-planes-2.0        WRN: None of the services ['keystone'] for configuration data 'NOT-IN-SCOPE-COMPUTE' are in scope for the context 'bad-control-plane:cluster1' so this data will not be used.
+#   control-planes-2.0        WRN: None of the services ['eon'] for configuration data 'NOT-IN-SCOPE' are in scope for the context 'bad-control-plane:compute' so this data will not be used.
+#   control-planes-2.0        WRN: None of the services ['keystone'] for configuration data 'NOT-IN-SCOPE-COMPUTE' are in scope for the context 'bad-control-plane:compute' so this data will not be used.
+#   control-planes-2.0        WRN: None of the services ['eon'] for configuration data 'NOT-IN-SCOPE' are in scope for the context 'bad-control-plane' so this data will not be used.
+#   control-planes-2.0        WRN: None of the services ['keystone'] for configuration data 'NOT-IN-SCOPE-COMPUTE' are in scope for the context 'bad-control-plane' so this data will not be used.

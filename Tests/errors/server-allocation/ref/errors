@@ -1,0 +1,7 @@
+#   cloud-cplite-2.0          ERR: Cluster deleted from input model
+Persisted server allocations found for resource 'res2' that no longer exists in control plane control-plane-1.
+         member:1 server:server7 (192.168.10.9)
+    If these servers are no longer used they must be removed from the input model.
+#   cloud-cplite-2.0          ERR: Couldn't allocate 3 servers with role ['SERVER-ROLE'] for cluster cluster1 in control-plane-1 from zones set(['AZ1'])
+#   cloud-cplite-2.0          ERR: Previously deleted server server5 in resource group control-plane-1:res1 can not be restored as it is not in the specified failure zones: ['AZ1']
+#   cloud-cplite-2.0          ERR: Couldn't allocate 3 servers with role ['SERVER-ROLE-2'] for resource group res1 in control-plane-1 from zones set(['AZ1'])

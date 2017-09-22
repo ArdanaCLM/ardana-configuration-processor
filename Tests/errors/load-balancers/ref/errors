@@ -1,0 +1,14 @@
+#   load-balancer-2.0         ERR: load balancer 'dup-lb-1' is specifed as being attached to more that one network group: 'test-ng1' and 'test-ng2'
+#   load-balancer-2.0         ERR: Load Balancers cannot be defined in both network-groups and control-planes.
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': load balancer 'dup-lb-1' defined more than once
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': load balancer 'lb-no-net-group' is not assigned to any network group
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': Unknown provider 'not-a-component' for load balancer lb-invalid-provider.
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': Provider 'zookeeper' for load balancer lb-missing-provider is not part of any cluster or group in the control plane.
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': Undefined component 'not-a-component-lb' in load balancer tls-lb.
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': Component nova-api is listed for more than one load balancer with a role of any_role: ['dup-lb-1', 'dup-lb-2']
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': Components specified as 'default' for more than one load balancer with a role of any_role: ['dup-lb-1', 'dup-lb-2']
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': Load balancer 'lb-invalid-role' role 'public' can not be combined with any other role.
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': No load balancer defined for role 'internal' or 'default'
+#   load-balancer-2.0         ERR: Control Plane 'bad-control-plane-1': cert-file for load balancer 'lb-invalid-cert-format' is not in a recognised format.
+#   load-balancer-2.0         ERR: Cert-file 'dup-cert' specified for more than one load balancer: ('bad-control-plane-1', 'dup-lb-1'), ('bad-control-plane-1', 'dup-lb-2')
+#   load-balancer-2.0         ERR: External name 'dup-ext-name' specified for more than one load balancer: ('bad-control-plane-1', 'dup-lb-1'), ('bad-control-plane-1', 'dup-lb-2')

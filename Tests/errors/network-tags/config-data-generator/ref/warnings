@@ -1,0 +1,1 @@
+#   configuration-data-generator-2.0WRN: Network tags in configuration data 'TAGS-ON-CLUSTER' referenced from control-plane-2:cluster1 will be ignored as these can only be defined at the control plane level.

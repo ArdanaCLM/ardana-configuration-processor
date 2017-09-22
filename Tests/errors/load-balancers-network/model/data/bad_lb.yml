@@ -1,0 +1,105 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  regions:
+    - name: region2
+      includes:
+        - control-plane: control-plane-2
+          services:
+            - all
+
+  control-planes:
+    - name: control-plane-2
+      control-plane-prefix: cp2
+      failure-zones:
+        - UBER-CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - any
+      load-balancers:
+        - provider: ip-cluster
+          name: lbext
+          components:
+            - default
+          roles:
+            - public
+        - provider: ip-cluster
+          name: lb
+          tls-components:
+            - default
+          roles:
+            - internal
+            - admin
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE-2
+          member-count: 2
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+            - ip-cluster
+
+  networks:
+    - name: NET-2-1
+      tagged-vlan: true
+      vlanid: 666
+      cidr: 10.0.10.0/24
+      gateway-ip: 10.0.10.1
+      network-group: NET-GROUP
+
+    - name: NET-2-2
+      tagged-vlan: true
+      vlanid: 666
+      cidr: 10.0.11.0/24
+      gateway-ip: 10.0.11.1
+      network-group: NET-GROUP
+
+  server-roles:
+    - name: SERVER-ROLE-2
+      interface-model: SERVER-INTERFACES
+      disk-model: SERVER-DISKS
+
+  server-groups:
+    - name: UBER-CLOUD
+      server-groups:
+        - CLOUD
+        - NET-2-1-GROUP
+        - NET-2-2-GROUP
+    - name: NET-2-1-GROUP
+      networks:
+        - NET-2-1
+    - name: NET-2-2-GROUP
+      networks:
+        - NET-2-2
+
+  servers:
+    - id: server2
+      ip-addr: 10.0.10.2
+      role: SERVER-ROLE-2
+      server-group: NET-2-1-GROUP
+      nic-mapping: NIC-MAPPING
+
+    - id: server3
+      ip-addr: 10.0.11.2
+      role: SERVER-ROLE-2
+      server-group: NET-2-2-GROUP
+      nic-mapping: NIC-MAPPING

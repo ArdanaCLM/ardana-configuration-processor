@@ -1,0 +1,59 @@
+<h2>Ardana Entry Scale Cloud with VSA Example</h2>
+<p>The input files in this example deploy a cloud that has the following characteristics:</p>
+<h3>Control Planes</h3>
+<ul>
+<li>A single control plane consisting of three servers that co-host all of the required services.</li>
+</ul>
+<h3>Resource Pools</h3>
+<ul>
+<li>
+<p>One compute Node</p>
+</li>
+<li>
+<p>Three VSA Nodes</p>
+</li>
+</ul>
+<p><em>Additional resource nodes can be added to the configuration.</em></p>
+<p><em>Minimal Swift Resources are provided by the control plane</em></p>
+<h3>Deployer Node</h3>
+<p>This configuration runs the lifecycle-manager (formerly referred to as the deployer) on a control plane node.
+You need to include this node address in your servers.yml definition. This function does not need a dedicated network.</p>
+<p>An example set of servers are defined in <strong><em>data/servers.yml</em></strong>.   You will need to modify this file to reflect your specific environment.</p>
+<h3>Networking</h3>
+<p>The example requires the following networks:</p>
+<p>IPMI/iLO network, connected to the deployer and the IPMI/iLO ports of all servers</p>
+<p>A pair of bonded NICs which are used by the following networks:</p>
+<ul>
+<li>External API - This is the network that users will use to make requests to the cloud</li>
+<li>External VM - This is the network that will be used to provide access to VMs (via floating IP addresses)</li>
+<li>Guest - This is the network that will carry traffic between VMs on private networks within the cloud</li>
+<li>Cloud Management - This is the network that will be used for all internal traffic between the cloud services. This network is also
+used to install and configure the nodes and for iSCSI traffic as well. This network needs to be on an untagged VLAN</li>
+</ul>
+<p>Note that the EXTERNAL_API network must be reachable from the EXTERNAL_VM network if you want VMs to be able to make API calls to the cloud.</p>
+<p>An example set of networks are defined in <strong><em>data/networks.yml</em></strong>.    You will need to modify this file to reflect your environment.</p>
+<p>The example uses the devices hed3 &amp; hed4 as a bonded network for all services.   If you need to modify these
+for your environment they are defined in <strong><em>data/net_interfaces.yml</em></strong> The network devices eth3 &amp; eth4 are renamed to devices hed4 &amp; hed5 using the PCI bus mappings secified in  <strong><em>data/nic_mappings.yml</em></strong>. You may need to modify the PCI bus addresses to match your system.</p>
+<h3>Local Storage</h3>
+<p>All servers should present a single OS disk, protected by a RAID controller. This disk needs to be at least 512GB in capacity. VSA appliance deployed on a host is expected to consume ~40 GB of disk space from host root disk for ephemeral storage to run VSA VM. In addition the example configures one additional disk depending on the role of the server:</p>
+<ul>
+<li>Controllers:  /dev/sdb is configured to be used by Swift</li>
+<li>Compute Severs:  /dev/sdb is configured as an additional Volume Group to be used for VM storage</li>
+<li>VSA Servers:  /dev/sdc is configured for VSA data storage and
+                /dev/sdb is configured for VSA cache (required only for adaptive-optimization)</li>
+</ul>
+<p>Note that VSA can be deployed with adaptive optimization (AO) or without AO. AO allows built-in storage tiering for VSA. It is recommended to use SSD disk for AO.</p>
+<p><em>Additional disks can be configured for any of these roles by editing the corresponding <strong><em>data/disks_*.yml</em></strong> file</em></p>
+<footer>
+  <small>(c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
+  <small>(c) Copyright 2017 SUSE LLC
+  <small>Licensed under the Apache License, Version 2.0 (the "License"); you may </small>
+  <small>not use this file except in compliance with the License. You may obtain </small>
+  <small>a copy of the License at<br><br></small>
+  <small>http://www.apache.org/licenses/LICENSE-2.0<br><br></small>
+  <small>Unless required by applicable law or agreed to in writing, software </small>
+  <small>distributed under the License is distributed on an "AS IS" BASIS, WITHOUT </small>
+  <small>WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the </small>
+  <small>License for the specific language governing permissions and limitations </small>
+  <small>under the License.<br></small>
+</footer>

@@ -1,0 +1,3 @@
+#   encryption-key            ERR: The Encryption Key does not meet the following requirement(s):
+#       The Encryption Key must be at least 12 characters
+#       The Encryption Key must contain at least 3 of following classes of characters: Uppercase Letters, Lowercase Letters, Digits, Punctuation

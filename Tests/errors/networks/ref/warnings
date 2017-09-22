@@ -1,0 +1,5 @@
+#   networks-2.0              WRN: Network OVERLAP3: start-address and end-address are deprecated.  Instead specify an address range in 'addresses'
+#   networks-2.0              WRN: Network INVALID-IP: start-address and end-address are deprecated.  Instead specify an address range in 'addresses'
+#   networks-2.0              WRN: Network ADDRESS-NOT-IN-CIDR-2: start-address and end-address are deprecated.  Instead specify an address range in 'addresses'
+#   networks-2.0              WRN: Network ADDRESS-NOT-IN-CIDR-3: start-address and end-address are deprecated.  Instead specify an address range in 'addresses'
+#   networks-2.0              WRN: The address range 17.0.0.35-17.0.0.45 in network INVALID-ADDRESS-RANGE overlaps with another range or address in the network.

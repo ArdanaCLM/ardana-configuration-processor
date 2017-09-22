@@ -1,0 +1,110 @@
+#
+# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+product:
+    version: 2
+
+services:
+  - name: dup-service
+    mnemonic: DUP
+
+  - name: old-style-component-mapping
+    mnemonic: OLD
+    components:
+       foo:
+          old-component:
+             min-count: 1
+
+service-components:
+
+  - name: old-component
+    mnemonic: OLD-COM
+
+  - name: dup-comp
+    mnemonic: DUP-COM
+
+  - name: dup-comp
+    mnemonic: DUP-COM2
+
+  - name: dup-comp-2
+    mnemonic: DUP-COM
+
+  - name: dup-comp-service
+    mnemonic: DUP
+
+  - name: bad-service
+    mnemonic: No-SRV
+    service: not-a-service
+
+  - name: invalid-port-range
+    mnemonic: TEST-BAD-PORT-RANGE
+    endpoints:
+      - port: '666:667'
+        roles:
+          - test-role
+        has-vip: true
+
+  - name: invalid-port-attr
+    mnemonic: TEST-PORT-ATTR
+    endpoints:
+      - port: '666:667'
+        roles:
+          - test-role
+        vip-port: 40
+        vip-tls-port: 41
+        vip-options:
+          - blah
+          - blah
+          - blah
+
+  - name: invalid-tls-port
+    mnemonic: TEST-BAD-TLS-PORT
+    endpoints:
+      - port: '666:667'
+        roles:
+          - test-role
+        has-vip: true
+        tls-port: 40
+        tls-terminator: true
+
+  - name: test-dup-roles
+    mnemonic: TEST-DUP-ROLES
+    endpoints:
+      - port: '666'
+        roles:
+          - dup-role
+      - port: '667'
+        roles:
+          - not-a-dup-role
+          - dup-role
+      - port: '668'
+        roles:
+          - still-not-a-dup-role
+
+  - name: bad-resources
+    mnemonic: TEST-BAD-RES
+    supported-resource-allocations:
+       cpu: true
+
+  - name: bad-consumers
+    mnemonic: TEST-BAD-CONSUMERS
+    multi-consumers:
+      default: allow
+      allowed:
+        - allowed-not-a-service
+      blocked:
+        - blocked-not-a-service

@@ -1,0 +1,5 @@
+#   disk-model-2.0            ERR: Disk model SERVER-DISKS is defined more than once.
+#   disk-model-2.0            ERR: Device /dev/sda_root is defined more than once in SERVER-DISKS-WRONG. This will lead to data corruption.
+#   disk-model-2.0            ERR: Disk model 'SERVER-DISKS-WRONG' with volume group 'ardana-vg' has invalid root mode bits set 'wrong' on disk 'root'
+#   disk-model-2.0            ERR: Device '/dev/sdb' defined in volume-group 'ardana-vg' in disk-model 'SERVER-DISKS-WRONG' is not present in the 'vm-size' stanza for the disk-model
+#   disk-model-2.0            ERR: Disk size '1x' for disk '/dev/sda_root' in the 'vm-size' stanza for disk-model 'SERVER-DISKS-WRONG' is not valid

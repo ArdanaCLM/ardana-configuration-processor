@@ -1,0 +1,71 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+title: CPU Models
+type: object
+properties:
+  cpu-models:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        vm-size:
+          type: object
+          properties:
+            vcpus:
+              type: integer
+          required:
+            - vcpus
+        assignments:
+          type: array
+          items:
+            type: object
+            properties:
+              components:
+                type: array
+                items:
+                  type: string
+              cpu:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    processor-ids:
+                      type:
+                        - string
+                        - integer
+                    role:
+                      type: string
+                  required:
+                    - processor-ids
+                    - role
+            required:
+              - components
+              - cpu
+      required:
+        - name
+  product:
+    properties:
+      version:
+        type: integer
+    required:
+    - version
+    type: object
+required:
+- product
+- cpu-models

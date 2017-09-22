@@ -1,0 +1,2 @@
+#   dpdk-device-generator-2.0 WRN: DPDK data for device 'hed4' has not been applied to server 'interface-model-errors-cp-dpdk-c1-m1' (id: server2 role: SERVER-ROLE-DPDK) because the device is not used on the server although at least one of the associated components is on the server: 'rabbitmq'
+#   dpdk-device-generator-2.0 WRN: DPDK data for device 'hed3' has not been applied to server 'interface-model-errors-cp-dpdk-c1-m1' (id: server2 role: SERVER-ROLE-DPDK) because none of the components are on the server: 'ntp-client'.

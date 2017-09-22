@@ -1,0 +1,20 @@
+#   control-planes-2.0        ERR: Control plane name 'control-plane-1' is not unique
+#   control-planes-2.0        ERR: Control-plane-prefix 'cp1' is not unique
+#   control-planes-2.0        ERR: Have regions object but control plane 'control-plane-1' is using 'region-name'.  Please remove the 'region-name'
+#   control-planes-2.0        ERR: Region 'bad-cp-region': Control Plane 'not-a-cp' not defined.
+#   control-planes-2.0        ERR: Region 'test-region': Service 'keystone' is not part of control plane 'other-cp'.
+#   control-planes-2.0        ERR: bad-control-plane: Duplicate cluster/resource name 'dup-resource'
+#   control-planes-2.0        ERR: bad-control-plane: Duplicate cluster/resource prefix: 'vsa'
+#   control-planes-2.0        ERR: bad-control-plane: Duplicate cluster/resource prefix: 'c1'
+#   control-planes-2.0        ERR: bad-control-plane:cluster1: Invalid allocation policy 'notstrict'
+#   control-planes-2.0        ERR: bad-control-plane:compute: Invalid allocation policy 'not-an-allocation-policy'
+#   control-planes-2.0        ERR: bad-control-plane:common-service-components: Undefined component 'not-a-component'
+#   control-planes-2.0        ERR: bad-control-plane:cluster1: Undefined component 'still-not-a-component'
+#   control-planes-2.0        ERR: bad-control-plane:compute: Undefined component 'never-was-a-component'
+#   control-planes-2.0        ERR: bad-control-plane:cluster1: Configuration data 'DOES-NOT-EXIST-EITHER' is not defined.
+#   control-planes-2.0        ERR: bad-control-plane:compute: Configuration data 'DOES-NOT-EXIST-AGAIN' is not defined.
+#   control-planes-2.0        ERR: bad-control-plane: Configuration data 'DOES-NOT-EXIST' is not defined.
+#   control-planes-2.0        ERR: Undefined Control plane 'not-a-cp' in uses section of control plane 'bad-control-plane'.
+#   control-planes-2.0        ERR: Undefined service component 'not-a-component' in uses section of control plane 'bad-control-plane'.
+#   control-planes-2.0        ERR: Control plane bad-control-plane uses 'keystone-api' from control plane 'other-cp', but 'keystone-api' is not part of that control plane.
+#   control-planes-2.0        ERR: Control plane 'bad-control-plane' references itself in the uses section.

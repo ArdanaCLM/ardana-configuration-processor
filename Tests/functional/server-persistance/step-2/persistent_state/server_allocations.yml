@@ -1,0 +1,34 @@
+server1:
+  cluster_name: cluster1
+  cp_name: control-plane-1
+  hypervisor-id: null
+  member_id: 1
+  state: allocated
+  type: cluster
+  vm-factory: false
+server2:
+  cluster_name: cluster1
+  cp_name: control-plane-1
+  hypervisor-id: null
+  member_id: 2
+  state: allocated
+  type: cluster
+  vm-factory: false
+  previous_config:
+     dummy-state: test
+server4:
+  resource_name: res1
+  cp_name: control-plane-1
+  hypervisor-id: null
+  member_id: 1
+  state: allocated
+  type: resource
+  vm-factory: false
+server5:
+  resource_name: res1
+  cp_name: control-plane-1
+  hypervisor-id: null
+  member_id: 2
+  state: allocated
+  type: resource
+  vm-factory: false

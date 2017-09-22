@@ -1,0 +1,7 @@
+#   deployer-network-lifecycle-mgr-2.0ERR: Control plane bad-control-plane doesn't have lifecycle-manager-target role for all control nodes
+#   deployer-network-lifecycle-mgr-2.0ERR: Control plane bad-control-plane doesn't have lifecycle-manager-target role for all resource nodes
+#   deployer-network-lifecycle-mgr-2.0ERR: Component lifecycle-manager not on at least one server.
+#   deployer-network-lifecycle-mgr-2.0ERR: Interface 'hed1' in interface model 'BAD-SERVER-INTERFACES-PCI-PT' can not be configured for 'pci-pt' as it is used by network 'NET' which includes at least one server address.
+#   deployer-network-lifecycle-mgr-2.0ERR: Interface 'hed1' in interface model 'BAD-SERVER-INTERFACES-SRIOV' can not be configured for 'sriov-only' as it is used by network 'NET' which includes at least one server address.
+#   deployer-network-lifecycle-mgr-2.0ERR: Address 200.0.0.1 of server server4 does not belong to a network in the model
+#   deployer-network-lifecycle-mgr-2.0ERR: Address 201.0.0.1 of server server5 is part of network BAD-NET but that network is not a member of a network group in its interface model SERVER-INTERFACES

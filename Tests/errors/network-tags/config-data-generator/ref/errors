@@ -1,0 +1,1 @@
+#   configuration-data-generator-2.0ERR: Invalid network-tags attribute in configuration-data 'TAGS-NOT-NEUTRON'. Network tags can only be defined when neutron is in the list of services.

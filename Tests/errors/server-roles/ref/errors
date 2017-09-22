@@ -1,0 +1,4 @@
+#   server-roles-2.0          ERR: Server Role DUPLICATE-ROLE is defined more than once.
+#   server-roles-2.0          ERR: Disk model 'NOT-A-DISK-MODEL' referenced in Server Role 'INVALID-MODELS' is not defined.
+#   server-roles-2.0          ERR: Interface model 'NOT-AN-INTEFACE-MODEL' referenced in Server Role 'INVALID-MODELS' is not defined.
+#   server-roles-2.0          ERR: Memory model 'NOT-A-MEMORY-MODEL' referenced in Server Role 'INVALID-MODELS' is not defined.

@@ -1,0 +1,24 @@
+192.168.10.2:
+  addr: 192.168.10.2
+  allocated: true
+  free: false
+  host: test-deleted-components-cp1-vip-lbext-net
+  persisted: false
+  server-id: null
+  used-by: vip lbext
+192.168.10.3:
+  addr: 192.168.10.3
+  allocated: true
+  free: false
+  host: test-deleted-components-cp1-c1-m1
+  persisted: false
+  server-id: server1
+  used-by: server
+192.168.10.4:
+  addr: 192.168.10.4
+  allocated: true
+  free: false
+  host: test-deleted-components-cp1-vip-lb-net
+  persisted: false
+  server-id: null
+  used-by: vip lb

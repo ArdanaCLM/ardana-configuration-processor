@@ -1,0 +1,19 @@
+#   config-data-2.0           ERR: in configuration data 'MISSING-KEYS' - missing required parameter: 'vsd_host_name'
+#   config-data-2.0           ERR: in configuration data 'MISSING-KEYS' - missing required parameter: 'vsd_user'
+#   config-data-2.0           ERR: in configuration data 'MISSING-KEYS' - missing required parameter: 'vsd_passwd'
+#   config-data-2.0           ERR: in configuration data 'MISSING-KEYS' - missing required parameter: 'vsc_active_ip'
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - value for required parameter 'vsd_host_name' is missing
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - value for required parameter 'vsd_user' is missing
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - value for required parameter 'vsd_passwd' is missing
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - value for required parameter 'vsc_active_ip' is missing
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - parameter 'vsd_cms_id' expects a string value
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - parameter 'vsc_active_ip' expects a string value
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - value for 'vsc_active_ip' is not a valid IP address: 'None'
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - parameter 'vsd_host_name' expects a string value
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - parameter 'vsd_user' expects a string value
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - parameter 'vsd_passwd' expects a string value
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - parameter 'vsc_passive_ip' expects a string value
+#   config-data-2.0           ERR: in configuration data 'MISSING-VALUES' - value for 'vsc_passive_ip' is not a valid IP address: 'None'
+#   config-data-2.0           ERR: in configuration data 'NOT-IP-ADDRESS' - parameter 'vsd_cms_id' expects a string value
+#   config-data-2.0           ERR: in configuration data 'NOT-IP-ADDRESS' - value for 'vsc_active_ip' is not a valid IP address: '500.0.0.1'
+#   config-data-2.0           ERR: in configuration data 'NOT-IP-ADDRESS' - value for 'vsc_passive_ip' is not a valid IP address: '100.x.x.5'

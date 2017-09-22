@@ -1,0 +1,83 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+title: Windriver config
+type: object
+properties:
+  property-groups:
+    type: object
+    properties:
+      name:
+        type: string
+      properties:
+        type: object
+        properties:
+          database-storage:
+            type: integer
+          backup-storage:
+            type: integer
+          shared-instance-storage:
+            type: integer
+          enable-sdn:
+            type: boolean
+          vswitch-type:
+            type: string
+          license-file-name:
+            type: string
+          logical-interface:
+            type: array
+            items:
+              type: object
+              properties:
+                lag-interface:
+                  type: string
+                lag-mode:
+                  type: integer
+                interface-mtu:
+                  type: integer
+                interface-ports:
+                  type: array
+                  items:
+                    type: string
+                networks:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      dynamic-allocation:
+                        type: boolean
+                    required:
+                      - name
+              required:
+                - lag-interface
+                - lag-mode
+                - interface-mtu
+                - interface-ports
+                - networks
+        required:
+          - database-storage
+          - backup-storage
+          - license-file-name
+          - logical-interface
+          - shared-instance-storage
+          - enable-sdn
+    required:
+      - name
+      - properties
+required:
+  - property-groups

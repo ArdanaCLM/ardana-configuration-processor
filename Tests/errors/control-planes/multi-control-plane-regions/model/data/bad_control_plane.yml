@@ -1,0 +1,161 @@
+#
+# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  service-components:
+    -  name: comp-with-warnings
+       mnemonic: FOO-BAR
+       service: warning-service
+       warnings:
+         - "Component Warning 1"
+         - "Component Warning 2"
+
+  services:
+    - name: warning-service
+      mnemonic: WARN-SER
+
+  configuration-data:
+    - name:  NOT-IN-SCOPE
+      services:
+        - eon
+      data:
+        foo: bar
+
+    - name:  NOT-IN-SCOPE-COMPUTE
+      services:
+        - keystone
+      data:
+        foo: bar
+
+  regions:
+    - name: test-region
+      includes:
+          - control-plane: other-cp
+            services:
+              - keystone
+    - name: bad-cp-region
+      includes:
+          - control-plane: not-a-cp
+            services:
+              - keystone
+
+  control-planes:
+    - name: control-plane-1
+      control-plane-prefix: cp1
+      region-name: region1
+      failure-zones:
+        - CLOUD
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - lifecycle-manager-target
+            - ip-cluster
+            - mysql
+            - rabbitmq
+            - keystone-api
+
+    - name: other-cp
+      member-groups:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: CONTROLLER-ROLE
+          min-count: 0
+          service-components:
+            - ntp-server
+            - comp-with-warnings
+
+    - name: bad-control-plane
+      control-plane-prefix: cp1
+      uses:
+        - from: not-a-cp
+          service-components:
+            - foo
+        - from: other-cp
+          service-components:
+            - not-a-component
+            - keystone-api
+        - from: bad-control-plane
+          service-components:
+            - not-a-component
+      failure-zones:
+        - not-a-failure-zone
+      configuration-data:
+        - DOES-NOT-EXIST
+        - NOT-IN-SCOPE
+        - NOT-IN-SCOPE-COMPUTE
+      common-service-components:
+        - not-a-component
+      member-groups:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: CONTROLLER-ROLE
+          member-count: 3
+          allocation-policy: notstrict
+          configuration-data:
+            - DOES-NOT-EXIST-EITHER
+            - NOT-IN-SCOPE
+            - NOT-IN-SCOPE-COMPUTE
+          service-components:
+            - still-not-a-component
+
+      resource-nodes:
+        - name: compute
+          resource-prefix: comp
+          server-role: COMPUTE-ROLE
+          allocation-policy: not-an-allocation-policy
+          min-count: 0
+          configuration-data:
+            - DOES-NOT-EXIST-AGAIN
+            - NOT-IN-SCOPE
+            - NOT-IN-SCOPE-COMPUTE
+          service-components:
+            - never-was-a-component
+
+        - name: dup-resource
+          resource-prefix: vsa
+          server-role: VSA-ROLE
+          allocation-policy: strict
+          min-count: 0
+          service-components:
+            - ntp-client
+            - vsa
+
+        - name: dup-resource
+          resource-prefix: vsa
+          server-role: VSA-ROLE
+          allocation-policy: strict
+          min-count: 0
+          service-components:
+            - ntp-client
+            - vsa
+
+        - name: dup-prefix
+          resource-prefix: c1
+          server-role: VSA-ROLE
+          allocation-policy: strict
+          min-count: 0
+          service-components:
+            - ntp-client
+            - vsa
+

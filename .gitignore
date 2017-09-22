@@ -1,0 +1,31 @@
+keys/
+.DS_Store
+*.swp
+*.egg-info
+*~
+*.pyc
+applytest
+doc/build/
+manifests/secrets.pp
+.tox/
+.venv/
+.test/
+/.project
+/.pydevproject
+**run.sh
+**checkpoint.sh
+
+**build
+**dist
+**.log
+
+# Default output paths
+**clouds
+**json_builder
+
+# pycharm ide files
+**.idea
+
+ConfigurationProcessor/tools/regress/AUTHORS
+ConfigurationProcessor/tools/regress/ChangeLog
+

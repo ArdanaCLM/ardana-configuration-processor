@@ -1,0 +1,6 @@
+#   network-groups-2.0        ERR: Network Group DUP is defined more than once.
+#   network-groups-2.0        ERR: Network groups: the first 15 chars of the md5 hexdigest for 'DUP' clashes with the md5 hexdigest of 'DUP'. Please change one of these names.
+#   network-groups-2.0        ERR: Undefined component 'not-a-component' in network group 'UNDEFINED-COMPONENTS'
+#   network-groups-2.0        ERR: Undefined component 'not-a-tls-component' in network group 'UNDEFINED-COMPONENTS'
+#   network-groups-2.0        ERR: 'default' specified for component-endpoints in more than one network group: ['DUP_ENDPOINT-1', 'NET-GROUP']
+#   network-groups-2.0        ERR: 'nova-api' is connected to more than one network group: ['DUP_ENDPOINT-1', 'DUP_ENDPOINT-2'].

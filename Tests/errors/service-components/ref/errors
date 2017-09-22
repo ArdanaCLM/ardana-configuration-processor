@@ -1,0 +1,15 @@
+#   service-components-2.0    ERR: service-component 'dup-comp' is defined more than once.
+#   service-components-2.0    ERR: menmonic 'DUP-COM' is defined multiple times: 'dup-comp(component)', 'dup-comp-2(component)'
+#   service-components-2.0    ERR: menmonic 'DUP' is defined multiple times: 'dup-service(service)', 'dup-comp-service(component)'
+#   service-components-2.0    ERR: Unknown service 'not-a-service' in service component 'bad-service'.
+#   service-components-2.0    ERR: Component test-dup-roles has the same role defined for more than one endpoint: dup-role
+#   service-components-2.0    ERR: Component invalid-port-range has an invalid port value '666:667' - Can't have a port range when has-vip is true
+#   service-components-2.0    ERR: Component bad-resources supports cpu allocations but does not define a list of cpu roles
+#   service-components-2.0    ERR: Component invalid-tls-port has an invalid port value '666:667' - Can't have a port range when has-vip is true
+#   service-components-2.0    ERR: Component invalid-tls-port port '666:667' - Can't set tls-port when has-vip is true.
+#   service-components-2.0    ERR: Component invalid-tls-port port '666:667' - Can't set tls-port when tls-terminator is true.
+#   service-components-2.0    ERR: Component invalid-port-attr port '666:667' - Can't set vip-port when has-vip is false.
+#   service-components-2.0    ERR: Component invalid-port-attr port '666:667' - Can't set vip-tls-port when has-vip is false.
+#   service-components-2.0    ERR: Component invalid-port-attr port '666:667' - Can't set vip-options when has-vip is false.
+#   service-components-2.0    ERR: Unknown service 'allowed-not-a-service' in multi-consumers allowed list for component 'bad-consumers'
+#   service-components-2.0    ERR: Unknown service 'blocked-not-a-service' in multi-consumers blocked list for component 'bad-consumers'

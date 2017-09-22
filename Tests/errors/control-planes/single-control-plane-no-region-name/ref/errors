@@ -1,0 +1,2 @@
+#   control-planes-2.0        ERR: The input model specifies one control plane but no regions object has been detected and there is no 'region-name' attribute to the control plane.  Please add a regions object
+#   control-planes-2.0        ERR: Component 'only-one-instance' which can only have one instance is specified on more than one cluster in the input model: '(control-plane: control-plane-1, cluster: cluster1), (control-plane: control-plane-1, cluster: cluster2)'

@@ -1,0 +1,2 @@
+#   deployer-network-lifecycle-mgr-2.0WRN: Possible PXE boot on tagged VLAN
+    Network BAD-PXE-VLAN-NET includes the address of one or more servers that also have iLO values, but is a tagged VLAN.  PXE Booting on a tagged VLAN needs specific BIOS support.

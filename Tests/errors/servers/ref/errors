@@ -1,0 +1,17 @@
+#   servers-2.0               ERR: Invalid baremetal subnet: 400.0.0.1/24
+#   servers-2.0               ERR: Invalid baremetal netmask: 300.0.0.0
+#   servers-2.0               ERR: Duplicate server id: server-duplicate-id (['192.168.10.6', '192.168.10.7'])
+#   servers-2.0               ERR: Duplicate server id: server-bad-vf-count (['192.168.10.12', '192.168.10.12'])
+#   servers-2.0               ERR: Server 'server-bad-ip-addr' has an invalid IP address for 'ip-addr': xxx.168.10.7
+#   servers-2.0               ERR: Server 'server-invalid-ilo-address' has an invalid IP address for 'ilo-ip': 500.0.0.2
+#   servers-2.0               ERR: Server 'server-bad-mac-addr' has an invalid MAC address: 'xxxx.xx.x'. Here is an example format: '01:23:45:67:89:ab'
+#   servers-2.0               ERR: Server Group 'NOT-A-GROUP' used by server server-bad-server-group is not defined
+#   servers-2.0               ERR: NIC Mapping 'BAD-NIC-MAPPING' used by server 192.168.10.4 is not defined
+#   servers-2.0               ERR: Server role 'BAD-SERVER-ROLE' used by server server-bad-server-role is not defined
+#   servers-2.0               ERR: Server server-bad-net-device needs device bad-device for interface bad-device in interface model BAD-NET-DEVICE, but this device is not defined in its nic-mapping NIC-MAPPING.
+#   servers-2.0               ERR: Server 'server-bad-vf-count' uses interface model 'BAD-VF-COUNT' which defines a 'vf-count' of 10 for device 'hed1', but 'hed1' in nic_mapping 'NIC-MAPPING' does not define the nic-device-type.
+#   servers-2.0               ERR: Server 'server-vf-count-too-high' uses interface model 'VF-COUNT-TOO-HIGH' which defines a 'vf-count' of 100 for device 'hed1', which exceeds the maximum value of 63 for nic device family 'INTEL-82599'.
+#   servers-2.0               ERR: The following interfaces on server 'server-unequal-vf-counts' using interface model 'UNEQUAL-VF-COUNTS' are using the driver 'ixgbe' which has a constraint that all vf-counts must be the same value: 'hed1', 'hed2'
+#   servers-2.0               ERR: Server 'server-bad-multi-port-pcipt' using interface-model 'BAD-MULTI-PORT-PCIPT' and nic-mapping 'MULTI-PORT': device 'hed1' has specified 'pci-pt: True', but device 'hed2' is neither 'pci-pt' nor 'sriov-only'. If any port on a multi-port device has 'pci-pt: True', then all other ports on the same device must have either 'pci-pt: True' or 'sriov-only: True'
+#   servers-2.0               ERR: Server 'server-missing-nic-dev-type-pci' uses interface model 'PCI-PASSTHROUGH' which defines 'hed1' as a pci-passthrough device but 'hed1' in nic_mapping 'SIMPLE-PORT-NO-NIC-DEV' does not define the nic-device-type.
+#   servers-2.0               ERR: Server 'server-missing-nic-dev-type-sriov' uses interface model 'SRIOV' which defines a 'vf-count' of 10 for device 'hed1', but 'hed1' in nic_mapping 'SIMPLE-PORT-NO-NIC-DEV' does not define the nic-device-type.

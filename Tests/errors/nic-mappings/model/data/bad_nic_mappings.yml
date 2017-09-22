@@ -1,0 +1,136 @@
+#
+# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  nic-device-families:
+      - name: TEST-FAMILY
+        vendor-id: '0x0001'
+        config-script: test.sh
+        driver: dummy_driver
+        vf-count-type: driver
+        max-vf-count: 60
+
+  nic-device-types:
+      - name: SIMPLE-PORT-TYPE
+        family: TEST-FAMILY
+        device-id: '0x0002'
+        type: simple-port
+
+      - name: MULTI-PORT-TYPE
+        family: TEST-FAMILY
+        device-id: '0x0001'
+        type: multi-port
+
+  nic-mappings:
+
+    - name: DUPLICATE-NAME
+      physical-ports:
+        - logical-name: hed3
+          type: simple-port
+          bus-address: "0000:04:00.0"
+
+    - name: DUPLICATE-NAME
+      physical-ports:
+        - logical-name: hed4
+          type: simple-port
+          bus-address: "0000:05:00.0"
+
+    - name: DUPLICATE-PORT-NAME
+      physical-ports:
+        - logical-name: dup-port-name
+          type: simple-port
+          bus-address: "0000:05:00.0"
+
+        - logical-name: dup-port-name
+          type: simple-port
+          bus-address: "0000:06:00.0"
+
+    - name: DUPLICATE-ADDRESS
+      physical-ports:
+        - logical-name: port-one
+          type: simple-port
+          bus-address: "0000:05:00.0"
+
+        - logical-name: port-two
+          type: simple-port
+          bus-address: "0000:05:00.0"
+
+    - name: MIXED-TYPE
+      physical-ports:
+        - logical-name: port-one
+          type: simple-port
+          bus-address: "0000:05:00.0"
+
+        - logical-name: port-two
+          type: multi-port
+          bus-address: "0000:05:00.0"
+          port-attributes:
+              port-num: 0
+
+    - name: INVALID-PORT-NUM
+      physical-ports:
+        - logical-name: port-one
+          type: simple-port
+          bus-address: "0000:05:00.0"
+          port-attributes:
+              port-num: 0
+
+    - name: MISSING-PORT-NUM
+      physical-ports:
+        - logical-name: port-one
+          type: multi-port
+          bus-address: "0000:05:00.0"
+
+    - name: DUPLICATE-PORT-NUM
+      physical-ports:
+        - logical-name: port-one
+          type: multi-port
+          bus-address: "0000:05:00.0"
+          port-attributes:
+              port-num: 0
+
+        - logical-name: port-two
+          type: multi-port
+          bus-address: "0000:05:00.0"
+          port-attributes:
+              port-num: 0
+
+    - name: INVALID-NIC-DEVICE-TYPE
+      physical-ports:
+        - logical-name: port-one
+          type: simple-port
+          bus-address: "0000:05:00.0"
+          nic-device-type: not-a-nic-device-type
+
+    - name: INVALID-SIMPLE-PORT-TYPE
+      physical-ports:
+        - logical-name: port-one
+          type: simple-port
+          bus-address: "0000:05:00.0"
+          nic-device-type: MULTI-PORT-TYPE
+
+    - name: INVALID-MULTI-PORT-TYPE
+      physical-ports:
+        - logical-name: port-one
+          type: multi-port
+          bus-address: "0000:05:00.0"
+          nic-device-type: SIMPLE-PORT-TYPE
+          port-attributes:
+              port-num: 0
+

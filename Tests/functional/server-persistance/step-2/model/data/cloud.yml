@@ -1,0 +1,155 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  control-planes:
+    - name: control-plane-1
+      control-plane-prefix: cp1
+      region-name: region1
+      failure-zones:
+        - CLOUD
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 2
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - lifecycle-manager
+            - lifecycle-manager-target
+            - ip-cluster
+            - mysql
+            - rabbitmq
+            - keystone-api
+      resources:
+        - name: res1
+          resource-prefix: r1
+          server-role: SERVER-ROLE-2
+          member-count: 2
+          allocation-policy: strict
+          service-components:
+            - ntp-client
+            - lifecycle-manager-target
+
+  disk-models:
+  - name: SERVER-DISKS
+    volume-groups:
+      - name: ardana-vg
+        physical-volumes:
+          - /dev/sda_root
+        logical-volumes:
+          - name: root
+            size: 10%
+            fstype: ext4
+            mount: /
+
+  interface-models:
+    - name: SERVER-INTERFACES
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP
+
+  network-groups:
+    - name: NET-GROUP
+      hostname-suffix: net
+      hostname: true
+      component-endpoints:
+        - default
+      load-balancers:
+        - provider: ip-cluster
+          name: lbext
+          components:
+            - default
+          roles:
+            - public
+        - provider: ip-cluster
+          name: lb
+          components:
+            - default
+          roles:
+            - internal
+            - admin
+
+  networks:
+    - name: NET
+      tagged-vlan: false
+      cidr: 192.168.10.0/24
+      gateway-ip: 192.168.10.1
+      network-group: NET-GROUP
+
+  nic-mappings:
+    - name: NIC-MAPPING
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:07:00.0"
+
+  server-groups:
+    - name: CLOUD
+      networks:
+        - NET
+
+  server-roles:
+    - name: SERVER-ROLE
+      interface-model: SERVER-INTERFACES
+      disk-model: SERVER-DISKS
+    - name: SERVER-ROLE-2
+      interface-model: SERVER-INTERFACES
+      disk-model: SERVER-DISKS
+
+  servers:
+    - id: server1
+      ip-addr: 192.168.10.3
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+#    - id: server2
+#      ip-addr: 192.168.10.4
+#      role: SERVER-ROLE
+#      server-group: CLOUD
+#      nic-mapping: NIC-MAPPING
+
+    - id: server3
+      ip-addr: 192.168.10.5
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server4
+      ip-addr: 192.168.10.6
+      role: SERVER-ROLE-2
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+#    - id: server5
+#      ip-addr: 192.168.10.7
+#      role: SERVER-ROLE-2
+#      server-group: CLOUD
+#      nic-mapping: NIC-MAPPING
+
+    - id: server6
+      ip-addr: 192.168.10.8
+      role: SERVER-ROLE-2
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING

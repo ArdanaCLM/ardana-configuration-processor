@@ -1,0 +1,16 @@
+#   vm-factory-2.0            ERR: Server 'vm-and-hypervisor' is defined to be a vm and also a vm hypervisor
+#   vm-factory-2.0            ERR: Server 'vm-and-hypervisor' is defined to be a vm, but its role 'VM-ROLE-TWO-GROUPS' does not have a cpu-model
+#   vm-factory-2.0            ERR: Server 'vm-and-hypervisor' is defined to be a vm but its role 'VM-ROLE-TWO-GROUPS' does not have a memory-model
+#   vm-factory-2.0            ERR: The set of 'network-groups' and 'forced-network-groups' for vm 'vm-and-hypervisor' network-interface 'hed1' in interface model 'VM-INTERFACES-TWO-GROUPS' is not a subset of any of the 'passthrough-network-groups' in the interfaces in interface model 'HYPERVISOR-INTERFACES-ONE-GROUP' on the 'hypervisor-id' 'hypervisor'
+#   vm-factory-2.0            ERR: Server 'vm-invalid-hypervisor' references a 'hypervisor-id' 'serverx' that doesn't exist in the model
+#   vm-factory-2.0            ERR: Server 'vm-invalid-hypervisor' is defined to be a vm, but the disk-model 'VM-DISKS-TOO-MANY-DISKS' assigned to its role 'VM-ROLE-BOND-TOO-MANY-DISKS' does not have a 'vm-size' stanza.
+#   vm-factory-2.0            ERR: Server 'vm-invalid-hypervisor' is defined to be a vm, but the disk-model 'VM-DISKS-TOO-MANY-DISKS' assigned to its role 'VM-ROLE-BOND-TOO-MANY-DISKS' has >= 31 disks
+#   vm-factory-2.0            ERR: Server 'vm-invalid-hypervisor' is defined to be a vm, but the cpu-model 'VM-NO-SIZE' assigned to its role 'VM-ROLE-BOND-TOO-MANY-DISKS' does not have a 'vm-size' stanza.
+#   vm-factory-2.0            ERR: Server 'vm-invalid-hypervisor' is defined to be a vm, but the memory-model 'VM-NO-SIZE' assigned to its role 'VM-ROLE-BOND-TOO-MANY-DISKS' does not have a 'vm-size' stanza.
+#   vm-factory-2.0            ERR: Server 'vm-invalid-hypervisor' which is defined to be a vm is using a network interface 'BOND0' in interface model 'VM-INTERFACES-WITH-BOND' which is a bond
+#   vm-factory-2.0            ERR: Server 'vm-on-vm' is a vm on 'hypervisor-id' 'vm-invalid-hypervisor' that is also a vm
+#   vm-factory-2.0            ERR: Server 'vm-on-vm' which is defined to be a vm is using device 'hed1' in nic-mapping 'NIC-MAPPING-NON-ZERO' whose bus-address doesn't end in '.0'
+#   vm-factory-2.0            ERR: Server 'vm-different-group-to-hypervisor' that is a vm on 'hypervisor-id' 'hypervisor' isn't in the same server-group as its hypervisor 'CLOUD1'
+#   vm-factory-2.0            ERR: Server 'vm-different-group-to-hypervisor' which is defined to be a vm does not have a nic-mapping
+#   vm-factory-2.0            ERR: Server 'hypervisor-not-set' which is defined to be a hypervisor for vm 'vm-hypervisor-not-set' does not have the 'ardana-hypervisor' field set
+#   vm-factory-2.0            ERR: Server 'hypervisor-no-passthrough' which is defined to be a hypervisor doesn't have 'passthrough-network-groups' set for any interface in its interface model 'HYPERVISOR-INTERFACES-NO-PASSTHROUGH'

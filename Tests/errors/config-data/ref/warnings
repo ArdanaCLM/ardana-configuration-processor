@@ -1,0 +1,3 @@
+#   config-data-2.0           WRN: in configuration data 'DUPLICATE-NAME'. Skipping unrecognized entry: 'some-value'
+#   config-data-2.0           WRN: in configuration data 'DUPLICATE-NAME'. Skipping unrecognized entry: 'some-other-value'
+#   config-data-2.0           WRN: Unrecognised service name 'not-a-service' in configuration-data 'BAD-SERVICE'.

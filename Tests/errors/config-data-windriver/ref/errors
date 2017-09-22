@@ -1,0 +1,12 @@
+#   config-data-2.0           ERR:
+
+Input
+    {}
+
+Could not be validated - list of errors:
+    Index of error:
+        Erroneous value:     {}
+        Expected type:       ['property-groups']
+
+#   config-data-2.0           ERR: Windriver configuration data element 'INVALID-SCHEMA' is not valid
+#   config-data-2.0           ERR: Network 'NOT-A-NETWORK' referenced in WindRiver configuration data object 'MISSING-NETWORK'is not present in the networks input

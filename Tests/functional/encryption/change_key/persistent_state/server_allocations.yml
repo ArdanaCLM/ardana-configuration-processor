@@ -1,0 +1,95 @@
+server1:
+  cluster_name: cluster1
+  cp_name: control-plane-1
+  hypervisor-id: null
+  member_id: 1
+  previous_config:
+    addr: 192.168.10.3
+    ansible_options: null
+    cluster-name: cluster1
+    components:
+      apache2: {}
+      ardana-ca: {}
+      ardana-ux-services: {}
+      ip-cluster: {}
+      keystone-api: {}
+      keystone-client: {}
+      lifecycle-manager: {}
+      lifecycle-manager-target: {}
+      mysql: {}
+      ntp-server: {}
+      rabbitmq: {}
+    control-plane-name: control-plane-1
+    disk-model:
+      name: SERVER-DISKS
+      volume-groups:
+      - logical-volumes:
+        - fstype: ext4
+          mount: /
+          name: root
+          size: 10%
+        name: ardana-vg
+        physical-volumes:
+        - /dev/sda_root
+    failure-zone: CLOUD
+    fcoe_interfaces: []
+    hostname: null
+    hypervisor-id: null
+    id: server1
+    if-model: SERVER-INTERFACES
+    interfaces:
+    - device:
+        name: hed1
+      name: hed1
+      network-groups:
+      - NET-GROUP
+      networks:
+        NET:
+          addresses:
+          - 192.168.10.1-192.168.10.254
+          cidr: 192.168.10.0/24
+          explicit_mtu: false
+          forced: false
+          gateway-ip: 192.168.10.1
+          mtu: 1500
+          name: NET
+          network-group: NET-GROUP
+          passthrough: false
+          passthrough-only: false
+          tagged-vlan: false
+    member_id: 1
+    name: encryption-change-key-cp1-c1-m1
+    nic_map:
+      name: NIC-MAPPING
+      physical-ports:
+      - bus-address: '0000:07:00.0'
+        logical-name: hed1
+        type: simple-port
+    port-groups: []
+    rack: null
+    region: region1
+    role: SERVER-ROLE
+    server-group-list:
+    - CLOUD
+    server_group: CLOUD
+    services:
+      clients:
+      - keystone-client
+      foundation:
+      - ip-cluster
+      - ardana-ca
+      - rabbitmq
+      - ntp-server
+      - mysql
+      - apache2
+      ardana:
+      - ardana-ux-services
+      - lifecycle-manager
+      - lifecycle-manager-target
+      keystone:
+      - keystone-api
+    state: allocated
+    vm-factory: false
+  state: allocated
+  type: cluster
+  vm-factory: false

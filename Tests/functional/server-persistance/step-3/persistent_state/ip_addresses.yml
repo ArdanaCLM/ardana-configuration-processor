@@ -1,0 +1,64 @@
+192.168.10.2:
+  addr: 192.168.10.2
+  allocated: true
+  free: false
+  host: server-persistance-cp1-vip-lbext-net
+  persisted: true
+  server-id: null
+  used-by: vip lbext
+192.168.10.3:
+  addr: 192.168.10.3
+  allocated: true
+  free: false
+  host: server-persistance-cp1-c1-m1
+  persisted: true
+  server-id: server1
+  used-by: server
+192.168.10.4:
+  addr: 192.168.10.4
+  allocated: true
+  free: false
+  host: server-persistance-cp1-c1-m2
+  persisted: false
+  server-id: server2
+  used-by: server
+192.168.10.5:
+  addr: 192.168.10.5
+  allocated: true
+  free: false
+  host: server-persistance-cp1-c1-m3
+  persisted: false
+  server-id: server3
+  used-by: server
+192.168.10.6:
+  addr: 192.168.10.6
+  allocated: true
+  free: false
+  host: server-persistance-cp1-r10001
+  persisted: true
+  server-id: server4
+  used-by: server
+192.168.10.7:
+  addr: 192.168.10.7
+  allocated: true
+  free: false
+  host: server-persistance-cp1-r10002
+  persisted: false
+  server-id: server5
+  used-by: server
+192.168.10.8:
+  addr: 192.168.10.8
+  allocated: true
+  free: false
+  host: server-persistance-cp1-r10003
+  persisted: false
+  server-id: server6
+  used-by: server
+192.168.10.9:
+  addr: 192.168.10.9
+  allocated: true
+  free: false
+  host: server-persistance-cp1-vip-lb-net
+  persisted: true
+  server-id: null
+  used-by: vip lb

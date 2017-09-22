@@ -1,0 +1,26 @@
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-2' Configuration Data 'TAGS-MISSING-PHYSNET': network tag 'neutron.networks.vlan' is missing the required attribute 'provider-physical-network'
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-2' Configuration Data 'TAGS-MISSING-PHYSNET': network tag 'neutron.networks.flat' is missing the required attribute 'provider-physical-network'
+#   network-tag-generator-2.0 ERR: 'physnet7' used by provider network 'PROVIDER-NET' defined in configuration-data 'TAGS-MISSING-PHYSNET' is not defined by a network tag in control plane 'control-plane-2'
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-3' Configuration Data 'TAGS-INVALID-FORMAT': network tag '{'neutron,networks.vxlan': {'tenaant_vxlan_id_range': '40-50'}, 'neutron.networks.flat': {'provider-physical-network': 'physnet1'}}' is an invalid format.
+#   network-tag-generator-2.0 ERR: network tag 'neutron.networks.flat' is defined more that once for network group 'NET-GROUP-PHYSNET-1'
+    Control Plane 'control-plane-3' Configuration Data 'TAGS-DUP-1'
+    Control Plane 'control-plane-3' Configuration Data 'TAGS-DUP-2'
+
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-3' Configuration Data 'TAGS-INVALID-RANGE': neutron.networks.vlan '20:10' is an invalid range.
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-3' Configuration Data 'TAGS-INVALID-RANGE': neutron.networks.vlan '1000:7000' is an invalid range. Please specify ranges within [1:4094]
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-3' Configuration Data 'TAGS-INVALID-RANGE': neutron.networks.vlan ID range '35:45' overlaps with '40:50'
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-3' Configuration Data 'TAGS-INVALID-RANGE': neutron.networks.vxlan '50:40' is an invalid range.
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-3' Configuration Data 'TAGS-INVALID-RANGE': neutron.networks.vxlan '200:20000000' is an invalid range. Please specify ranges within [0:16777215]
+#   network-tag-generator-2.0 ERR: Control Plane 'control-plane-3' Configuration Data 'TAGS-INVALID-RANGE': neutron.networks.vxlan ID range '135:145' overlaps with '140:150'
+#   network-tag-generator-2.0 ERR: Multiple values of provider-physical-network defined for network group 'NET-GROUP-PHYSNET-1':
+   'physnet2' defined by Control Plane 'control-plane-4' Configuration Data 'TAGS-DIFFERENT-PHYSNET-2'
+   'physnet1' defined by Control Plane 'control-plane-4' Configuration Data 'TAGS-DIFFERENT-PHYSNET-1'
+
+#   network-tag-generator-2.0 ERR: provider-physical-network 'physnet2' is defined for more than one network group':
+   'NET-GROUP-PHYSNET-1' defined by Control Plane 'control-plane-4' Configuration Data 'TAGS-DIFFERENT-PHYSNET-2'
+   'NET-GROUP-PHYSNET-2' defined by Control Plane 'control-plane-4' Configuration Data 'TAGS-DIFFERENT-NETGROUP'
+
+#   network-tag-generator-2.0 ERR: Network tag 'neutron.networks.vxlan' is defined on more than network group in the following context:
+    NET-GROUP-PHYSNET-1: Control Plane 'control-plane-4' Configuration Data 'TAGS-VXLAN-PHYSNET-1'
+    NET-GROUP-PHYSNET-2: Control Plane 'control-plane-4' Configuration Data 'TAGS-VXLAN-PHYSNET-2'
+

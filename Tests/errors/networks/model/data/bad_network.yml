@@ -1,0 +1,182 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  interface-models:
+    - name: SERVER-INTERFACES2
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP
+
+  network-groups:
+    - name: NET-GROUP-TAGS
+      hostname-suffix: netvxlan
+      tags:
+        - neutron.networks.vxlan
+        - neutron.networks.vlan
+
+    - name: NET-GROUP-WITH-ROUTES
+      hostname-suffix: netroute
+      routes:
+        - NET-GROUP-TAGS
+
+  networks:
+    - name: DUP-NAME
+      tagged-vlan: false
+      cidr: 10.0.0.0/24
+      gateway-ip: 10.0.0.1
+      network-group: NET-GROUP
+
+    - name: DUP-NAME
+      tagged-vlan: false
+      cidr: 10.0.0.0/24
+      gateway-ip: 10.0.0.1
+      network-group: NET-GROUP
+
+    # Overlap Cases
+    #        <--overlap1-->    <--overlap1-->
+    #                 <--overlap2-->
+    #      <-----------overlap3---------------->
+    #  <--overlap4-->
+    - name: OVERLAP1
+      tagged-vlan: false
+      cidr: 11.0.0.0/24
+      addresses:
+        - 11.0.0.10-11.0.0.19
+        - 11.0.0.30-11.0.0.39
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP
+
+    - name: OVERLAP2
+      tagged-vlan: false
+      cidr: 11.0.0.0/24
+      addresses:
+        - 11.0.0.15-11.0.0.35
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP
+
+    - name: OVERLAP3
+      tagged-vlan: false
+      cidr: 11.0.0.0/24
+      start-address: 11.0.0.5
+      end-address: 11.0.0.45
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP
+
+    - name: OVERLAP4
+      tagged-vlan: false
+      cidr: 11.0.0.0/24
+      addresses:
+        - 11.0.0.2-11.0.0.12
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP
+
+    - name: INVALID-IP
+      tagged-vlan: false
+      cidr: 12.0.0.0/24
+      start-address: 12.300.0.5
+      end-address: 12.300.0.45
+      gateway-ip: 12.0.0.300
+      network-group: NET-GROUP
+
+    - name: INVALID-CDIR-1
+      tagged-vlan: false
+      cidr: 400.0.0.0/24
+      network-group: NET-GROUP
+
+    - name: INVALID-CDIR-2
+      tagged-vlan: false
+      cidr: 13.0.0.0/31
+      gateway-ip: 13.0.0.1
+      network-group: NET-GROUP
+
+    - name: INVALID-GATEWAY
+      tagged-vlan: false
+      cidr: 14.0.0.0/24
+      gateway-ip: 14.1.0.1
+      network-group: NET-GROUP
+
+    - name: VXLAN-NO-CIRD
+      tagged-vlan: false
+      network-group: NET-GROUP-TAGS
+
+    - name: ADDRESS-NO-CIDR
+      tagged-vlan: false
+      addresses:
+        - 15.0.0.2-15.0.0.12
+      network-group: NET-GROUP
+
+    - name: ADDRESS-NOT-IN-CIDR-1
+      tagged-vlan: false
+      cidr: 16.0.1.0/24
+      addresses:
+        - 16.0.0.15-16.0.2.35
+        - 16.0.0.50
+        - 16.0.1.10
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP
+
+    - name: ADDRESS-NOT-IN-CIDR-2
+      tagged-vlan: false
+      cidr: 16.1.1.0/24
+      start-address: 16.1.0.15
+      network-group: NET-GROUP
+
+    - name: ADDRESS-NOT-IN-CIDR-3
+      tagged-vlan: false
+      cidr: 16.1.1.0/24
+      end-address: 16.2.0.15
+      network-group: NET-GROUP
+
+    - name: INVALID-ADDRESS
+      tagged-vlan: false
+      cidr: 16.0.1.0/24
+      addresses:
+        - 300.0.0.20
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP
+
+    - name: INVALID-ADDRESS-RANGE
+      tagged-vlan: false
+      cidr: 17.0.0.0/24
+      addresses:
+        - 17.0.0.2-17.0.0.3,17.0.0.4
+        - 17.0.0.20-17.0.0.10
+        - 17.0.0.30-17.0.0.40
+        - 17.0.0.35-17.0.0.45
+      gateway-ip: 17.0.0.1
+      network-group: NET-GROUP
+
+    - name: MISSING-VLANID
+      cidr: 18.0.0.0/24
+      network-group: NET-GROUP
+
+    - name: TAGGED-PROVIDER-VLANID
+      network-group: NET-GROUP-TAGS
+
+    - name: MISSING-GROUP
+      network-group: NOT-A-GROUP
+
+    - name: MISSING-GATEWAY-FOR-ROUTES
+      tagged-vlan: false
+      cidr: 19.0.0.0/24
+      network-group: NET-GROUP-WITH-ROUTES

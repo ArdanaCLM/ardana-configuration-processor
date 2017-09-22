@@ -1,0 +1,10 @@
+#   cloud-cplite-2.0          WRN: Servers deleted from input model
+The following server allocations are persisted but not used:
+         server5 (control plane:control-plane-1 cluster:res1 member:2)
+         server2 (control plane:control-plane-1 cluster:cluster1 member:2)
+    To free these allocations rerun the config processor playbook with '-e remove_deleted_servers=True'.  If running the config processor direct from the command line use '--remove_deleted_servers'
+#   cloud-cplite-2.0          WRN: Unused persisted address allocations
+The following address allocations are persisted but not used:
+         192.168.10.4 (NET - server server-persistance-cp1-c1-m2)
+         192.168.10.7 (NET - server server-persistance-cp1-r10002)
+    To free these addresses rerun the config processor playbook with '-e free_unused_addresses=True'.  If running the config processor direct from the command line use '--free_unused_addresses'

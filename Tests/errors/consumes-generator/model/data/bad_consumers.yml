@@ -1,0 +1,153 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  regions:
+    - name: region2
+      includes:
+        - control-plane: control-plane-2
+          services:
+            - all
+        - control-plane: control-plane-3
+          services:
+            - all
+
+    - name: region3
+      includes:
+        - control-plane: control-plane-2
+          services:
+            - all
+        - control-plane: control-plane-4
+          services:
+            - all
+
+
+  control-planes:
+    - name: control-plane-2
+      control-plane-prefix: cp2
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - lifecycle-manager
+      load-balancers:
+        - name: lb
+          provider: ip-cluster
+          components:
+            - default
+          roles:
+            - internal
+            - admin
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ip-cluster
+            - mysql
+            - lifecycle-manager-target
+            - no-multi-consume
+            - consumer1-only
+            - block-consumer2
+
+    - name: control-plane-3
+      control-plane-prefix: cp3
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - lifecycle-manager
+        - from: control-plane-2
+          service-components:
+            - any
+      load-balancers:
+        - name: lb
+          provider: ip-cluster
+          components:
+            - default
+          roles:
+            - internal
+            - admin
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ip-cluster
+            - mysql
+            - lifecycle-manager-target
+            - consumer1_comp
+            - consumer2_comp
+
+    - name: control-plane-4
+      control-plane-prefix: cp4
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - lifecycle-manager
+        - from: control-plane-2
+          service-components:
+            - any
+      load-balancers:
+        - name: lb
+          provider: ip-cluster
+          components:
+            - default
+          roles:
+            - internal
+            - admin
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ip-cluster
+            - mysql
+            - lifecycle-manager-target
+            - consumer1_comp
+            - consumer2_comp
+
+  servers:
+    - id: server2
+      ip-addr: 192.168.10.4
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server3
+      ip-addr: 192.168.10.5
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server4
+      ip-addr: 192.168.10.6
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING

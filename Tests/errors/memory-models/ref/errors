@@ -1,0 +1,8 @@
+#   memory-model-2.0          ERR: memory model DUPLICATE-MODEL is defined more than once.
+#   memory-model-2.0          ERR: Numa node '0' defined multiple times for page size '2M' in memory model 'DUP-NUMA-PAGE-SIZE'.
+#   memory-model-2.0          ERR: Page size '8M' defined multiple times in memory model 'DUP-NON-NUMA-PAGE-SIZE'.
+#   memory-model-2.0          ERR: Page size 'XX' in memory model 'INVALID-PAGE-SIZE' is not valid.
+#   memory-model-2.0          ERR: Page size '100X' in memory model 'INVALID-PAGE-SIZE' is not valid.
+#   memory-model-2.0          ERR: Page count '0' in memory model 'INVALID-PAGE-COUNT' is not valid.
+#   memory-model-2.0          ERR: Default huge page size '4M' in memory model 'INVALID-DEAFULT-HUGE-PAGE-SIZE' does not match any of the non-numa page sizes.
+#   memory-model-2.0          ERR: Ram '6x' in vm-size in memory model 'VM-MEMORY-MODEL' is not valid

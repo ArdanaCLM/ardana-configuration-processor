@@ -1,0 +1,2 @@
+#   cloudconfig-2.0           WRN: Unknown service 'not-a-service' in audit-settings.enabled-services
+#   cloudconfig-2.0           WRN: Unknown service 'still-not-a-service' in audit-settings.disabled-services

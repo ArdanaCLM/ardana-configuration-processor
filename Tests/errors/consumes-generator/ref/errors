@@ -1,0 +1,3 @@
+#   consumes-generator-2.0    ERR: Component 'consumer1-only' in control plane 'control-plane-2' is consumed by more than one instance of 'consumer2_comp' from the following control planes:  'control-plane-3', 'control-plane-4'
+#   consumes-generator-2.0    ERR: Component 'no-multi-consume' in control plane 'control-plane-2' is consumed by more than one instance of 'consumer1_comp' from the following control planes:  'control-plane-3', 'control-plane-4'
+#   consumes-generator-2.0    ERR: Component 'block-consumer2' in control plane 'control-plane-2' is consumed by more than one instance of 'consumer2_comp' from the following control planes:  'control-plane-3', 'control-plane-4'

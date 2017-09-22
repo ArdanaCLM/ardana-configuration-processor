@@ -1,0 +1,1 @@
+#   vm-factory-2.0            ERR: Server 'vm' which is to be a vm and which has a nic-mapping does not have its ansible network assigned to the entry with the lowest pci-address in its nic-mapping 'NIC-MAPPING-ANSIBLE-NOT-LOWEST'

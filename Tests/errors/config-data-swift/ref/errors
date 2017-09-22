@@ -1,0 +1,13 @@
+#   config-data-2.0           ERR: Using both ring-specifications and Swift configuration data - please remove the ring-specifications
+#   config-data-2.0           ERR: No 'control_plane_rings' specified
+#   config-data-2.0           ERR:
+
+Input
+    {}
+
+Could not be validated - list of errors:
+    Index of error:
+        Erroneous value:     {}
+        Expected type:       ['rings']
+
+#   config-data-2.0           ERR: Swift configuration data element 'INVALID-SCHEMA' is not valid

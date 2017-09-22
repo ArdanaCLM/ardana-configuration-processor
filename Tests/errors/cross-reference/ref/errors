@@ -1,0 +1,21 @@
+#   cross-reference-2.0       ERR: Failure zone NOT-A-ZONE referenced in control-plane-2 is not defined as a server group
+#   cross-reference-2.0       ERR: Server role NOT-A-SERVER-ROLE referenced in control-plane-2:cluster1 is not defined
+#   cross-reference-2.0       ERR: Failure zone STILL-NOT-A-ZONE referenced in control-plane-2:cluster1 is not defined as a server group
+#   cross-reference-2.0       ERR: Server role ALSO-NOT-A-SERVER-ROLE referenced in control-plane-2:cluster1 is not defined
+#   cross-reference-2.0       ERR: Failure zone ALSO-NOT-A-ZONE referenced in control-plane-2:cluster1 is not defined as a server group
+#   cross-reference-2.0       ERR: Network group NOT-A-NET-GROUP used by interface hed1 in interface model BAD-SERVER-INTERFACES is not defined
+#   cross-reference-2.0       ERR: Network group ALSO-NOT-A-NET-GROUP used by interface hed1 in interface model BAD-SERVER-INTERFACES is not defined
+#   cross-reference-2.0       ERR: Network group STILL-NOT-A-NET-GROUP used by interface hed1 in interface model BAD-SERVER-INTERFACES is not defined
+#   cross-reference-2.0       ERR: Neutron provider network 'NET-GROUP' in configuration-data 'BAD-NEUTRON-CONFIG' has the same name as a network group.
+#   cross-reference-2.0       ERR: Network group BAD-NET-GROUP route NOT-A-NETGROUP is not a valid network group.
+#   cross-reference-2.0       ERR: No route defined to the following neutron provider networks: 'NEUTRON-NET'
+#   cross-reference-2.0       ERR: Network group BAD-NET-GROUP contains a load balancer and is not associated with any interface model.
+#   cross-reference-2.0       ERR: Network group BAD-NET-GROUP does not have any networks
+#   cross-reference-2.0       ERR: Invalid Server id not-a-server with passthrough data:  {}
+#   cross-reference-2.0       ERR: Server server2 is not a member of a server-group
+#   cross-reference-2.0       ERR: Server group NOT-A-GROUP referenced by server group GROUP1 is not defined
+#   cross-reference-2.0       ERR: Server group CLOUD is included in more than one server group.
+#   cross-reference-2.0       ERR: Network NOT-A-NETWORK referenced by server group GROUP2 is not defined
+#   cross-reference-2.0       ERR: Server group GROUP2 includes more than one network from network group NET-GROUP.
+#   cross-reference-2.0       ERR: Firewall rule set NO-GROUP: Must specify at least one network group
+#   cross-reference-2.0       ERR: Invalid network group name NOT-A-GROUP in firewall rule set INVALID-GROUP.

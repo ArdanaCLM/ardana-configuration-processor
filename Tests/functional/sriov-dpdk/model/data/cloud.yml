@@ -1,0 +1,244 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  control-planes:
+    - name: control-plane-1
+      control-plane-prefix: cp1
+      region-name: region1
+      failure-zones:
+        - CLOUD
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - lifecycle-manager
+            - lifecycle-manager-target
+            - ip-cluster
+            - mysql
+            - rabbitmq
+            - keystone-api
+            - openvswitch
+
+  disk-models:
+  - name: SERVER-DISKS
+    volume-groups:
+      - name: ardana-vg
+        physical-volumes:
+          - /dev/sda_root
+        logical-volumes:
+          - name: root
+            size: 10%
+            fstype: ext4
+            mount: /
+
+  interface-models:
+    - name: SERVER-INTERFACES
+
+      dpdk-devices:
+      - components:
+          - openvswitch
+        devices:
+          - name: hed14
+          - name: hed15
+            driver: igb_uio
+        eal-options:
+          - name: socket-mem
+            value: 1,1024
+          - name: n
+            value: 2
+        component-options:
+          - name: n-dpdk-rxqs
+            value: 64
+
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP
+
+        - name: SRIOV-ONLY-IF
+          device:
+              name: hed10
+              vf-count: 6
+              sriov-only: true
+          forced-network-groups:
+            - SRIOV-ONLY
+
+        - name: SRIOV-IF
+          device:
+              name: hed11
+              vf-count: 6
+          forced-network-groups:
+            - SRIOV
+
+        - name: PCIPT-IF
+          device:
+              name: hed12
+              pci-pt: true
+          forced-network-groups:
+            - PCIPT
+
+        - name: SRIOV-PCIPT-IF
+          device:
+              name: hed13
+              pci-pt: true
+              vf-count: 4
+          forced-network-groups:
+            - SRIOV-PCIPT
+
+        - name: DPDK1-IF
+          device:
+              name: hed14
+          forced-network-groups:
+            - DPDK1
+
+        - name: DPDK2-IF
+          device:
+              name: hed15
+          forced-network-groups:
+            - DPDK2
+
+  network-groups:
+    - name: NET-GROUP
+      hostname-suffix: net
+      hostname: true
+      component-endpoints:
+        - default
+      load-balancers:
+        - provider: ip-cluster
+          name: lbext
+          components:
+            - default
+          roles:
+            - public
+        - provider: ip-cluster
+          name: lb
+          components:
+            - default
+          roles:
+            - internal
+            - admin
+    - name: SRIOV-ONLY
+      hostname-suffix: sriovonly
+    - name: SRIOV
+      hostname-suffix: sriov
+    - name: PCIPT
+      hostname-suffix: pcipt
+    - name: SRIOV-PCIPT
+      hostname-suffix: sriov
+    - name: DPDK1
+      hostname-suffix: dpdk1
+    - name: DPDK2
+      hostname-suffix: dpdk2
+
+
+  networks:
+    - name: NET
+      tagged-vlan: false
+      cidr: 192.168.10.0/24
+      gateway-ip: 192.168.10.1
+      network-group: NET-GROUP
+    - name: SRIOV-ONLY-NET
+      network-group: SRIOV-ONLY
+      tagged-vlan: false
+    - name: SRIOV-NET
+      network-group: SRIOV
+      tagged-vlan: false
+    - name: PCIPT-NET
+      network-group: PCIPT
+      tagged-vlan: false
+    - name: SRIOV-PCIPT-NET
+      network-group: SRIOV-PCIPT
+      tagged-vlan: false
+    - name: DPDK1-NET
+      network-group: DPDK1
+      tagged-vlan: false
+    - name: DPDK2-NET
+      network-group: DPDK2
+      tagged-vlan: false
+
+
+  nic-mappings:
+    - name: NIC-MAPPING
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:07:00.0"
+
+        - logical-name: hed10
+          type: simple-port
+          bus-address: "0000:10:00.0"
+          nic-device-type: '8086:10fb'
+
+        - logical-name: hed11
+          type: simple-port
+          bus-address: "0000:11:00.0"
+          nic-device-type: '8086:10fb'
+
+        - logical-name: hed12
+          type: simple-port
+          bus-address: "0000:12:00.0"
+          nic-device-type: '8086:10fb'
+
+        - logical-name: hed13
+          type: simple-port
+          bus-address: "0000:13:00.0"
+          nic-device-type: '8086:10fb'
+
+        - logical-name: hed14
+          type: multi-port
+          bus-address: "0000:14:00"
+          port-attributes:
+              port-num: 0
+
+        - logical-name: hed15
+          type: multi-port
+          bus-address: "0000:14:00"
+          port-attributes:
+              port-num: 1
+
+
+  server-groups:
+    - name: CLOUD
+      networks:
+        - NET
+        - SRIOV-ONLY-NET
+        - SRIOV-NET
+        - PCIPT-NET
+        - SRIOV-PCIPT-NET
+        - DPDK1-NET
+        - DPDK2-NET
+
+  server-roles:
+    - name: SERVER-ROLE
+      interface-model: SERVER-INTERFACES
+      disk-model: SERVER-DISKS
+
+  servers:
+    - id: server1
+      ip-addr: 192.168.10.3
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING

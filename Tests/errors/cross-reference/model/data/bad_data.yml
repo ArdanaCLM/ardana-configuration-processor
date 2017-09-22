@@ -1,0 +1,230 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  regions:
+    - name: region2
+      includes:
+        - control-plane: control-plane-2
+          services:
+            - all
+
+  control-planes:
+    - name: control-plane-2
+      control-plane-prefix: cp2
+      failure-zones:
+        - NOT-A-ZONE
+      uses:
+        - from: control-plane-1
+          service-components:
+            - any
+      configuration-data:
+        - BAD-NEUTRON-CONFIG
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          failure-zones:
+            - STILL-NOT-A-ZONE
+          server-role: NOT-A-SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+      resources:
+        - name: res1
+          resource-prefix: r1
+          failure-zones:
+            - ALSO-NOT-A-ZONE
+          server-role: ALSO-NOT-A-SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager-target
+            - neutron-openvswitch-agent
+
+  interface-models:
+    - name: BAD-SERVER-INTERFACES
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NOT-A-NET-GROUP
+          forced-network-groups:
+            - ALSO-NOT-A-NET-GROUP
+          passthrough-network-groups:
+            - STILL-NOT-A-NET-GROUP
+
+  services:
+    - name: dummy
+      mnemonic: DUMMY
+
+  service-components:
+    - name: dummy-component
+      mnemonic: DUMMY-X
+      service: dummy
+
+  network-groups:
+    - name: BAD-NET-GROUP
+      hostname-suffix: net
+      routes:
+        - NOT-A-NETGROUP
+        - BAD-NET-GROUP
+      component-endpoints:
+        - dummy-component
+      load-balancers:
+        - lb2
+
+  networks:
+    - name: NET-2
+      tagged-vlan: false
+      cidr: 10.0.0.0/24
+      gateway-ip: 10.0.0.1
+      network-group: NET-GROUP
+    - name: NET-3
+      tagged-vlan: false
+      cidr: 11.0.0.0/24
+      gateway-ip: 11.0.0.1
+      network-group: NET-GROUP
+
+  configuration-data:
+    - name:  BAD-NEUTRON-CONFIG
+      services:
+        - neutron
+      data:
+        neutron_provider_networks:
+        - name: NET-GROUP
+          provider:
+            - network_type: vlan
+              physical_network: physnet1
+              segmentation_id: 106
+          cidr: 172.30.1.0/24
+          no_gateway:  True
+          enable_dhcp: True
+          host_routes:
+            # route to MANAGEMENT-NET
+            - destination: 192.168.10.0/24
+              nexthop:  172.30.1.1
+
+        - name: NEUTRON-NET
+          provider:
+            - network_type: vlan
+              physical_network: physnet2
+              segmentation_id: 107
+          cidr: 39.0.0.0/24
+
+  pass-through:
+    - servers:
+        - id: not-a-server
+          data: {}
+
+  server-groups:
+    - name: GROUP1
+      server-groups:
+        - NOT-A-GROUP
+        - CLOUD
+    - name: GROUP2
+      server-groups:
+        - CLOUD
+      networks:
+        - NOT-A-NETWORK
+        - NET-2
+        - NET-3
+
+  servers:
+    - id: server2
+      ip-addr: 192.168.10.4
+      role: SERVER-ROLE
+      nic-mapping: NIC-MAPPING
+
+  firewall-rules:
+    - name: NO-GROUP
+      rules:
+      - type: allow
+        remote-ip-prefix: 12.0.0.0/0
+    - name: INVALID-GROUP
+      network-groups:
+        - NOT-A-GROUP
+      rules:
+      - type: allow
+        remote-ip-prefix: 12.0.0.0/0
+
+
+
+#  disk-models:
+#  - name: SERVER-DISKS
+#    volume-groups:
+#      - name: ardana-vg
+#        physical-volumes:
+#          - /dev/sda_root
+#        logical-volumes:
+#          - name: root
+#            size: 10%
+#            fstype: ext4
+#            mount: /
+#
+#  interface-models:
+#    - name: SERVER-INTERFACES
+#      network-interfaces:
+#        - name: hed1
+#          device:
+#              name: hed1
+#          network-groups:
+#            - NET-GROUP
+#
+#  network-groups:
+#    - name: NET-GROUP
+#      hostname-suffix: net
+#      hostname: true
+#      component-endpoints:
+#        - default
+#      load-balancers:
+#        - lbext
+#        - lb
+#
+#  networks:
+#    - name: NET
+#      tagged-vlan: false
+#      cidr: 192.168.10.0/24
+#      gateway-ip: 192.168.10.1
+#      network-group: NET-GROUP
+#
+#  nic-mappings:
+#    - name: NIC-MAPPING
+#      physical-ports:
+#        - logical-name: hed1
+#          type: simple-port
+#          bus-address: "0000:07:00.0"
+#
+#  server-groups:
+#    - name: CLOUD
+#      networks:
+#        - NET
+#
+#  server-roles:
+#    - name: SERVER-ROLE
+#      interface-model: SERVER-INTERFACES
+#      disk-model: SERVER-DISKS
+#
+#  servers:
+#    - id: server1
+#      ip-addr: 192.168.10.3
+#      role: SERVER-ROLE
+#      server-group: CLOUD
+#      nic-mapping: NIC-MAPPING

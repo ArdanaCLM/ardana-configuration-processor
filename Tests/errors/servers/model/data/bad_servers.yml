@@ -1,0 +1,289 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  interface-models:
+    - name: BAD-NET-DEVICE
+      network-interfaces:
+        - name: bad-device
+          device:
+            name: bad-device
+          network-groups:
+            - NET-GROUP
+
+    - name: BAD-VF-COUNT
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+            vf-count: 10
+          network-groups:
+            - NET-GROUP
+
+    - name: VF-COUNT-TOO-HIGH
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+            vf-count: 100
+          network-groups:
+            - NET-GROUP
+
+    - name: UNEQUAL-VF-COUNTS
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+            vf-count: 50
+          network-groups:
+            - NET-GROUP
+        - name: hed2
+          device:
+            name: hed2
+            vf-count: 60
+          network-groups:
+            - SECOND-NET-GROUP
+
+    - name: BAD-MULTI-PORT-PCIPT
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+            pci-pt: True
+          network-groups:
+            - NET-GROUP
+        - name: hed2
+          device:
+            name: hed2
+          network-groups:
+            - SECOND-NET-GROUP
+
+    - name: PCI-PASSTHROUGH
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+            pci-pt: True
+          network-groups:
+            - NET-GROUP
+
+    - name: SRIOV
+      network-interfaces:
+        - name: hed1
+          device:
+            name: hed1
+            vf-count: 10
+          network-groups:
+            - NET-GROUP
+
+  server-roles:
+    - name: BAD-NET-DEVICE
+      interface-model: BAD-NET-DEVICE
+      disk-model: SERVER-DISKS
+
+    - name: BAD-VF-COUNT
+      interface-model: BAD-VF-COUNT
+      disk-model: SERVER-DISKS
+
+    - name: VF-COUNT-TOO-HIGH
+      interface-model: VF-COUNT-TOO-HIGH
+      disk-model: SERVER-DISKS
+
+    - name: UNEQUAL-VF-COUNTS
+      interface-model: UNEQUAL-VF-COUNTS
+      disk-model: SERVER-DISKS
+
+    - name: BAD-MULTI-PORT-PCIPT
+      interface-model: BAD-MULTI-PORT-PCIPT
+      disk-model: SERVER-DISKS
+
+    - name: MISSING-NIC-DEV-PCI
+      interface-model: PCI-PASSTHROUGH
+      disk-model: SERVER-DISKS
+
+    - name: MISSING-NIC-DEV-SRIOV
+      interface-model: SRIOV
+      disk-model: SERVER-DISKS
+
+  nic-mappings:
+    - name: SIMPLE-PORT-NO-NIC-DEV
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:05:00.0"
+
+    - name: SIMPLE-PORT-TYPE
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:05:00.0"
+          nic-device-type: "8086:10fb"
+
+    - name: TWO-PORT
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:05:00.0"
+          nic-device-type: TEST-TYPE
+        - logical-name: hed2
+          type: simple-port
+          bus-address: "0000:06:00.0"
+          nic-device-type: TEST-TYPE
+
+    - name: MULTI-PORT
+      physical-ports:
+        - logical-name: hed1
+          type: multi-port
+          bus-address: "0000:05:00"
+          nic-device-type: MULTI-PORT-TYPE
+          port-attributes:
+            port-num: 0
+        - logical-name: hed2
+          type: multi-port
+          bus-address: "0000:05:00"
+          nic-device-type: MULTI-PORT-TYPE
+          port-attributes:
+            port-num: 1
+
+  nic-device-types:
+    - name: TEST-TYPE
+      family: TEST-FAMILY
+      device-id: "2222"
+      type: simple-port
+
+    - name: MULTI-PORT-TYPE
+      family: TEST-FAMILY
+      device-id: "3333"
+      type: multi-port
+
+  nic-device-families:
+    - name: TEST-FAMILY
+      vendor-id: "0x20cc"
+      vf-count-type: driver
+      driver: "ixgbe"
+      config-script: my_config.sh
+
+  servers:
+    - id: server-bad-nic-mapping
+      ip-addr: 192.168.10.4
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: BAD-NIC-MAPPING
+
+    - id: server-bad-server-role
+      ip-addr: 192.168.10.5
+      role: BAD-SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server-duplicate-id
+      ip-addr: 192.168.10.6
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server-duplicate-id
+      ip-addr: 192.168.10.7
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server-bad-ip-addr
+      ip-addr: xxx.168.10.7
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server-bad-mac-addr
+      ip-addr: 192.168.10.8
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+      mac-addr: "xxxx.xx.x"
+
+    - id: server-bad-server-group
+      ip-addr: 192.168.10.9
+      role: SERVER-ROLE
+      server-group: NOT-A-GROUP
+      nic-mapping: NIC-MAPPING
+
+    - id: server-bad-net-device
+      ip-addr: 192.168.10.10
+      role: BAD-NET-DEVICE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server-no-nic-mapping
+      ip-addr: 192.168.10.11
+      role: SERVER-ROLE
+      server-group: CLOUD
+
+    - id: server-bad-vf-count
+      ip-addr: 192.168.10.12
+      role: BAD-VF-COUNT
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server-bad-vf-count
+      ip-addr: 192.168.10.12
+      role: BAD-VF-COUNT
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server-vf-count-too-high
+      ip-addr: 192.168.10.12
+      role: VF-COUNT-TOO-HIGH
+      server-group: CLOUD
+      nic-mapping: SIMPLE-PORT-TYPE
+
+    - id: server-unequal-vf-counts
+      ip-addr: 192.168.10.13
+      role: UNEQUAL-VF-COUNTS
+      server-group: CLOUD
+      nic-mapping: TWO-PORT
+
+    - id: server-bad-multi-port-pcipt
+      ip-addr: 192.168.10.14
+      role: BAD-MULTI-PORT-PCIPT
+      server-group: CLOUD
+      nic-mapping: MULTI-PORT
+
+    - id: server-missing-nic-dev-type-pci
+      ip-addr: 192.168.10.14
+      role: MISSING-NIC-DEV-PCI
+      server-group: CLOUD
+      nic-mapping: SIMPLE-PORT-NO-NIC-DEV
+
+    - id: server-missing-nic-dev-type-sriov
+      ip-addr: 192.168.10.14
+      role: MISSING-NIC-DEV-SRIOV
+      server-group: CLOUD
+      nic-mapping: SIMPLE-PORT-NO-NIC-DEV
+
+    - id: server-invalid-ilo-address
+      ip-addr: 192.168.10.15
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+      ilo-ip: 500.0.0.2
+
+  baremetal:
+    subnet: 400.0.0.1/24
+    netmask: 300.0.0.0
+

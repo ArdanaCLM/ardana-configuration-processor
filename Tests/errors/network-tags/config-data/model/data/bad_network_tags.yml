@@ -1,0 +1,296 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  control-planes:
+    - name: control-plane-2
+      control-plane-prefix: cp2
+      configuration-data:
+        - TAGS-MISSING-PHYSNET
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - all
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - lifecycle-manager-target
+            - ip-cluster
+            - neutron-openvswitch-agent
+            - mysql
+            - rabbitmq
+      load-balancers:
+        - provider: ip-cluster
+          name: lbext
+          components:
+            - default
+          roles:
+            - public
+        - provider: ip-cluster
+          name: lb
+          components:
+            - default
+          roles:
+            - internal
+
+    - name: control-plane-3
+      control-plane-prefix: cp3
+      configuration-data:
+        - TAGS-INVALID-RANGE
+        - TAGS-INVALID-FORMAT
+        - TAGS-DUP-1
+        - TAGS-DUP-2
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - all
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - lifecycle-manager-target
+            - ip-cluster
+            - neutron-openvswitch-agent
+      load-balancers:
+        - provider: ip-cluster
+          name: lbext
+          components:
+            - default
+          roles:
+            - public
+        - provider: ip-cluster
+          name: lb
+          components:
+            - default
+          roles:
+            - internal
+
+    - name: control-plane-4
+      control-plane-prefix: cp4
+      configuration-data:
+        - TAGS-DIFFERENT-PHYSNET-1
+        - TAGS-DIFFERENT-PHYSNET-2
+        - TAGS-DIFFERENT-NETGROUP
+        - TAGS-VXLAN-PHYSNET-1
+        - TAGS-VXLAN-PHYSNET-2
+        - TAGS-NO-SCHEMA
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - all
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - lifecycle-manager-target
+            - ip-cluster
+            - neutron-openvswitch-agent
+      load-balancers:
+        - provider: ip-cluster
+          name: lbext
+          components:
+            - default
+          roles:
+            - public
+        - provider: ip-cluster
+          name: lb
+          components:
+            - default
+          roles:
+            - internal
+
+  servers:
+    - id: server2
+      ip-addr: 192.168.10.4
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+    - id: server3
+      ip-addr: 192.168.10.5
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+  regions:
+    - name: region1
+      includes:
+          - control-plane: control-plane-1
+            services:
+              - all
+          - control-plane: control-plane-2
+            services:
+              - all
+          - control-plane: control-plane-3
+            services:
+              - all
+          - control-plane: control-plane-4
+            services:
+              - all
+
+  interface-models:
+    - name: SERVER-INTERFACES-1
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP-PHYSNET-1
+            - NET-GROUP-PHYSNET-2
+            - NET-GROUP-INVALID-RANGE
+
+  network-groups:
+    - name: NET-GROUP-PHYSNET-1
+      hostname-suffix: bad1
+      routes:
+        - PROVIDER-NET
+    - name: NET-GROUP-PHYSNET-2
+      hostname-suffix: bad1
+    - name: NET-GROUP-INVALID-RANGE
+      hostname-suffix: bad3
+
+  configuration-data:
+    - name: TAGS-MISSING-PHYSNET
+      services:
+        - neutron
+      data:
+        neutron_provider_networks:
+        - name: PROVIDER-NET
+          provider:
+            - network_type: vlan
+              physical_network: physnet7
+              segmentation_id: 106
+          cidr: 172.30.1.0/24
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron.networks.vlan:
+                not-a-physnet:  physnetx
+            - neutron.networks.flat:
+                not-a-physnet:  physnetx
+
+    - name:  TAGS-INVALID-RANGE
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-INVALID-RANGE
+          tags:
+            - neutron.networks.vlan:
+                provider-physical-network: physnet1
+                tenant-vlan-id-range: 20:10,35:45,40:50,1000:7000
+            - neutron.networks.vxlan:
+                tenant-vxlan-id-range: 50:40,135:145,140:150,200:20000000
+
+    - name: TAGS-DUP-1
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron.networks.flat:
+                provider-physical-network: physnet2
+
+    - name: TAGS-DUP-2
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron.networks.flat:
+                provider-physical-network: physnet2
+
+    - name: TAGS-INVALID-FORMAT
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron,networks.vxlan:
+                tenaant_vxlan_id_range: 40-50
+              neutron.networks.flat:
+                provider-physical-network: physnet1
+
+    - name: TAGS-DIFFERENT-PHYSNET-1
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron.networks.flat:
+                provider-physical-network: physnet1
+
+    - name: TAGS-DIFFERENT-PHYSNET-2
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron.networks.vlan:
+                provider-physical-network: physnet2
+
+    - name: TAGS-DIFFERENT-NETGROUP
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-2
+          tags:
+            - neutron.networks.vlan:
+                provider-physical-network: physnet2
+
+    - name: TAGS-VXLAN-PHYSNET-1
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron.networks.vxlan
+
+    - name: TAGS-VXLAN-PHYSNET-2
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-2
+          tags:
+            - neutron.networks.vxlan
+
+    - name: TAGS-NO-SCHEMA
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - no.schema.for.tag

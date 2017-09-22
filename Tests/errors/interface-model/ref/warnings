@@ -1,0 +1,3 @@
+#   interface-models-2.0      WRN: Network interface 'mixed-mtU' in 'MIXED_MTU' has network groups with a specified MTU (EXPLICIT-MTU) and network groups with an unspecified MTU (IMPLICIT-MTU). Network groups with an unspecified MTU will be set to the default 1500. Please explicitly set an MTU for these network groups to remove this warning.
+#   interface-models-2.0      WRN: Network interface 'openvswitch-with-primary' in 'BAD-BOND-OPTIONS' specifies provider: 'openvswitch' and bond-primary: 'hed5', bond-primary: is not supported by provider, ignoring
+#   interface-models-2.0      WRN: Network interface 'missing-provider' is a bond but has not specified 'provider' as one of its options.  Assuming 'linux' by default.

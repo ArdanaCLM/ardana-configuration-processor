@@ -1,0 +1,408 @@
+#
+# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+title: Service Components
+type: object
+properties:
+  product:
+    properties:
+      version:
+        type: integer
+    type: object
+
+  service-components:
+    type: array
+    items:
+      type: object
+      additionalProperties: False
+      required:
+        - name
+        - mnemonic
+      properties:
+        name:
+          type: string
+        mnemonic:
+          type: string
+        service:
+          type: string
+        aliases:
+           type: array
+           items:
+             type: string
+        hidden:
+          type: boolean
+        advertise-member-list:
+          type: boolean
+        advertises_global:
+          type: boolean
+        global-vars:
+          type: array
+          items:
+            type: string
+        must-be-on-a-server:
+          type: boolean
+        must-be-on-all-servers:
+          type: boolean
+        must-be-on-server-network:
+          type: boolean
+        can-run-on-a-vm:
+          type: boolean
+        can-only-have-one-instance:
+          type: boolean
+        needs-ip:
+          type: boolean
+        needs-cluster-ip:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        multi-consumers:
+          type: object
+          additionalProperties: False
+          required:
+            - default
+          properties:
+            default:
+              enum:
+                - allow
+                - block
+            allowed:
+              type: array
+              items:
+                type: string
+            blocked:
+              type: array
+              items:
+                type: string
+        supported-resource-allocations:
+          type: object
+          additionalProperties: False
+          properties:
+            cpu:
+              type: boolean
+            cpu-roles:
+              type: array
+              items:
+                type: string
+        zone-type:
+          type: string
+        network-tags:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - name
+            properties:
+              name:
+                type: string
+              required:
+                type: string
+              expected:
+                type: string
+              needs-bridge:
+                type: boolean
+              needs-value:
+                type: boolean
+              bridge-provider:
+                type: string
+              deprecated:
+                type: string
+              endpoints:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - port
+                    - roles
+                  port:
+                    type:
+                      - string
+                      - integer
+                  roles:
+                     type: array
+                     items:
+                       type: string
+        auto-network-tags:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - name
+            properties:
+              name:
+                type: string
+              needs-bridge:
+                type: boolean
+              needs-value:
+                type: boolean
+        provides-data:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - to
+              - data
+            properties:
+              to:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+              data:
+                type:
+                  - object
+                  - string
+                  - array
+                  - boolean
+              per-cluster:
+                type: boolean
+        config-set:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - ansible-vars
+            properties:
+              name:
+                type: string
+              ansible-vars:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: False
+                  required:
+                    - name
+                    - value
+                  properties:
+                    name:
+                      type: string
+                    immutable:
+                      type:
+                        - boolean
+                        # Should tidy up and make boolean only
+                        - string
+                    value:
+                      type:
+                        - string
+                        - integer
+                        - boolean
+                    properties:
+                      type: object
+                      additionalProperties: False
+                      properties:
+                        max-length:
+                          type: integer
+                        min-length:
+                          type: integer
+                        available-chars:
+                          type: string
+                        start-value:
+                          type: integer
+                        length:
+                          type: integer
+                        comment:
+                          type: string
+        consumes-services:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - service-name
+            properties:
+              service-name:
+                type: string
+              optional:
+                type: boolean
+              needs-host-dimensions:
+                type: boolean
+              scope:
+                enum:
+                  - cloud
+                  - control-plane
+              relationship-vars:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: False
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                    value:
+                      type:
+                        - string
+                        - integer
+                        - boolean
+                    immutable:
+                      type:
+                        - boolean
+                        # Should tidy up and make boolean only
+                        - string
+                    properties:
+                      type: object
+                      properties:
+                        max-length:
+                          type: integer
+                        min-length:
+                          type: integer
+                        start-value:
+                          type: integer
+                    vars:
+                      type: object
+        requires:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - name
+              - scope
+            properties:
+              name:
+                type: string
+              scope:
+                enum:
+                  - host
+        conflicts:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - name
+              - scope
+            properties:
+              name:
+                type: string
+              scope:
+                enum:
+                  - host
+        advertises-to-services:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - service-name
+            properties:
+              service-name:
+                type: string
+              entries:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: False
+                  required:
+                    - service-description
+                    - service-name
+                    - service-type
+                  properties:
+                    service-description:
+                      type: string
+                    service-name:
+                      type: string
+                    service-type:
+                      type: string
+                    url-suffix:
+                      type: string
+        relationship-vars-schema:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - name
+              - vars
+            properties:
+              name:
+                type: string
+              vars:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                    default:
+                      type:
+                        - string
+                        - array
+                        - object
+                        - boolean
+        endpoints:
+          type: array
+          items:
+            type: object
+            additionalProperties: False
+            required:
+              - port
+              - roles
+            properties:
+              port:
+                type:
+                  - integer
+                  - string
+              tls-port:
+                type: integer
+              vip-port:
+                type: integer
+              vip-tls-port:
+                type:
+                  - integer
+                  - string
+              protocol:
+                enum:
+                  - tcp
+                  - udp
+                  - icmp
+              roles:
+                type: array
+                items:
+                  type: string
+              list-members:
+                type: boolean
+              tls-terminator:
+                type: boolean
+              has-vip:
+                type: boolean
+              vip-options:
+                type: array
+                items:
+                  type: string
+              vip-tls-terminator:
+                type: boolean
+              vip-backup-mode:
+                type: boolean
+              vip-check:
+                type: string
+
+required:
+- product
+- service-components
+

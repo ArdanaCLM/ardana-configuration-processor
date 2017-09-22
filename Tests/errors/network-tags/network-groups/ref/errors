@@ -1,0 +1,27 @@
+#   network-tag-generator-2.0 ERR: Network Group 'INVALID-FORMAT': network tag '{'neutron.networks.vlan': {'provider-physical-network': 'physnet1', 'tenant-vlan-id-range': '50:40,35:45,1000:7000'}, 'neutron.networks.vxlan': {'tenant-vxlan-id-range': '150:140,135:145,200:20000000'}}' is an invalid format.
+#   network-tag-generator-2.0 ERR: network tag 'neutron.networks.flat' is defined more that once for network group 'MULTIPLE-FLAT'
+    Network Group 'MULTIPLE-FLAT'
+    Network Group 'MULTIPLE-FLAT'
+
+#   network-tag-generator-2.0 ERR: Network Group 'MISSING-PHYSNET-1': network tag 'neutron.networks.vlan' is missing the required attribute 'provider-physical-network'
+#   network-tag-generator-2.0 ERR: Network Group 'MISSING-PHYSNET-1': network tag 'neutron.networks.flat' is missing the required attribute 'provider-physical-network'
+#   network-tag-generator-2.0 ERR: Network Group 'INVALID-RANGE': neutron.networks.vlan '50:40' is an invalid range.
+#   network-tag-generator-2.0 ERR: Network Group 'INVALID-RANGE': neutron.networks.vlan '1000:7000' is an invalid range. Please specify ranges within [1:4094]
+#   network-tag-generator-2.0 ERR: Network Group 'INVALID-RANGE': neutron.networks.vlan ID range '35:45' overlaps with '40:50'
+#   network-tag-generator-2.0 ERR: Network Group 'INVALID-RANGE': neutron.networks.vxlan '150:140' is an invalid range.
+#   network-tag-generator-2.0 ERR: Network Group 'INVALID-RANGE': neutron.networks.vxlan '200:20000000' is an invalid range. Please specify ranges within [0:16777215]
+#   network-tag-generator-2.0 ERR: Network Group 'INVALID-RANGE': neutron.networks.vxlan ID range '135:145' overlaps with '140:150'
+#   network-tag-generator-2.0 ERR: Multiple values of provider-physical-network defined for network group 'DIFFERENT-PHYSNET':
+   'physnet2' defined by Network Group 'DIFFERENT-PHYSNET'
+   'physnet1' defined by Network Group 'DIFFERENT-PHYSNET'
+
+#   network-tag-generator-2.0 ERR: provider-physical-network 'physnet1' is defined for more than one network group':
+   'INVALID-RANGE' defined by Network Group 'INVALID-RANGE'
+   'MULTIPLE-FLAT' defined by Network Group 'MULTIPLE-FLAT'
+   'DIFFERENT-PHYSNET' defined by Network Group 'DIFFERENT-PHYSNET'
+
+#   network-tag-generator-2.0 ERR: 'physnet7' used by provider network 'PROVIDER-NET' defined in configuration-data 'TAGS-MISSING-PHYSNET' is not defined by a network tag in control plane 'control-plane-2'
+#   network-tag-generator-2.0 ERR: Network tag 'neutron.networks.vxlan' is defined on more than network group in the following context:
+    INVALID-RANGE: Network Group 'INVALID-RANGE'
+    SECOND-VXLAN: Network Group 'SECOND-VXLAN'
+

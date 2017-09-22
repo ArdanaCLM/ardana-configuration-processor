@@ -1,0 +1,17 @@
+#   config-data-2.0           ERR: Provider Network BAD-NETWORK-DETAILS: Gateway IP address '172.40.1.1' is not in cidr range 172.30.1.0/24 (172.30.1.1 - 172.30.1.254)
+#   config-data-2.0           ERR: Provider Network BAD-NETWORK-DETAILS allocation pool: IP address '172.40.1.10' is not in cidr range 172.30.1.0/24 (172.30.1.1 - 172.30.1.254)
+#   config-data-2.0           ERR: Provider Network BAD-NETWORK-DETAILS allocation pool: IP address '172.40.1.250' is not in cidr range 172.30.1.0/24 (172.30.1.1 - 172.30.1.254)
+#   config-data-2.0           ERR: Provider network BAD-NETWORK-DETAILS host_routes: destination '198.168.10.0/24' is not defined as a Network in the input model. Add 'external: True' to this host_route if this is for an external network.
+#   config-data-2.0           ERR: Provider Network BAD-CONFIG-DATA: 'not-a-type' is not a valid network type. It must be one of ['vlan', 'flat', 'local']
+#   config-data-2.0           ERR: Provider Network BAD-CONFIG-DATA: 'not-a-gateway-cidr' is not a valid CIDR.
+#   config-data-2.0           ERR: Provider Network BAD-CONFIG-DATA gateway-ip: 'not-an-gateway-address' is not a valid IP address.
+#   config-data-2.0           ERR: Provider Network BAD-CONFIG-DATA allocation pool: 'not-a-start-address' is not a valid IP address.
+#   config-data-2.0           ERR: Provider Network BAD-CONFIG-DATA allocation pool: 'not-an-end-address' is not a valid IP address.
+#   config-data-2.0           ERR: Provider Network BAD-CONFIG-DATA host_routes: 'not-a-destination-cidr' is not a valid CIDR.
+#   config-data-2.0           ERR: in configuration data 'TEST-CONFIG', network: 'name' Missing required parameter: 'provider'
+#   config-data-2.0           ERR: in configuration data 'TEST-CONFIG', network: 'name' Missing required parameter: 'cidr'
+#   config-data-2.0           ERR: in configuration data 'TEST-CONFIG'. The name can not be called 'name'
+#   config-data-2.0           ERR: in configuration data 'TEST-CONFIG', network: 'MISSING-SUB-VALUES' Missing 'end' which is a required parameter for 'allocation_pools'
+#   config-data-2.0           ERR: in configuration data 'TEST-CONFIG', network: 'MISSING-SUB-VALUES' Missing 'nexthop' which is a required parameter for 'host_routes'
+#   config-data-2.0           ERR: in configuration data 'TEST-CONFIG', network: 'MISSING-SUB-VALUES' Missing 'physical_network' which is a required parameter for 'provider'
+#   config-data-2.0           ERR: Error in neutron configuration data : vlan_transparent is only supported with DPDK and there are no dpdk-devices defined in the interface-models.

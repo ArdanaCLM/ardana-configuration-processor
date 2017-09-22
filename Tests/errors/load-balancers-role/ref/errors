@@ -1,0 +1,1 @@
+#   cloud-cplite-2.0          ERR: Component test-component needs a VIP for role not-a-role but there is no load-balancer providing that role.

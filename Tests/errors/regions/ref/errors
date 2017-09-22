@@ -1,0 +1,2 @@
+#   regions-2.0               ERR: Duplicate region name 'dup-region'
+#   regions-2.0               ERR: Region 'invalid-service-region': Invalid service name 'not-a-service'.

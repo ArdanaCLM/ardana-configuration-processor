@@ -1,0 +1,240 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  disk-models:
+    - name: VM-DISKS-TOO-MANY-DISKS
+      volume-groups:
+        - name: vg1
+          physical-volumes:
+            - /dev/vda_root
+            - /dev/vdb
+            - /dev/vdc
+            - /dev/vdd
+          logical-volumes:
+            - name: root
+              size: 20%
+              fstype: ext4
+              mount: /
+      device-groups:
+          - name: swift-obj
+            devices:
+              - name: /dev/vde
+              - name: /dev/vdf
+              - name: /dev/vdg
+              - name: /dev/vdh
+              - name: /dev/vdi
+              - name: /dev/vdj
+              - name: /dev/vdk
+              - name: /dev/vdl
+              - name: /dev/vdm
+              - name: /dev/vdn
+              - name: /dev/vdo
+              - name: /dev/vdp
+              - name: /dev/vdq
+              - name: /dev/vdr
+              - name: /dev/vds
+              - name: /dev/vdt
+              - name: /dev/vdu
+              - name: /dev/vdv
+              - name: /dev/vdw
+              - name: /dev/vdx
+              - name: /dev/vdy
+              - name: /dev/vdz
+              - name: /dev/vdaa
+              - name: /dev/vdab
+              - name: /dev/vdac
+              - name: /dev/vdad
+              - name: /dev/vdae
+              - name: /dev/vdaf
+              - name: /dev/vdag
+    - name: VM-DISKS-CORRECT
+      vm-size:
+        disks:
+          - name: /dev/sda_root
+            size: 1T
+      volume-groups:
+      - name: ardana-vg
+        physical-volumes:
+          - /dev/sda_root
+        logical-volumes:
+          - name: root
+            size: 10%
+            fstype: ext4
+            mount: /
+
+  interface-models:
+    - name: VM-INTERFACES-TWO-GROUPS
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP
+            - NET-GROUP1
+    - name: VM-INTERFACES-WITH-BOND
+      network-interfaces:
+        - name: BOND0
+          device:
+              name: bond0
+          bond-data:
+             options:
+                 mode: active-backup
+                 miimon: 200
+                 primary: hed1
+             provider: linux
+             devices:
+               - name: hed1
+               - name: hed2
+          network-groups:
+            - NET-GROUP
+            - NET-GROUP1
+          passthrough-network-groups:
+            - NET-GROUP
+            - NET-GROUP1
+    - name: VM-INTERFACES-ONE-GROUP
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP
+    - name: HYPERVISOR-INTERFACES-ONE-GROUP
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP
+          passthrough-network-groups:
+            - NET-GROUP
+    - name: HYPERVISOR-INTERFACES-NO-PASSTHROUGH
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP
+
+  network-groups:
+    - name: NET-GROUP1
+
+  networks:
+    - name: NET1
+      vlanid: 100
+      cidr: 192.168.20.0/24
+      gateway-ip: 192.168.20.1
+      network-group: NET-GROUP1
+
+  nic-mappings:
+    - name: NIC-MAPPING-NON-ZERO
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:07:00.1"
+        - logical-name: hed2
+          type: simple-port
+          bus-address: "0000:08:00.0"
+
+  memory-models:
+    - name: VM-NO-SIZE
+    - name: VM-SIZE
+      vm-size:
+        ram: 6G
+
+  cpu-models:
+    - name: VM-NO-SIZE
+    - name: VM-SIZE
+      vm-size:
+        vcpus: 4
+
+  server-groups:
+   - name: CLOUD1
+     networks:
+      - NET1
+
+  server-roles:
+    - name: VM-ROLE-TWO-GROUPS
+      interface-model: VM-INTERFACES-TWO-GROUPS
+      disk-model: VM-DISKS-CORRECT
+    - name: VM-ROLE-BOND-TOO-MANY-DISKS
+      interface-model: VM-INTERFACES-WITH-BOND
+      disk-model: VM-DISKS-TOO-MANY-DISKS
+      cpu-model: VM-NO-SIZE
+      memory-model: VM-NO-SIZE
+    - name: VM-ROLE-ONE-GROUP
+      interface-model: VM-INTERFACES-ONE-GROUP
+      disk-model: VM-DISKS-CORRECT
+      cpu-model: VM-SIZE
+      memory-model: VM-SIZE
+    - name: HYPERVISOR-ROLE-ONE-GROUP
+      interface-model: HYPERVISOR-INTERFACES-ONE-GROUP
+      disk-model: SERVER-DISKS
+    - name: HYPERVISOR-ROLE-NO-PASSTHROUGH
+      interface-model: HYPERVISOR-INTERFACES-NO-PASSTHROUGH
+      disk-model: SERVER-DISKS
+
+  servers:
+    - id: vm-and-hypervisor
+      ip-addr: 192.168.10.5
+      role: VM-ROLE-TWO-GROUPS
+      hypervisor-id: hypervisor
+      ardana-hypervisor: True
+      server-group: CLOUD1
+      nic-mapping: NIC-MAPPING
+    - id: vm-invalid-hypervisor
+      ip-addr: 192.168.10.6
+      role: VM-ROLE-BOND-TOO-MANY-DISKS
+      hypervisor-id: serverx
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-NON-ZERO
+    - id: vm-on-vm
+      ip-addr: 192.168.10.7
+      role: VM-ROLE-ONE-GROUP
+      hypervisor-id: vm-invalid-hypervisor
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING-NON-ZERO
+    - id: vm-different-group-to-hypervisor
+      ip-addr: 192.168.10.8
+      role: VM-ROLE-ONE-GROUP
+      hypervisor-id: hypervisor
+      server-group: CLOUD
+    - id: vm-hypervisor-not-set
+      ip-addr: 192.168.10.9
+      role: VM-ROLE-ONE-GROUP
+      hypervisor-id: hypervisor-not-set
+      server-group: CLOUD1
+      nic-mapping: NIC-MAPPING
+    - id: hypervisor-no-passthrough
+      ip-addr: 192.168.10.10
+      role: HYPERVISOR-ROLE-NO-PASSTHROUGH
+      ardana-hypervisor: True
+      server-group: CLOUD1
+      nic-mapping: NIC-MAPPING
+    - id: hypervisor
+      ip-addr: 192.168.10.11
+      role: HYPERVISOR-ROLE-ONE-GROUP
+      ardana-hypervisor: True
+      server-group: CLOUD1
+      nic-mapping: NIC-MAPPING
+    - id: hypervisor-not-set
+      ip-addr: 192.168.10.12
+      role: HYPERVISOR-ROLE-ONE-GROUP
+      server-group: CLOUD1
+      nic-mapping: NIC-MAPPING

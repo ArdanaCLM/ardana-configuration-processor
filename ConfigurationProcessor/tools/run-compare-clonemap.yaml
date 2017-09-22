@@ -1,0 +1,5 @@
+clonemap:
+ - name: 'ardana/ardana-node-configuration'
+   dest: 'config'
+ - name: 'ardana/ardana-input-model'
+   dest: 'ardana-input-model'

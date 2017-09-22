@@ -1,0 +1,2 @@
+#   firewall-rules-2.0        ERR: Firewall rule 'BAD-ADDRESS': '500.0.0.0/0' is not a valid IP address or prefix.
+#   firewall-rules-2.0        ERR: Firewall rule 'BAD-ICMP-PORT-RANGE': protocol is 'icmp', but 'port-range-min' (ICMP type) and 'port-range-max' (ICMP code) cannot be greater than 255, which is the maximum allowed ICMP type and code.

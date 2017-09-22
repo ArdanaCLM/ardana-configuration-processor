@@ -1,0 +1,1 @@
+#   advertises-generator-2.0  ERR: Region 'region2': service 'test' is included from more than one control plane: 'control-plane-2', 'control-plane-1'

@@ -1,0 +1,6 @@
+ref/errors$
+ref/warnings$
+persistent_state/
+model/cp_opts.no_state
+model/cp_opts.generated
+model/cp_opts.existing_state

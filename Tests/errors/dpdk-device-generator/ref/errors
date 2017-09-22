@@ -1,0 +1,2 @@
+#   dpdk-device-generator-2.0 ERR: Device 'hed1' on server 'interface-model-errors-cp-dpdk-c1-m1' (id: server2 role: SERVER-ROLE-DPDK) cannot be used for DPDK as it is also the interface used by the lifecycle manager.
+#   dpdk-device-generator-2.0 ERR: DPDK data for device 'hed2' on server 'interface-model-errors-cp-dpdk-c1-m1' (id: server2 role: SERVER-ROLE-DPDK) matches more than one component: 'mysql', 'ip-cluster'.

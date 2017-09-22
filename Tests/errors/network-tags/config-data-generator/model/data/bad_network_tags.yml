@@ -1,0 +1,139 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  control-planes:
+    - name: control-plane-2
+      control-plane-prefix: cp2
+      configuration-data:
+        - TAGS-NOT-NEUTRON
+        - TAGS-DUP-1
+        - TAGS-DUP-2
+        - TAGS-INVALID-FORMAT
+      failure-zones:
+        - CLOUD
+      uses:
+        - from: control-plane-1
+          service-components:
+            - all
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          configuration-data:
+            - TAGS-ON-CLUSTER
+          service-components:
+            - ntp-server
+            - lifecycle-manager-target
+            - ip-cluster
+            - neutron-openvswitch-agent
+            - glance-registry
+      load-balancers:
+        - provider: ip-cluster
+          name: lbext
+          components:
+            - default
+          roles:
+            - public
+        - provider: ip-cluster
+          name: lb
+          components:
+            - default
+          roles:
+            - internal
+
+  servers:
+    - id: server2
+      ip-addr: 192.168.10.4
+      role: SERVER-ROLE
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+  regions:
+    - name: region1
+      includes:
+          - control-plane: control-plane-1
+            services:
+              - all
+          - control-plane: control-plane-2
+            services:
+              - all
+
+  interface-models:
+    - name: SERVER-INTERFACES-1
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - NET-GROUP-PHYSNET-1
+
+  network-groups:
+    - name: NET-GROUP-PHYSNET-1
+      hostname-suffix: bad1
+
+  configuration-data:
+    - name:  TAGS-ON-CLUSTER
+      services:
+        - neutron
+      network-tags:
+        - network-group: MANAGEMENT
+          tags:
+            - neutron.networks.vxlan
+
+    - name:  TAGS-NOT-NEUTRON
+      services:
+        - glance
+      network-tags:
+        - network-group: MANAGEMENT
+          tags:
+            - neutron.networks.vxlan
+
+    - name: TAGS-DUP-1
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron,networks.vxlan
+            - neutron.networks.flat:
+                provider-physical-network: physnet1
+
+    - name: TAGS-DUP-2
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron,networks.vxlan
+            - neutron.networks.flat:
+                provider-physical-network: physnet1
+
+    - name: TAGS-INVALID-FORMAT
+      services:
+        - neutron
+      network-tags:
+        - network-group: NET-GROUP-PHYSNET-1
+          tags:
+            - neutron,networks.vxlan:
+                tenaant_vxlan_id_range: 40-50
+              neutron.networks.flat:
+                provider-physical-network: physnet1

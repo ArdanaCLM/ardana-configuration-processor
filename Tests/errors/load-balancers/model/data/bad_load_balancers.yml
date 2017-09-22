@@ -1,0 +1,158 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  network-groups:
+    - name: test-ng1
+      load-balancers:
+        - tls-lb
+        - dup-lb-1
+        - dup-lb-2
+        - lb-invalid-provider
+        - lb-missing-provider
+        - lb-invalid-role
+        - lb-no-ext-name
+        - lb-invalid-cert-format
+      routes:
+        - test-ng2
+    - name: test-ng2
+      load-balancers:
+        - dup-lb-1
+      routes:
+        - test-ng1
+
+  regions:
+    - name: region1
+      includes:
+      - control-plane: control-plane-1
+        services:
+          - all
+    - name: region2
+      includes:
+      - control-plane: bad-control-plane-1
+        services:
+          - all
+
+  control-planes:
+    - name: bad-control-plane-1
+      control-plane-prefix: cp-bad
+      uses:
+        - from: control-plane-1
+          service-components:
+            - lifecycle-manager
+      failure-zones:
+        - CLOUD
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role: SERVER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - lifecycle-manager-target
+            - ip-cluster
+            - mysql
+            - rabbitmq
+            - keystone-api
+            - nova-api
+            - glance-api
+
+      load-balancers:
+        - name: tls-lb
+          provider: ip-cluster
+          external-name:
+          components:
+            - not-a-component-lb
+            - cinder-api
+          tls-components:
+            - not-a-tls-component-lb
+          roles:
+            - some_role
+
+        - name: dup-lb-1
+          provider: ip-cluster
+          external-name: dup-ext-name
+          cert-file: dup-cert
+          components:
+            - nova-api
+            - default
+          roles:
+            - any_role
+
+        - name: dup-lb-1
+          provider: ip-cluster
+          components:
+            - keystone-api
+          roles:
+            - any_role
+
+        - name: dup-lb-2
+          provider: ip-cluster
+          external-name: dup-ext-name
+          cert-file:
+              default: dup-lb-1-cert
+              nova-api: dup-cert
+          components:
+            - nova-api
+            - default
+          roles:
+            - any_role
+
+        - name: lb-invalid-provider
+          provider: not-a-component
+          components:
+            - barbican-api
+          roles:
+            - another_role
+
+        - name: lb-missing-provider
+          provider: zookeeper
+          components:
+            - swift-proxy
+          roles:
+            - another_role
+
+        - name: lb-invalid-role
+          provider: ip-cluster
+          external-name:
+          components:
+            - nova-api
+            - default
+          roles:
+            - public
+            - another_role
+
+        - name: lb-no-net-group
+          provider: ip-cluster
+          components:
+            - glance-api
+          roles:
+            - yet_another_role
+
+        - name: lb-invalid-cert-format
+          provider: ip-cluster
+          cert-file:
+            glance_api:
+              - cert_1
+              - cert_2
+          components:
+            - glance-api
+          roles:
+            - and_another_role

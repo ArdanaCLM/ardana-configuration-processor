@@ -1,0 +1,1 @@
+#   vm-factory-2.0            WRN: Server 'vm-on-vm' which is defined to be a vm is using a set of network devices in its interface model 'VM-INTERFACES-ONE-GROUP' which isn't exactly equal to the set of devices in its nic-mapping 'NIC-MAPPING-NON-ZERO'

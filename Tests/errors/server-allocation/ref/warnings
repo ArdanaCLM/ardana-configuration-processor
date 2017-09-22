@@ -1,0 +1,12 @@
+#   cross-reference-2.0       WRN: Server server4 with role SERVER-ROLE-2 in server group AZ2 is not in scope for selection in any cluster or resource group
+#   cross-reference-2.0       WRN: Server server5 with role SERVER-ROLE-2 in server group AZ2 is not in scope for selection in any cluster or resource group
+#   cross-reference-2.0       WRN: Server server6 with role SERVER-ROLE-2 in server group AZ2 is not in scope for selection in any cluster or resource group
+#   cross-reference-2.0       WRN: Server server7 with role SERVER-ROLE-2 in server group AZ2 is not in scope for selection in any cluster or resource group
+#   cross-reference-2.0       WRN: Server server1 with role SERVER-ROLE in server group AZ2 is not in scope for selection in any cluster or resource group
+#   cross-reference-2.0       WRN: Server server2 with role SERVER-ROLE in server group AZ2 is not in scope for selection in any cluster or resource group
+#   cross-reference-2.0       WRN: Server server3 with role SERVER-ROLE in server group AZ2 is not in scope for selection in any cluster or resource group
+#   cloud-cplite-2.0          WRN: Allocated server server1 in cluster control-plane-1:cluster1 is not in the specified failure zones: ['AZ1']
+#   cloud-cplite-2.0          WRN: Allocated server server3 in cluster control-plane-1:cluster1 is not in the specified failure zones: ['AZ1']
+#   cloud-cplite-2.0          WRN: Previously deleted server server2 in cluster control-plane-1:cluster1 can not be restored as it is not in the specified failure zones: ['AZ1']
+#   cloud-cplite-2.0          WRN: Allocated server server4 in resource group control-plane-1:res1 is not in the specified failure zones: ['AZ1']
+#   cloud-cplite-2.0          WRN: Allocated server server6 in resource group control-plane-1:res1 is not in the specified failure zones: ['AZ1']

@@ -1,0 +1,2 @@
+#   cloud-cplite-2.0          WRN: Due to existing allocations control-plane-1:cluster1 contains 3 servers which is now more that the max value specified of 2.
+#   cloud-cplite-2.0          WRN: Due to existing allocations control-plane-1:res1 contains 3 servers which is now more that the max value specified of 2.

@@ -1,0 +1,2 @@
+#   cloud-cplite-2.0          WRN: Server server-network-errors-cp2-c8-m1 (192.168.10.10) using interface model MULTI-HOSTNAME: test-component is not directly connected to a network group 'NET-GROUP-2' with the tag: test-tag-net2
+#   cloud-cplite-2.0          WRN: Network tag "test-tag.expected" was expected by test-component: Should be defined

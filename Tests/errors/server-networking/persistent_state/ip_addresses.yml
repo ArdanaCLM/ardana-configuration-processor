@@ -1,0 +1,8 @@
+192.168.10.9:
+  addr: 192.168.10.9
+  allocated: true
+  free: false
+  host: used-by-vip
+  persisted: false
+  server-id: null
+  used-by: vip lb

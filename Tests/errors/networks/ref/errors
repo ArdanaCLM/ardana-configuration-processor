@@ -1,0 +1,40 @@
+#   networks-2.0              ERR: Network DUP-NAME is defined more than once.
+#   networks-2.0              ERR: Network OVERLAP2 has address overlaps with network OVERLAP1.
+#   networks-2.0              ERR: Network OVERLAP3 has address overlaps with network OVERLAP2.
+#   networks-2.0              ERR: Network OVERLAP3 has address overlaps with network OVERLAP1.
+#   networks-2.0              ERR: Network OVERLAP3 has address overlaps with network OVERLAP4.
+#   networks-2.0              ERR: Network OVERLAP1 has address overlaps with network OVERLAP4.
+#   networks-2.0              ERR: Network INVALID-IP: 12.0.0.300 is not a valid IP address for 'gateway-ip'.
+#   networks-2.0              ERR: Network INVALID-IP: 12.300.0.5 is not a valid IP address for 'start-address'.
+#   networks-2.0              ERR: Network INVALID-IP: 12.300.0.45 is not a valid IP address for 'end-address'.
+#   networks-2.0              ERR: The address range 12.300.0.5-12.300.0.45 in network INVALID-IP is not a range of valid IP addresses.
+#   networks-2.0              ERR: Network INVALID-CDIR-1: 400.0.0.0/24 is not a valid CIDR.
+#   networks-2.0              ERR: CIDR 400.0.0.0/24 in network INVALID-CDIR-1 is not a valid CIDR.
+#   networks-2.0              ERR: Network INVALID-CDIR-2: CIDR 13.0.0.0/31 range is too small. It must have at least 4 IP addresses in its range.
+#   networks-2.0              ERR: The address range 13.0.0.1-13.0.0.0 specified in network INVALID-CDIR-2 is invalid.  The specified first address 13.0.0.1 is greater than the specified last address 13.0.0.0.
+#   networks-2.0              ERR: Network INVALID-GATEWAY: Gateway IP address 14.1.0.1 is not in cidr range 14.0.0.0/24 (14.0.0.1 - 14.0.0.254)
+#   networks-2.0              ERR: Network group NET-GROUP-TAGS has the tag 'neutron.networks.vxlan', but its network VXLAN-NO-CIRD has no CIDR. All networks in a network group with the tag 'neutron.networks.vxlan' should have a CIDR.
+#   networks-2.0              ERR: Network ADDRESS-NO-CIDR has addresses specified, but it has no CIDR.  A valid CIDR must be specified if addresses are specified for a network.
+#   networks-2.0              ERR: Network ADDRESS-NOT-IN-CIDR-1: Gateway IP address 11.0.0.1 is not in cidr range 16.0.1.0/24 (16.0.1.1 - 16.0.1.254)
+#   networks-2.0              ERR: Address range 16.0.0.15-16.0.2.35 in network ADDRESS-NOT-IN-CIDR-1 is not within the specified CIDR 16.0.1.0/24.
+#   networks-2.0              ERR: Address 16.0.0.50 in network ADDRESS-NOT-IN-CIDR-1 is not within the specified CIDR 16.0.1.0/24.
+#   networks-2.0              ERR: Address range 16.1.0.15-16.1.1.254 in network ADDRESS-NOT-IN-CIDR-2 is not within the specified CIDR 16.1.1.0/24.
+#   networks-2.0              ERR: Address range 16.1.1.1-16.2.0.15 in network ADDRESS-NOT-IN-CIDR-3 is not within the specified CIDR 16.1.1.0/24.
+#   networks-2.0              ERR: Network INVALID-ADDRESS: Gateway IP address 11.0.0.1 is not in cidr range 16.0.1.0/24 (16.0.1.1 - 16.0.1.254)
+#   networks-2.0              ERR: Address 300.0.0.20 in network INVALID-ADDRESS is not a valid IP address.
+#   networks-2.0              ERR: The address range 17.0.0.2-17.0.0.3,17.0.0.4 in network INVALID-ADDRESS-RANGE is not a range of valid IP addresses.
+#   networks-2.0              ERR: The address range 17.0.0.20-17.0.0.10 specified in network INVALID-ADDRESS-RANGE is invalid.  The specified first address 17.0.0.20 is greater than the specified last address 17.0.0.10.
+#   networks-2.0              ERR: Network MISSING-VLANID: networks are tagged vlans by default, but a vlanid was not set. Please set a vlanid for this network or set tagged-vlan: false
+#   networks-2.0              ERR: Network TAGGED-PROVIDER-VLANID: networks are tagged vlans by default, but a vlanid was not set. Please set a vlanid for this network or set tagged-vlan: false
+#   networks-2.0              ERR: Network TAGGED-PROVIDER-VLANID is a tagged vlan, but its network group NET-GROUP-TAGS has the tag 'neutron.networks.vlan', making it a provider vlan network. Provider vlans should not be associated with tagged vlan networks.
+#   networks-2.0              ERR: Network group NET-GROUP-TAGS has the tag 'neutron.networks.vxlan', but its network TAGGED-PROVIDER-VLANID has no CIDR. All networks in a network group with the tag 'neutron.networks.vxlan' should have a CIDR.
+#   networks-2.0              ERR: Network MISSING-GROUP: networks are tagged vlans by default, but a vlanid was not set. Please set a vlanid for this network or set tagged-vlan: false
+#   networks-2.0              ERR: Network INVALID-CDIR-1 is part of a network group with more than one network, but it does not have a 'gateway-ip' value.
+#   networks-2.0              ERR: Network VXLAN-NO-CIRD is part of a network group with more than one network, but it does not have a 'gateway-ip' value.
+#   networks-2.0              ERR: Network ADDRESS-NO-CIDR is part of a network group with more than one network, but it does not have a 'gateway-ip' value.
+#   networks-2.0              ERR: Network ADDRESS-NOT-IN-CIDR-2 is part of a network group with more than one network, but it does not have a 'gateway-ip' value.
+#   networks-2.0              ERR: Network ADDRESS-NOT-IN-CIDR-3 is part of a network group with more than one network, but it does not have a 'gateway-ip' value.
+#   networks-2.0              ERR: Network MISSING-VLANID is part of a network group with more than one network, but it does not have a 'gateway-ip' value.
+#   networks-2.0              ERR: Network TAGGED-PROVIDER-VLANID is part of a network group with more than one network, but it does not have a 'gateway-ip' value.
+#   networks-2.0              ERR: Network group NOT-A-GROUP referenced by network MISSING-GROUP is not defined
+#   networks-2.0              ERR: Network MISSING-GATEWAY-FOR-ROUTES is part of a network group that provides routes, but it does not have a 'gateway-ip' value.

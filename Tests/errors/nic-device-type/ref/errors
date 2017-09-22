@@ -1,0 +1,3 @@
+#   nic-device-types-2.0      ERR: NIC Device Type DUPLICATE-NAME is defined more than once
+#   nic-device-types-2.0      ERR: NIC Device ID '3333' is defined for more than one device type: 'DUPLICATE-ID-ONE', 'DUPLICATE-ID-TWO'
+#   nic-device-types-2.0      ERR: NIC Device Type 'INVALID-FAMILY': family 'NOT-A-FAMILY' is not defined.

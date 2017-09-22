@@ -1,0 +1,14 @@
+#   cpu-model-2.0             ERR: CPU Model 'DUPLICATE_NAME' is defined more than once.
+#   cpu-model-2.0             ERR: Processor id '6' is assigned more than once in CPU model DUP-PROCESSOR_ID
+#   cpu-model-2.0             ERR: Component 'nova-compute-kvm' listed more than once in CPU model 'DUP-COMPONENTS'.
+#   cpu-model-2.0             ERR: 'a' in CPU model 'INVALID-CPUS:['nova-compute-kvm'] '0-a'' is not a valid Processor ID
+#   cpu-model-2.0             ERR: 'b' in CPU model 'INVALID-CPUS:['nova-compute-kvm'] 'b-2'' is not a valid Processor ID
+#   cpu-model-2.0             ERR: 'c' in CPU model 'INVALID-CPUS:['nova-compute-kvm']' is not a valid Processor ID
+#   cpu-model-2.0             ERR: '5-' in CPU model 'INVALID-CPUS:['nova-compute-kvm']' is not a valid range.
+#   cpu-model-2.0             ERR: '-8' in CPU model 'INVALID-CPUS:['nova-compute-kvm']' is not a valid range.
+#   cpu-model-2.0             ERR: '-' in CPU model 'INVALID-CPUS:['nova-compute-kvm']' is not a valid range.
+#   cpu-model-2.0             ERR: '6-3' in CPU model 'INVALID-CPUS:['nova-compute-kvm']' is not a valid range.
+#   cpu-model-2.0             ERR: Invalid component 'not-a-component' in CPU model 'NOT-A-COMPONENT'.
+#   cpu-model-2.0             ERR: Component 'mysql' in CPU model 'NOT-A-CPU-COMPONENT' does not support resource allocations.
+#   cpu-model-2.0             ERR: Component 'nova-compute-kvm' in CPU model 'NOT-A-CPU-ROLE' does not support cpu resource allocations for role 'not-a-role'. Supported roles are: 'vm'
+#   cpu-model-2.0             ERR: CPU model 'VM-NOT-ENOUGH-VCPUS' has a 'vm-size' stanza that doesn't specify enough vcpus.  Please increase to at least 9

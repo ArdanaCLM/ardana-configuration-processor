@@ -1,0 +1,16 @@
+10.0.0.25:
+  addr: 10.0.0.25
+  allocated: true
+  free: false
+  host: lbtestvip-cp2-vip-lb-net
+  persisted: false
+  server-id: null
+  used-by: vip lb
+10.0.0.26:
+  addr: 10.0.0.26
+  allocated: true
+  free: false
+  host: used-by-another-lb
+  persisted: false
+  server-id: null
+  used-by: vip lb

@@ -1,0 +1,194 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  interface-models:
+    - name: BAD-SERVER-INTERFACES-PCI-PT
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+              pci-pt: true
+          network-groups:
+            - NET-GROUP
+
+    - name: BAD-SERVER-INTERFACES-SRIOV
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+              vf-count: 10
+              sriov-only: true
+          network-groups:
+            - NET-GROUP
+
+    - name: BAD-SERVER-INTERFACES
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - BAD-NET-GROUP
+
+    - name: BAD-SERVER-INTERFACES-PXE-VLAN
+      network-interfaces:
+        - name: hed1
+          device:
+              name: hed1
+          network-groups:
+            - BAD-NET-PXE-VLAN-GROUP
+
+  nic-mappings:
+    - name: SIMPLE-PORT
+      physical-ports:
+        - logical-name: hed1
+          type: simple-port
+          bus-address: "0000:05:00.0"
+          nic-device-type: "8086:10fb"
+
+  server-roles:
+    - name: SERVER-ROLE-PCI-PT
+      interface-model: BAD-SERVER-INTERFACES-PCI-PT
+      disk-model: SERVER-DISKS
+
+    - name: SERVER-ROLE-SRIOV
+      interface-model: BAD-SERVER-INTERFACES-SRIOV
+      disk-model: SERVER-DISKS
+
+    - name: SERVER-ROLE-BAD-NET
+      interface-model: BAD-SERVER-INTERFACES
+      disk-model: SERVER-DISKS
+
+    - name: SERVER-ROLE-PXE-VLAN
+      interface-model: BAD-SERVER-INTERFACES-PXE-VLAN
+      disk-model: SERVER-DISKS
+
+  network-groups:
+    - name: BAD-NET-GROUP
+      hostname-suffix: badnet
+
+    - name: BAD-NET-PXE-VLAN-GROUP
+      hostname-suffix: badvlan
+
+  networks:
+    - name: BAD-NET
+      tagged-vlan: false
+      cidr: 201.0.0.0/24
+      network-group: BAD-NET-GROUP
+
+    - name: BAD-PXE-VLAN-NET
+      tagged-vlan: true
+      vlanid: 100
+      cidr: 202.0.0.0/24
+      network-group: BAD-NET-PXE-VLAN-GROUP
+
+
+  regions:
+    - name: region1
+      includes:
+      - control-plane: control-plane-1
+        services:
+          - all
+      - control-plane: bad-control-plane
+        services:
+          - all
+
+  server-groups:
+    - name: BAD-CLOUD
+      networks:
+        - BAD-NET
+        - BAD-PXE-VLAN-NET
+      server-groups:
+        - CLOUD
+
+  servers:
+    - id: server2
+      ip-addr: 192.168.10.4
+      role: SERVER-ROLE-PCI-PT
+      server-group: CLOUD
+      nic-mapping: SIMPLE-PORT
+
+    - id: server3
+      ip-addr: 192.168.10.5
+      role: SERVER-ROLE-SRIOV
+      server-group: CLOUD
+      nic-mapping: SIMPLE-PORT
+
+    - id: server4
+      ip-addr: 200.0.0.1
+      role: SERVER-ROLE-BAD-NET
+      server-group: CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server5
+      ip-addr: 201.0.0.1
+      role: SERVER-ROLE
+      server-group: BAD-CLOUD
+      nic-mapping: NIC-MAPPING
+
+    - id: server6
+      ip-addr: 202.0.0.1
+      role: SERVER-ROLE-PXE-VLAN
+      server-group: BAD-CLOUD
+      nic-mapping: NIC-MAPPING
+      ilo-ip: 10.0.0.1
+
+  control-planes:
+    - name: bad-control-plane
+      control-plane-prefix: cp-bad
+      failure-zones:
+        - BAD-CLOUD
+      clusters:
+        - name: cluster1
+          cluster-prefix: c1
+          server-role:
+            - SERVER-ROLE-PCI-PT
+            - SERVER-ROLE-SRIOV
+            - SERVER-ROLE-BAD-NET
+            - SERVER-ROLE-PXE-VLAN
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - ntp-server
+            - ip-cluster
+            - mysql
+            - rabbitmq
+            - keystone-api
+      resources:
+        - name: compute
+          resource-prefix: comp
+          server-role: SERVER-ROLE
+          allocation-policy: any
+          min-count: 0
+          service-components:
+            - ntp-client
+      load-balancers:
+        - name: lbext
+          provider: ip-cluster
+          components:
+            - default
+          roles:
+            - public
+        - name: lb
+          provider: ip-cluster
+          components:
+            - default
+          roles:
+            - internal
+            - admin

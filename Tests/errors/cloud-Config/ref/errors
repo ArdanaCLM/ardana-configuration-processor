@@ -1,0 +1,2 @@
+#   cloudconfig-2.0           ERR: Value of audit-settings.default must be 'enabled' or 'disabled'
+#   cloudconfig-2.0           ERR: Value of audit-settings.audit-dir can not be empty

@@ -1,0 +1,2 @@
+#   services-2.0              ERR: service 'dup-service' is defined more than once.
+#   services-2.0              ERR: menmonic 'DUP' is defined for more that one service: 'dup-service', 'dup-mnemonic'

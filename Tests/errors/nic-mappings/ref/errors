@@ -1,0 +1,18 @@
+#   nic-mappings-2.0          ERR: NIC mapping  DUPLICATE-NAME is defined more than once
+#   nic-mappings-2.0          ERR: Logical name 'dup-port-name' is defined more than once in nic mapping 'DUPLICATE-PORT-NAME'
+#   nic-mappings-2.0          ERR: Duplicate Bus Address in NIC mapping
+    nic_mapping: 'DUPLICATE-ADDRESS' logical-name: 'port-two' - bus-address '0000:05:00.0' previously defined as type 'simple-port'
+#   nic-mappings-2.0          ERR: Multiple type for same Bus Address in NIC mapping
+    nic_mapping: 'MIXED-TYPE' bus-address '0000:05:00.0' defined as both 'simple-port' and 'multi-port'
+#   nic-mappings-2.0          ERR: Invalid Port number in NIC mapping
+    nic_mapping: 'INVALID-PORT-NUM' logical-name: 'port-one' - port-num not supported for type 'simple-port'
+#   nic-mappings-2.0          ERR: Missing Port number in NIC mapping
+    nic_mapping: 'MISSING-PORT-NUM' logical-name: 'port-one' - port-num required in port-attributes for type 'multi-port'
+#   nic-mappings-2.0          ERR: Duplicate Port number in NIC mapping
+    nic_mapping: 'DUPLICATE-PORT-NUM' logical-name: 'port-two' bus address '0000:05:00.0' - port-num '0' previously defined
+#   nic-mappings-2.0          ERR: Unknown nic-device-type in NIC mapping
+    nic_mapping: 'INVALID-NIC-DEVICE-TYPE' logical-name: 'port-one' nic-device-type: 'not-a-nic-device-type'
+#   nic-mappings-2.0          ERR: Wrong port type in NIC mapping
+    nic_mapping: 'INVALID-SIMPLE-PORT-TYPE' logical-name: 'port-one' nic-device-type 'MULTI-PORT-TYPE' must be defined with a port type of 'multi-port'
+#   nic-mappings-2.0          ERR: Wrong port type in NIC mapping
+    nic_mapping: 'INVALID-MULTI-PORT-TYPE' logical-name: 'port-one' nic-device-type 'SIMPLE-PORT-TYPE' must be defined with a port type of 'simple-port'

@@ -1,0 +1,30 @@
+#   interface-models-2.0      ERR: Interface model 'DUP-NAME' is defined more than once.
+#   interface-models-2.0      ERR: Network interface 'multi-untagged-vlans' in 'MULTI-UNTAGGED_VLANS' has multiple network groups or forced network groups with with untagged vlans on it (UNTAGGED-1, UNTAGGED-2). There can only be one untagged vlan per interface.
+#   interface-models-2.0      ERR: Interface model 'MULTI-VXLAN' contains multiple network groups with the 'neutron.networks.vxlan' tag (VXLAN-2, VXLAN-1). Each interface model may only contain one network group with the 'neutron.networks.vxlan' tag.
+#   interface-models-2.0      ERR: Network interface 'conflict-mtu' in 'CONFLICT_MTU' has both untagged and tagged vlan network groups, and their MTUs are in conflict. Untagged network group UNTAGGED-MTU-1000 (mtu: 1000) must have an MTU greater than or equal to the highest MTU of the tagged vlan network groups on the same interface (1550).
+#   interface-models-2.0      ERR: Network interface 'dup-bond-device' in 'BAD-BOND-OPTIONS': device 'hed4' is already used. A device can only be used once per interface model.
+#   interface-models-2.0      ERR: Network interface 'dup-bond-name' in 'BAD-BOND-OPTIONS': device 'bond1' is already used. A device can only be used once per interface model.
+#   interface-models-2.0      ERR: Interface model 'DUP-INTERFACES': interface 'dup-name' is defined more than once.
+#   interface-models-2.0      ERR: Interface model 'DUP-FCOE-INTERFACES': interface 'dup-name' is defined more than once.
+#   interface-models-2.0      ERR: Interface model 'DUP-MIXED-INTERFACES': interface 'dup-name' is defined more than once.
+#   interface-models-2.0      ERR: Network interface 'iface2' in 'DUP-DEVICES': device 'hed1' is already used. A device can only be used once per interface model.
+#   interface-models-2.0      ERR: Network interface 'fcoe2' in 'DUP-FCOE-DEVICES': device 'hed1' is already used. A device can only be used once per interface model.
+#   interface-models-2.0      ERR: Network interface 'pci-pt-on-bond' in 'INVALID-PCI-PT': 'pci-pt' cannot be specified on bonded interfaces.
+#   interface-models-2.0      ERR: Network interface 'pci-pt-with-passthrough' in 'INVALID-PCI-PT': 'passthrough-network-groups' cannot be specified on 'pci-pt' interfaces.
+#   interface-models-2.0      ERR: Network interface 'sriov-only-and-pci-pt' in 'INVALID-SRIOV': device 'hed1' is already used. A device can only be used once per interface model.
+#   interface-models-2.0      ERR: Network interface 'sriov-on-bond' in 'INVALID-SRIOV': 'vf-count' cannot be specified on bonded interfaces.
+#   interface-models-2.0      ERR: Network interface 'sriov-only-no-count' in 'INVALID-SRIOV': 'vf-count' must  be specified when 'sriov-only' is set.
+#   interface-models-2.0      ERR: Network interface 'sriov-only-and-pci-pt' in 'INVALID-SRIOV': 'vf-count' must  be specified when 'sriov-only' is set.
+#   interface-models-2.0      ERR: Network interface 'sriov-only-and-pci-pt' in 'INVALID-SRIOV': 'sriov-only' and  'pci-pt' cannot both be set on the same interface.
+#   interface-models-2.0      ERR: DPDK devices in Interface Model 'INVALID-DPDK': Component 'not-a-component' is not defined.
+#   interface-models-2.0      ERR: Interface Model 'INVALID-DPDK': Device 'hed1' can not be configured for both DPDK and sriov-only.
+#   interface-models-2.0      ERR: Interface Model 'INVALID-DPDK': Device 'hed2' can not be configured for both DPDK and PCI Passthrough.
+#   interface-models-2.0      ERR: DPDK devices in Interface Model 'INVALID-DPDK': Device 'not-a-device' is not used by any interface in network-interfaces.
+#   interface-models-2.0      ERR: Network interface 'bad-bond-primary-device' in 'BAD-BOND-OPTIONS' specifies the bond primary: 'hed6', which does not appear in the bond's set of devices: ['hed3', 'hed4']
+#   interface-models-2.0      ERR: Network interface 'bad-bond-provider': the chosen bond provider 'not-a-provider' is invalid. Please choose a valid bond provider: ['linux', 'windows', 'openvswitch']
+#   interface-models-2.0      ERR: Network interface 'missing-mode' is a bond but has not specified 'mode' or 'bond_mode' as one of its options.
+#   interface-models-2.0      ERR: Network interface 'openvswitch-with-too-few-slaves' in 'BAD-BOND-OPTIONS' specifies provider: 'openvswitch' and devices: '['hed9']', the provider requires at least '2' device(s)
+#   interface-models-2.0      ERR: Network interface 'sriov-with-passthrough' in 'INVALID-SRIOV': 'passthrough-network-groups' cannot be specified on 'sriov-only' interfaces.
+#   interface-models-2.0      ERR: Network interface bad-linux-mode: the chosen bond mode 'Static' is invalid. Please choose a valid linux bond mode: ['balance-rr', 0, 'active-backup', 1, 'balance-xor', 2, 'broadcast', 3, '802.3ad', 4, 'balance-tlb', 5, 'balance-alb', 6]
+#   interface-models-2.0      ERR: Network interface bad-windows-mode: the chosen bond mode 'broadcast' is invalid. Please choose a valid windows bond mode: ['SwitchIndependent', 'Static', 'LACP']
+#   interface-models-2.0      ERR: Network interface bad-ovs-mode: the chosen bond mode 'balance-rr' is invalid. Please choose a valid openvswitch bond mode: ['active-backup', 'balance-tcp', 'balance-slb']

@@ -1,0 +1,3 @@
+#   cloud-cplite-2.0          ERR: vm 'vm-1' with server-role 'VM-ROLE' has been assigned to control-plane 'control-plane-2' with a component 'lifecycle-manager' that cannot run on a vm
+#   cloud-cplite-2.0          ERR: vm 'vm-2' with server-role 'VM-ROLE' has been assigned to control-plane 'control-plane-2' with a component 'lifecycle-manager' that cannot run on a vm
+#   cloud-cplite-2.0          ERR: Server 'hypervisor-not-allocated' in server-group 'CLOUD1' with role 'HYPERVISOR-ROLE' which is a host-node for vms that have been allocated has not itself been allocated.  Please increase the max-count for the cluster or resource pool with its role and server-group.

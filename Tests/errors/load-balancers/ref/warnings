@@ -1,0 +1,1 @@
+#   load-balancer-2.0         WRN: Control Plane 'bad-control-plane-1': Component 'cinder-api' in load balancer tls-lb is not in this control plane.
