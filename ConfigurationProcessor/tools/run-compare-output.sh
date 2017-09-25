@@ -140,7 +140,7 @@ rm -fr .test
 mkdir -p .test
 pushd .test
 
-BRANCH=${ZUUL_BRANCH:-ardana/master}
+BRANCH=${ZUUL_BRANCH:-master}
 PROJECT=${ZUUL_PROJECT:-ardana/ardana-configuration-processor}
 
 if [ -e /usr/zuul-env/bin/zuul-cloner ];
