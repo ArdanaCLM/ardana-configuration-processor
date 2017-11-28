@@ -77,7 +77,7 @@ class Box(object):
             while x < len(self._title) + 2:
                 self._box[0][x] = self._title[x - 2]
                 x += 1
-        except:
+        except Exception:
             pass
 
     def add_string_absolute(self, text, x, y):
@@ -90,7 +90,7 @@ class Box(object):
             while src_x < len(text):
                 self._box[y][x + src_x] = text[src_x]
                 src_x += 1
-        except:
+        except Exception:
             pass
 
     def add_string_centered(self, text, y, forced_width=None):
@@ -126,7 +126,7 @@ class Box(object):
                 for y in range(l.box.height):
                     for x in range(l.box.width):
                         self._box[l.dst_y + y][l.dst_x + x] = l.box[y][x]
-        except:
+        except Exception:
             pass
 
     def display(self, fp=None):
@@ -161,5 +161,5 @@ class Box(object):
                 self._box[y][0] = '|'
                 self._box[y][self._width - 1] = '|'
                 y += 1
-        except:
+        except Exception:
             pass

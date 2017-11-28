@@ -18,22 +18,25 @@ import os
 from setuptools import setup, find_packages
 
 setup(
-    name='ardana_configurationprocessor',
-    version='0.2.0',
+    name='ardana-configurationprocessor',
+    version='0.3.0',
     author='SUSE LLC',
     author_email='ardana@googlegroups.com',
     packages=find_packages(),
     include_package_data=True,
     scripts=[],
     url='https://github.com/ArdanaCLM',
-    license='LICENSE.txt',
-    description='Configuration Processor for SUSE Ardana CLM',
+    license='Apache-2.0',
+    description='Configuration Processor for Ardana CLM',
     long_description=open('README.txt').read(),
     install_requires=['six', 'stevedore', 'netaddr', 'pycrypto',
                       'cryptography', 'simplejson', 'jsonschema', 'html',
-                      'pbs' if os.name == 'nt' else 'sh'],
+                      'PyYAML', 'pbs' if os.name == 'nt' else 'sh'],
     zip_safe=False,
     entry_points={
+        'console_scripts': [
+            'ardana-cp = ardana_configurationprocessor.cmd.ardana_cp:main',
+        ],
         'ardana.configurationprocessor.generator': [
             'cloud-init = '
             'ardana_configurationprocessor.plugins.generators.'

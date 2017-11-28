@@ -40,9 +40,10 @@ and ardana-input-model-ref repos.
 	cd ardana-configuration-processor
 	git checkout master
 
-3) Prepare the virtualenvironment:
+3) Prepare the virtual environment:
 
-	pip install -r ConfigurationProcessor/requirements.txt
+	cd ConfigurationProcessor
+	python setup.py install
 	pip install ansible
 	pip install git-review
 

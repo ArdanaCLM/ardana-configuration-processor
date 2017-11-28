@@ -58,7 +58,7 @@ def compare_json(j1, j2):
     try:
         diff = json_delta.diff(j1, j2, False, False)
         return DIFFER, '\n'.join(json_delta.udiff(j1, j2, diff, 2))
-    except:
+    except Exception:
         print("################ EXCEPTION ################")
         print("#                                         #")
         print("# json_delta raised an exception          #")

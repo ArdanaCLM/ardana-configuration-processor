@@ -24,7 +24,7 @@ from ardana_configurationprocessor.cp.model.CPSecurityHelper \
 if __name__ == "__main__":
     try:
         password = sys.argv[1]
-    except:
+    except Exception:
         password = getpass.getpass(
             'Enter the current key to be used for decryption: ')
 
