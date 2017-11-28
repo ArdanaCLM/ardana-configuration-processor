@@ -151,17 +151,20 @@ class ValidatorPlugin(PluginBase):
         return os.path.join(path, file_contents['cloud'][file_type])
 
     def get_schema_path(self, file_base):
-        path_name = self._instructions['cloud_schema_path']
-        path_name = os.path.join(path_name, 'Schema')
-        path_name = os.path.join(path_name, str(self._version))
-        path_name = os.path.join(path_name, file_base)
+        # base path provided by the user
+        base_path = self._instructions['cloud_schema_path']
+        # fallback base path
+        base_path_default = os.path.abspath(os.path.join(
+            os.path.realpath(__file__), '..', '..', '..', 'data', 'Site'))
 
         suffixes = ['.json', '.yml', '.yaml']
-        for s in suffixes:
-            schema_name = path_name + s
-            if os.path.exists(schema_name):
-                return schema_name
-
+        for p in [base_path, base_path_default]:
+            path_name = os.path.join(p, 'Schema', str(self._version),
+                                     file_base)
+            for s in suffixes:
+                schema_name = path_name + s
+                if os.path.exists(schema_name):
+                    return schema_name
         return None
 
     def get_path_contents(self, path):

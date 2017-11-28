@@ -139,7 +139,9 @@ def _get_options():
                       help="The location of the site-level input data files")
     parser.add_option("-r", "--validator", dest="cloud_schema_path",
                       help="The location of the schema files. Defaults to "
-                           "site_input_path")
+                           "site_input_path and fallbacks to the data/ dir "
+                      "delivered via the ardana_configurationprocessor python "
+                      "module")
     parser.add_option("-c", "--cloud_config", dest="cloud_input_path",
                       help="The location of the cloud config input file.")
     parser.add_option("-e", "--encryption", dest="encryption",
