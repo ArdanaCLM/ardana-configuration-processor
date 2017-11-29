@@ -21,10 +21,8 @@ and ardana-input-model-ref repos.
 
 3. Prepare the virtual environment:
 
-    cd ConfigurationProcessor
     python setup.py sdist
     pip install dist/* ansible git-review coverage
-    cd ..
 
 4. Create a test ardana configuration processor environment:
 

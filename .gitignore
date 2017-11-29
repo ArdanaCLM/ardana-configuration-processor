@@ -26,6 +26,6 @@ manifests/secrets.pp
 # pycharm ide files
 **.idea
 
-ConfigurationProcessor/tools/regress/AUTHORS
-ConfigurationProcessor/tools/regress/ChangeLog
+tools/regress/AUTHORS
+tools/regress/ChangeLog
 

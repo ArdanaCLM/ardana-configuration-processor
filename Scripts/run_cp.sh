@@ -43,7 +43,6 @@ runcp ()
   touch $outDir/.gitignore
 
   # Rebuild
-  cd ConfigurationProcessor
   python setup.py install > $outDir/cp_build.log
 
   cd $startDir

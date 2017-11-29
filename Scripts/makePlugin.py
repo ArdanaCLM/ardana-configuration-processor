@@ -175,7 +175,6 @@ def get_cp_path():
     pos += len(reponame)
     value = curdir[:pos]
 
-    value = os.path.join(value, 'ConfigurationProcessor')
     return value
 
 

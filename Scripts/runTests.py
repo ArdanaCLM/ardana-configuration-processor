@@ -30,7 +30,7 @@ def main(args):
     verbose = True if len(args) > 0 and args[0] == '-v' else False
 
     top = os.getcwd()
-    k_cp_build = os.path.join(top, 'ConfigurationProcessor', 'build',
+    k_cp_build = os.path.join(top, 'build',
                               'lib', 'ardana_configurationprocessor')
 
     return_value = True

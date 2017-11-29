@@ -20,12 +20,12 @@ TOPDIR="${WORKSPACE:-${PWD}}"
 run_tox()
 {
   (
-    cd ardana-configuration-processor/ConfigurationProcessor
+    cd ardana-configuration-processor
     tox ${PYPI_MIRROR:+-i ${PYPI_MIRROR}} -e venv -- \
         python \
-            ../Driver/ardana-cp -w\
-            -c "../../${conf}" \
-            -r ../Data/Site \
+            Driver/ardana-cp -w\
+            -c "../${conf}" \
+            -r Data/Site \
             -s "${TOPDIR}/ardana-input-model/2.0/services" \
             -l "${TESTRUNSDIR}/${testname}/ardana_logs" \
             -o "${TESTRUNSDIR}/${testname}/output" ${CP_OPTS}
@@ -183,7 +183,7 @@ run_tests()
 
         # Make sure we have no cruft from previous runs
         (
-            cd ardana-configuration-processor/ConfigurationProcessor
+            cd ardana-configuration-processor
             rm -rf persistent_state
             rm -rf stage
 

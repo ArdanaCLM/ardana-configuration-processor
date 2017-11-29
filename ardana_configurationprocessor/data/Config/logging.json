@@ -37,7 +37,7 @@
     },
 
     "loggers": {
-        "ConfigurationProcessor": {
+        "ardana_configurationprocessor": {
             "level": "DEBUG",
             "handlers": ["info_file_handler"],
             "propagate": "no"
