@@ -30,10 +30,8 @@ def main(args):
     verbose = True if len(args) > 0 and args[0] == '-v' else False
 
     top = os.getcwd()
-    k_cp_build = os.path.join(top, 'ConfigurationProcessor')
-    k_cp_build = os.path.join(k_cp_build, 'build')
-    k_cp_build = os.path.join(k_cp_build, 'lib')
-    k_cp_build = os.path.join(k_cp_build, 'ardana_configurationprocessor')
+    k_cp_build = os.path.join(top, 'ConfigurationProcessor', 'build',
+                              'lib', 'ardana_configurationprocessor')
 
     return_value = True
 
@@ -42,12 +40,10 @@ def main(args):
 
     for mp in inventory.getModulePaths():
         name = inventory.getModuleName(mp)
-        if name and name.find('ardana') != -1:
+        if name and 'ardana' in name:
             os.chdir(mp)
 
-            cur_build = os.path.join('.', 'build')
-            cur_build = os.path.join(cur_build, 'lib')
-            cur_build = os.path.join(cur_build,
+            cur_build = os.path.join('.', 'build', 'lib',
                                      'ardana_configurationprocessor')
 
             if name != 'ardana_configurationprocessor':
@@ -55,12 +51,8 @@ def main(args):
                     shutil.rmtree(cur_build)
                 shutil.copytree(k_cp_build, cur_build)
 
-            cur_test = os.path.join('.', 'build')
-            cur_test = os.path.join(cur_test, 'lib')
-            cur_test = os.path.join(cur_test, name)
-            cur_test = os.path.join(cur_test, 'cp')
-            cur_test = os.path.join(cur_test, 'controller')
-            cur_test = os.path.join(cur_test, 'test')
+            cur_test = os.path.join('.', 'build', 'lib', name, 'cp',
+                                    'controller', 'test')
             if os.path.exists(cur_test):
                 shutil.rmtree(cur_test)
 
@@ -94,27 +86,26 @@ def main(args):
 
 
 def _run_tox():
-
-    command = ['tox']
-    p = subprocess.Popen(command, stdout=subprocess.PIPE)
+    p = subprocess.Popen(['tox'], stdout=subprocess.PIPE)
     out, err = p.communicate()
 
     errors = []
 
     for line in out.split('\n'):
-        if line.find('congratulations') != -1:
+        if 'congratulations' in line:
             return True, 0
 
-        if line.find(': E') != -1:
+        if ': E' in line:
             errors.append(line)
 
-        elif line.find(': W') != -1:
+        elif ': W' in line:
             errors.append(line)
 
         elif line.startswith('E '):
             errors.append(line)
 
     return False, errors
+
 
 if __name__ == '__main__':
     if main(sys.argv[1:]):
