@@ -97,5 +97,6 @@ def main(args):
         for name, mnemonic in six.iteritems(service_map):
             print('%s::%s' % (name, mnemonic))
 
+
 if __name__ == "__main__":
     main(sys.argv[1:])

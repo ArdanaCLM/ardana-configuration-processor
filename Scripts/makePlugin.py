@@ -66,7 +66,7 @@ def get_repo_name():
         repo_name = subprocess.check_output("git config --file=../.gitreview --get gerrit.project",
                                             shell=True)
     except CalledProcessError as e:
-        print 'ERROR: cannot get repo_name %s' % str(e)
+        print('ERROR: cannot get repo_name %s' % str(e))
         sys.exit(-1)
     repo_name = repo_name.split('/')[-1].split('.')[0]
     return repo_name
@@ -666,7 +666,7 @@ def update_setup_py(plugin_type, plugin_name, plugin_mnemonic, plugin_version):
         prev_line = prev_line.replace('\n', ',\n')
     lines_out[-1] = prev_line
 
-    spaces = ' '*12
+    spaces = ' ' * 12
 
     lines_out.append('\n')
     lines_out.append('%s\'%s = \'\n' % (spaces, plugin_mnemonic))
@@ -733,7 +733,7 @@ def update_ardana_cp(plugin_type, plugin_name, plugin_mnemonic):
     lines_out[-1] = prev_line
 
     num_spaces = prev_line.find('\'')
-    spaces = ' '*num_spaces
+    spaces = ' ' * num_spaces
 
     lines_out.append('%s\'%s\'\n' % (spaces, plugin_mnemonic))
 
