@@ -36,6 +36,16 @@ setup(
     entry_points={
         'console_scripts': [
             'ardana-cp = ardana_configurationprocessor.cmd.ardana_cp:main',
+            'ardana-cp-decrypt = ' \
+            'ardana_configurationprocessor.cmd.ardana_cp_decrypt.py:main',
+            # ardana-dv.py for backwards compat
+            'ardana-dv.py = ' \
+            'ardana_configurationprocessor.cmd.ardana_cp_decrypt.py:main',
+            'ardana-cp-passwordchecker = ' \
+            'ardana_configurationprocessor.cmd.ardana_cp_passwordchecker:main',
+            # ardana-pc.py for backwards compat
+            'ardana-pc.py = ' \
+            'ardana_configurationprocessor.cmd.ardana_cp_passwordchecker:main',
         ],
         'ardana.configurationprocessor.generator': [
             'cloud-init = '

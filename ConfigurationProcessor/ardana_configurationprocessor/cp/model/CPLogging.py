@@ -46,15 +46,26 @@ class CPLogging(object):
             else:
                 d1[k] = v2
 
+    def _find_logging_config(self, logging_conf_filename):
+        """ try first 'site_config_path" configuration and then
+        fallback to the config provided from the python module"""
+        path = self._instructions.get('site_config_path', '.')
+        path_fallback = os.path.abspath(os.path.join(
+            os.path.realpath(__file__), '..', '..', '..', 'data', 'Config'))
+        for p in [path, path_fallback]:
+            logging_config = os.path.join(p, logging_conf_filename)
+            if os.path.exists(logging_config):
+                return logging_config
+        return None
+
     def _setup_logging(self):
+        logging_config = self._find_logging_config('logging.json')
+        logging_config_win = self._find_logging_config('logging-win.json')
         try:
-            with open('%s/logging.json' %
-                      self._instructions.get('site_config_path', '.'),
-                      'rt') as f:
+            with open(logging_config, 'rt') as f:
                 config = json.load(f)
-            if platform.system() == 'Windows':
-                with open('%s/logging-win.json' % self._instructions[
-                        'site_config_path'], 'rt') as f:
+            if platform.system() == 'Windows' and logging_config_win:
+                with open(logging_config_win, 'rt') as f:
                     self.merge_dicts(config, json.load(f))
             log_dir = self._instructions['log_dir']
 
