@@ -128,7 +128,9 @@ class HostsFileBuilder(BuilderPlugin):
                             else:
                                 ips.append([addr, name_string])
                     for ip in sorted(ips, key=itemgetter(0)):
-                        fp.write("%-16s %s\n" % (ip[0].replace(" ", ""), ip[1]))
+                        # Also add lowercase hostnames for eventlet-0.20.0, which treats /etc/hosts
+                        # as case-sensitive
+                        fp.write("%-16s %s %s\n" % (ip[0].replace(" ", ""), ip[1], ip[1].lower()))
 
     def get_dependencies(self):
         return ['persistent-state-2.0']
