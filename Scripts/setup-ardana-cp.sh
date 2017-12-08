@@ -22,8 +22,6 @@ acp_base="$(dirname "${scripts_dir}")"
 clone_base="$(dirname "${acp_base}")"
 #venv_dir="${acp_base}/.venvs/acp"
 
-
-
 help ()
 {
   echo "-g | --<git_base> Git base to use (default: $git_base)"
@@ -61,7 +59,7 @@ if $show_help; then
 fi
 
 if [ -d $1 ]; then
-  echo "Already exists"
+  echo "$1 already exists"
   exit 1
 fi
 
@@ -125,16 +123,15 @@ clone_repo_into_dir()
 # Clone the a-c-p repo
 #
 cd $work_dir
-#git clone -b $branch git://git.suse.provo.cloud/ardana/ardana-configuration-processor
-clone_repo_into_dir ardana/ardana-configuration-processor ${branch} ardana-configuration-processor
+clone_repo_into_dir ${git_namespace}/ardana-configuration-processor ${branch} ardana-configuration-processor
 
 #
-# Clone the h-i-m repo
+# Clone the a-i-m repo
 #
 clone_repo_into_dir ${git_namespace}/ardana-input-model ${branch} ardana-input-model copy
 
 #
-# Clone the h-i-m-ref repo
+# Clone the a-i-m-ref repo
 #
 clone_repo_into_dir ${git_namespace}/ardana-input-model-ref ${branch} ardana-input-model-ref
 
