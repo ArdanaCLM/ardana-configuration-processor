@@ -76,11 +76,11 @@ runcp ()
 
   rm -rf logs
   mkdir logs
-  echo ./ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
+  echo ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
   if $run_coverage; then
-      coverage run ./ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
+      coverage run ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
   else
-      ./ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
+      ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
   fi
 
   cpRes=$?

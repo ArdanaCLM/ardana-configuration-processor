@@ -1,22 +1,3 @@
-#
-# (c) Copyright 2015-2017 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License"); you may
-# not use this file except in compliance with the License. You may obtain
-# a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations
-# under the License.
-#
-#
-#
-
 ## Ardana Input Model Reference
 
 This repo contains the Aranda configuration processor.
@@ -31,39 +12,33 @@ and ardana-input-model-ref repos.
 
 1) Create a virtual environment
 
-	virtualenv ~/venv_cp
-	. ~/venv_cp/bin/activate
+    virtualenv ~/venv_cp
+    . ~/venv_cp/bin/activate
 
-2) Clone thoe configuration processor
+2) Clone thoe configuration processor (optional if you are already in a git checkout)
 
-	git clone git://git.suse.provo.cloud/ardana/ardana-configuration-processor
-	cd ardana-configuration-processor
-	git checkout master
+    git clone git://git.suse.provo.cloud/ardana/ardana-configuration-processor
+    cd ardana-configuration-processor
 
 3) Prepare the virtual environment:
 
-	cd ConfigurationProcessor
-	python setup.py install
-	pip install ansible
-	pip install git-review
+    cd ConfigurationProcessor
+    python setup.py sdist
+    pip install dist/* ansible git-review
+    cd ..
 
-4) Copy Scripts from the repo and point to the SUSE git:
+4) Create a test configuration processor environment:
 
-	cp Scripts/setup-ardana-cp.sh Scripts/run_cp.sh ~
-	chmod 755 ~/setup-ardana-cp.sh
-
-5) Create a test configuration processor environment:
-
-	~/setup-ardana-cp.sh ARD-XXX
+    bash Scripts/setup-ardana-cp.sh ARD-XXX
 
 (This will clone the required repos and run the CP against each model to create a baseline)
 
-6) To test a model change:
+5) To test a model change:
 
-	Make changes to the models in ARD-XXX/ardana-input-model/2.0/examples
+    Make changes to the models in ARD-XXX/ardana-input-model/2.0/examples
 
-	cd ARD-XXX/ardana-configuration-processor/Driver
-	~/run_cp.sh
+    cd ARD-XXX/ardana-configuration-processor/Driver
+    ~/run_cp.sh
 
 Options supported for run_cp.sh
 
