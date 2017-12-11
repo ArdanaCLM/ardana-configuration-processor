@@ -27,9 +27,10 @@ help ()
   echo "-g | --<git_base> Git base to use (default: $git_base)"
   echo "-b | --branch <branch>  Git branch to use (default: $branch)"
   echo "-n | --no-ref           Don't create reference"
+  echo "-p | --pull             Clone repos even if the already exist"
 }
 
-OPTS=`getopt -o b:hn --long branch,help,no-ref -n 'parse-options' -- "$@"`
+OPTS=$(getopt -o g:b:hnp --long git_base,branch,help,no-ref,pull -n 'parse-options' -- "$@")
 eval set -- "$OPTS"
 
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
@@ -40,6 +41,7 @@ git_base="git://git.suse.provo.cloud"
 git_namespace="ardana"
 cp_opts=
 build_ref=true
+fresh_clone=false
 
 while true; do
   case $1 in
@@ -47,6 +49,7 @@ while true; do
     -b | --branch) shift; branch=$1; shift ;;
     -h | --help) show_help=true; shift ;;
     -n | --no-ref) build_ref=false; shift ;;
+    -p | --pull) fresh_clone=true; shift ;;
     -- ) shift; break ;;
     *) break;;
   esac
@@ -88,47 +91,38 @@ fi
 echo using branch $branch
 echo using external branch $external_branch
 
-mkdir $1
-cd $1
-work_dir=`pwd`
+target=$1
+mkdir $target
+cd $target
+
+work_dir=$(pwd)
 
 clone_repo_into_dir()
 {
-    local repo="${1}" branch="${2}" dest_dir=${3} mode="${4:-link}"
+    local repo="${1}" branch="${2}" dest_dir="${3}"
     local repo_name="$(basename "${repo}")"
 
-    if [[ -d "${clone_base}/${repo_name}" ]]
+    if [[ -d "${clone_base}/${repo_name}" && $fresh_clone = "false" ]]
     then
-        case "${mode}" in
-        (link)
-            ln -vs "${clone_base}/${repo_name}"
-            ;;
-        (copy)
-            # copy the repo and clear out any local
-            # uncommitted changes
-            cp -a "${clone_base}/${repo_name}" .
-            (
-                cd ${repo_name}
-                git reset --hard
-                git clean -x -d -f -f
-            )
-        esac
+        # copy the repo and clear out any local
+        # uncommitted changes
+        cp -a "${clone_base}/${repo_name}" .
+        (
+            cd ${repo_name}
+            git reset --hard
+            git clean -x -d -f -f
+        )
     else
         git clone -b "${branch}" "${git_base}/${repo}" "${dest_dir}"
     fi
 }
 
-
-#
-# Clone the a-c-p repo
-#
 cd $work_dir
-clone_repo_into_dir ${git_namespace}/ardana-configuration-processor ${branch} ardana-configuration-processor
 
 #
 # Clone the a-i-m repo
 #
-clone_repo_into_dir ${git_namespace}/ardana-input-model ${branch} ardana-input-model copy
+clone_repo_into_dir ${git_namespace}/ardana-input-model ${branch} ardana-input-model
 
 #
 # Clone the a-i-m-ref repo
@@ -146,8 +140,8 @@ clone_repo_into_dir ardana/ardana-extensions-odl ${branch} ardana-extensions-odl
 # git ignores this temporary directory
 mkdir ardana-input-model/2.0/services/.extensions
 echo "*" > ardana-input-model/2.0/services/.extensions/.gitignore
-for dir in `find . -name "ardana-extensions-*"`; do
-    for service_dir in `find $dir -name "services" -type d`; do
+for dir in $(find . -name "ardana-extensions-*"); do
+    for service_dir in $(find $dir -name "services" -type d); do
         echo "Adding additional services from $service_dir"
         cp -r $service_dir/* ardana-input-model/2.0/services/.extensions
     done
@@ -157,11 +151,11 @@ done
 # Run all of the models and generate reference outputs
 #
 if $build_ref; then
-    cd $work_dir/ardana-configuration-processor/Driver
-    ${scripts_dir}/run_cp.sh -a
+    cd $acp_base
+    ${scripts_dir}/run_cp.sh -a -t $target
 fi
 
 # Create links to the models not in a-i-m
 cd $work_dir/ardana-input-model/2.0
 ln -s $work_dir/ardana-input-model-ref ref
-ln -s $work_dir/ardana-configuration-processor/Tests tests
+ln -s $acp_base/Tests tests

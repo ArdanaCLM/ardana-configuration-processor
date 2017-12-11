@@ -19,9 +19,9 @@
 runcp ()
 {
   cloud=$1
-  cloudDir="../../ardana-input-model/2.0/$cloud"
-  outDir=../../clouds/$cloud
-  coverageOutDir=../../coverage
+  cloudDir="$target/ardana-input-model/2.0/$cloud"
+  outDir="$target/clouds/$cloud"
+  coverageOutDir="$target/coverage"
   cloudConfig="$cloudDir/cloudConfig.yml"
 
   if [ ! -f $cloudConfig ]; then
@@ -43,8 +43,8 @@ runcp ()
   touch $outDir/.gitignore
 
   # Rebuild
-  cd ../ConfigurationProcessor
-  python setup.py install > ../Driver/$outDir/cp_build.log
+  cd ConfigurationProcessor
+  python setup.py install > $outDir/cp_build.log
 
   cd $startDir
 
@@ -68,23 +68,24 @@ runcp ()
   cp_extra_opts=""
   if [ -f $cloudDir/cp_opts.existing_state ]
   then
-    cp_extra_opts=`cat $cloudDir/cp_opts.existing_state`
+    cp_extra_opts=$(cat $cloudDir/cp_opts.existing_state)
   elif [ -f $cloudDir/cp_opts.no_state ]
   then
-    cp_extra_opts=`cat $cloudDir/cp_opts.no_state`
+    cp_extra_opts=$(cat $cloudDir/cp_opts.no_state)
   fi
 
   rm -rf logs
   mkdir logs
-  echo ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
+  echo ardana-cp -l logs -s $target/ardana-input-model/2.0/ -c $cloudConfig -r Data/Site -w $cp_opts $cp_extra_opts
   if $run_coverage; then
-      coverage run ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
+      cd $startDir/Driver
+      coverage run ardana-cp -l logs -s $target/ardana-input-model/2.0/ -c $cloudConfig -r Data/Site -w $cp_opts $cp_extra_opts
   else
-      ardana-cp -l logs -s ../../ardana-input-model/2.0/ -c $cloudConfig -r ../Data/Site -w $cp_opts $cp_extra_opts
+      python Driver/ardana-cp -l logs -s $target/ardana-input-model/2.0/ -c $cloudConfig -r Data/Site -w $cp_opts $cp_extra_opts
   fi
 
   cpRes=$?
-  test_name=`echo $1 | sed -e "s/\//_/g"`
+  test_name=$(echo $1 | sed -e "s/\//_/g")
 
   # Save the coveage results
   if $run_coverage; then
@@ -179,7 +180,7 @@ runcp ()
       done
 
       if $full_diff; then
-        for f in `find ref/ansible -type f -print`
+        for f in $(find ref/ansible -type f -print)
         do
            echo
            echo "................. $f .........................."
@@ -187,7 +188,7 @@ runcp ()
            diff -dy --suppress-common-lines $f stage/${f##ref/}
         done
 
-        for f in `find ref/net -type f -print`
+        for f in $(find ref/net -type f -print)
         do
            echo
            echo "................. $f .........................."
@@ -195,7 +196,7 @@ runcp ()
            diff -dy --suppress-common-lines $f stage/${f##ref/}
         done
 
-        for f in `find ref/info -name "*.yml" -type f -print`
+        for f in $(find ref/info -name "*.yml" -type f -print)
         do
            echo
            echo "................. $f .........................."
@@ -203,7 +204,7 @@ runcp ()
            diff -dy --suppress-common-lines $f stage/${f##ref/}
         done
 
-        for f in `find ref/info/cert_reqs -type f -print`
+        for f in $(find ref/info/cert_reqs -type f -print)
         do
            echo
            echo "................. $f .........................."
@@ -235,10 +236,11 @@ OPTIONS[11]="-N,non_interactive          ,Run all models specified with -I optio
 OPTIONS[12]="-p,refresh_all_secrets      ,Refresh all secrets"
 OPTIONS[13]="-P:,credential_change_path: ,Credential Change Path"
 OPTIONS[14]="-q,quiet                    ,Only show CP result"
-OPTIONS[15]="-v,verbose_diff             ,Show differences in generated ansible"
-OPTIONS[16]="-x,leave_ext_name           ,Don't edit external name in network groups"
-OPTIONS[17]="-y,coverage                 ,Run with code coverage"
-OPTIONS[18]="-z,repeat                   ,Run with last selected model"
+OPTIONS[15]="-t:,target:                 ,Target directory containing the models"
+OPTIONS[16]="-v,verbose_diff             ,Show differences in generated ansible"
+OPTIONS[17]="-x,leave_ext_name           ,Don't edit external name in network groups"
+OPTIONS[18]="-y,coverage                 ,Run with code coverage"
+OPTIONS[19]="-z,repeat                   ,Run with last selected model"
 
 ol=""
 olong=""
@@ -265,13 +267,14 @@ help ()
 }
 
 
-OPTS=`getopt -o $ol --long $olong -n 'parse-options' -- "$@"`
-#OPTS=`getopt -o qarekdfvxcipP:I:Nhz --long quiet,run_all,create_ref,encrypt,change_key,remove_deleted_servers,free_unused_addresses,verbose_diff,leave_ext_name,commit,ignore_persisent_state,refresh_all_secrets,credential_change_path:,include:,non_interactive,help -n 'parse-options' -- "$@"`
+OPTS=$(getopt -o $ol --long $olong -n 'parse-options' -- "$@")
+#OPTS=$(getopt -o qarekdfvxcipP:I:t:Nhz --long quiet,run_all,create_ref,encrypt,change_key,remove_deleted_servers,free_unused_addresses,verbose_diff,leave_ext_name,commit,ignore_persisent_state,refresh_all_secrets,credential_change_path:,include:,target:,non_interactive,help -n 'parse-options' -- "$@")
 eval set -- "$OPTS"
 
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
-startDir=`pwd`
+startDir=$(pwd)
+target=$(pwd)
 create_ref=false
 full_diff=false
 patch_ext_name=true
@@ -305,14 +308,17 @@ while true; do
     -p | --refresh_all_secrets) cp_opts="$cp_opts -p"; shift ;;
     -P | --credential_change_path) cp_opts="$cp_opts -P $2"; shift 2;;
     -q | --quiet) quiet=true; shift ;;
+    -t | --target) target="$target/$2"; shift 2;;
     -v | --verbose_diff) full_diff=true; shift ;;
     -x | --leave_ext_name) patch_ext_name=false; shift ;;
     -y | --coverage) run_coverage=true; shift ;;
-    -z | --repeate) clouds=`cat $last_run_file`; shift ;;
+    -z | --repeate) clouds=$(cat $last_run_file); shift ;;
     -- ) shift; break ;;
     *) break;;
   esac
 done
+
+echo "The working directory for processing is" $target
 
 if $show_help; then
   help
@@ -321,7 +327,7 @@ fi
 
 default="No Default"
 if [ -f $last_run_file ]; then
-  default=`cat $last_run_file`
+  default=$(cat $last_run_file)
 fi
 
 for inc in $include; do
@@ -353,8 +359,8 @@ else
 fi
 
 if [ $# -lt 1 ]; then
-  cd ../../ardana-input-model/2.0
-  models=`find -L . -name "cloudConfig.yml" | sed -e "s/^.\///" ${strip_ref} ${strip_test} ${strip_ci}  -e "s/\/cloudConfig.yml//" | sort`
+  cd $target/ardana-input-model/2.0
+  models=$(find -L . -name "cloudConfig.yml" | sed -e "s/^.\///" ${strip_ref} ${strip_test} ${strip_ci}  -e "s/\/cloudConfig.yml//" | sort)
   cd $startDir
   if $run_all; then
     clouds=$models
