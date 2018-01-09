@@ -31,12 +31,6 @@
       mnemonic: WARN-SER
 
   configuration-data:
-    - name:  NOT-IN-SCOPE
-      services:
-        - eon
-      data:
-        foo: bar
-
     - name:  NOT-IN-SCOPE-COMPUTE
       services:
         - keystone
