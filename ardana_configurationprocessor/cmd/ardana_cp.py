@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # (c) Copyright 2015,2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -18,7 +18,7 @@
 
 import getpass
 import sys
-from optparse import OptionParser
+import argparse
 
 import ardana_configurationprocessor.cp.model.CPVariables as KenVar
 from ardana_configurationprocessor.cp.model.CPSecurity \
@@ -130,114 +130,114 @@ def print_about():
 
 
 def _get_options():
-    parser = OptionParser()
-    parser.add_option("-a", "--ansible_input", dest="ansible_input_path",
-                      help="The location of the ansible input data files")
-    parser.add_option("-i", "--icinga_input", dest="icinga_input_path",
-                      help="The location of the icinga input data files")
-    parser.add_option("-s", "--site_input", dest="site_input_path",
-                      help="The location of the site-level input data files")
-    parser.add_option("-r", "--validator", dest="cloud_schema_path",
-                      help="The location of the schema files. Defaults to "
-                           "site_input_path and fallbacks to the data/ dir "
-                      "delivered via the ardana_configurationprocessor python "
-                      "module")
-    parser.add_option("-c", "--cloud_config", dest="cloud_input_path",
-                      help="The location of the cloud config input file.")
-    parser.add_option("-e", "--encryption", dest="encryption",
-                      action="store_true", help="Run with encryption",
-                      default=False)
-    parser.add_option("-k", "--encryption_key_change",
-                      dest="encryption_key_change",
-                      action="store_true", help="Run with encryption and "
-                                                "change the old encryption "
-                                                "key",
-                      default=False)
-    parser.add_option("-x", "--encryption_key", dest="encryption_key_input",
-                      help="Encryption key.")
-    parser.add_option("-y", "--old_encryption_key", dest="old_encryption_key_input",
-                      help="Old encryption key if rekeying.")
-    parser.add_option("-C", "--checkpoint", dest="checkpoint_name",
-                      help="Run the checkpoint command")
-    parser.add_option("-o", "--_output_path",
-                      dest="output_path",
-                      help="The location of the output files",
-                      default="./clouds")
-    parser.add_option("-d", "--remove_deleted_servers", dest="remove_deleted_servers",
-                      action="store_true", help="Remove deleted servers from "
-                                                "persistent state",
-                      default=False)
-    parser.add_option("-f", "--free_unused_addresses", dest="free_unused_addresses",
-                      action="store_true", help="Free-up unused ip addresses",
-                      default=False)
-
-    parser.add_option("-l", "--log_dir",
-                      dest="log_dir",
-                      help="The location of the log files",
-                      default="/var/log/ardana/configuration_processor")
+    parser = argparse.ArgumentParser(
+        description='Ardana Configuration Processor')
+    parser.add_argument("-a", "--ansible_input", dest="ansible_input_path",
+                        help="The location of the ansible input data files")
+    parser.add_argument("-i", "--icinga_input", dest="icinga_input_path",
+                        help="The location of the icinga input data files")
+    parser.add_argument("-s", "--site_input", dest="site_input_path",
+                        help="The location of the site-level input data files")
+    parser.add_argument("-r", "--validator", dest="cloud_schema_path",
+                        help="The location of the schema files. Defaults to "
+                        "site_input_path and fallbacks to the data/ dir "
+                        "delivered via the ardana_configurationprocessor python"
+                        " module")
+    parser.add_argument("-c", "--cloud_config", dest="cloud_input_path",
+                        help="The location of the cloud config input file.")
+    parser.add_argument("-e", "--encryption", dest="encryption",
+                        action="store_true", help="Run with encryption",
+                        default=False)
+    parser.add_argument("-k", "--encryption_key_change",
+                        dest="encryption_key_change",
+                        action="store_true", help="Run with encryption and "
+                        "change the old encryption key", default=False)
+    parser.add_argument("-x", "--encryption_key", dest="encryption_key_input",
+                        help="Encryption key.")
+    parser.add_argument("-y", "--old_encryption_key",
+                        dest="old_encryption_key_input",
+                        help="Old encryption key if rekeying.")
+    parser.add_argument("-C", "--checkpoint", dest="checkpoint_name",
+                        help="Run the checkpoint command")
+    parser.add_argument("-o", "--_output_path",
+                        dest="output_path",
+                        help="The location of the output files",
+                        default="./clouds")
+    parser.add_argument("-d", "--remove_deleted_servers",
+                        dest="remove_deleted_servers", action="store_true",
+                        help="Remove deleted servers from persistent state",
+                        default=False)
+    parser.add_argument("-f", "--free_unused_addresses",
+                        dest="free_unused_addresses",
+                        action="store_true", help="Free-up unused ip addresses",
+                        default=False)
+    parser.add_argument("-l", "--log_dir",
+                        dest="log_dir",
+                        help="The location of the log files",
+                        default="/var/log/ardana/configuration_processor")
     parser.set_defaults(local=False)
-    parser.add_option("-w", "--write_local",
-                      action="store_true",
-                      dest="local",
-                      help="Write output at this level of dir hierarchy")
-    parser.add_option("-p", "--refresh_all_secrets", dest="refresh_all_secrets",
-                      action="store_true",
-                      help="Force a refresh of all secrets", default=False)
-    parser.add_option("-P", "--credential_change", dest="credential_change_path",
-                      help="The location of the credential_change directory.",
-                      default=None)
-    parser.add_option("-q", "--quiet", dest="quiet",
-                      action="store_true",
-                      help="Run without prompting for input", default=False)
-    parser.add_option("-n", "--service_names", dest="use_service_names",
-                      action="store_true",
-                      help="Store output artifacts using service names "
-                           "instead of service mnemonics")
+    parser.add_argument("-w", "--write_local",
+                        action="store_true",
+                        dest="local",
+                        help="Write output at this level of dir hierarchy")
+    parser.add_argument("-p", "--refresh_all_secrets",
+                        dest="refresh_all_secrets",
+                        action="store_true",
+                        help="Force a refresh of all secrets", default=False)
+    parser.add_argument("-P", "--credential_change",
+                        dest="credential_change_path",
+                        help="The location of the credential_change directory.",
+                        default=None)
+    parser.add_argument("-q", "--quiet", dest="quiet",
+                        action="store_true",
+                        help="Run without prompting for input", default=False)
+    parser.add_argument("-n", "--service_names", dest="use_service_names",
+                        action="store_true",
+                        help="Store output artifacts using service names "
+                        "instead of service mnemonics")
+    parser.add_argument("-L", "--lowercase-hostnames",
+                        dest="lowercase_hostnames", action="store_true",
+                        help="Store output artifacts using lowercase host names"
+                        " instead of uppercase host names")
+    parser.add_argument("-U", "--uppercase-hostnames",
+                        dest="uppercase_hostnames", action="store_true",
+                        help="Store output artifacts using uppercase host names"
+                        " instead of lowercase host names")
+    parser.add_argument("-m", "--store-internal-model",
+                        dest="store_internal_model", action="store_true",
+                        help="Store the internal models", default=False)
+    parser.add_argument("-V", "--verbose", dest="verbose", action="store_true",
+                        help="Run in verbose mode", default=False)
+    parser.add_argument("-A", "--about", dest="about", action="store_true",
+                        help="Print information about the Configuration "
+                        "Processor client", default=False)
 
-    parser.add_option("-L", "--lowercase-hostnames",
-                      dest="lowercase_hostnames", action="store_true",
-                      help="Store output artifacts using lowercase host names "
-                           "instead of uppercase host names")
-    parser.add_option("-U", "--uppercase-hostnames",
-                      dest="uppercase_hostnames", action="store_true",
-                      help="Store output artifacts using uppercase host names "
-                           "instead of lowercase host names")
+    args = parser.parse_args()
 
-    parser.add_option("-m", "--store-internal-model",
-                      dest="store_internal_model", action="store_true",
-                      help="Store the internal models", default=False)
-    parser.add_option("-V", "--verbose", dest="verbose", action="store_true",
-                      help="Run in verbose mode", default=False)
-    parser.add_option("-A", "--about", dest="about", action="store_true",
-                      help="Print information about the Configuration "
-                           "Processor client", default=False)
-
-    (options, args) = parser.parse_args()
-
-    if options.about:
+    if args.about:
         print_about()
         sys.exit(0)
 
-    if not options.site_input_path:
+    if not args.site_input_path:
         parser.error("Site Input Path (-s) is required")
 
-    if not options.cloud_input_path:
+    if not args.cloud_input_path:
         parser.error("Cloud Config Input Path (-c) is required")
 
-    if not options.cloud_schema_path:
-        options.cloud_schema_path = options.site_input_path
+    if not args.cloud_schema_path:
+        args.cloud_schema_path = args.site_input_path
 
-    input_format = options.cloud_input_path.split('.')
+    input_format = args.cloud_input_path.split('.')
     if input_format[-1] not in allowed_input_formats:
         parser.error("Cloud Config Input Path (-c) must point to a "
                      "file of type %s (e.g., cloudConfig.json)" % ', '.join(
                          allowed_input_formats))
 
-    if not options.ansible_input_path:
-        options.ansible_input_path = None
+    if not args.ansible_input_path:
+        args.ansible_input_path = None
 
-    if not options.icinga_input_path:
-        options.icinga_input_path = None
+    if not args.icinga_input_path:
+        args.icinga_input_path = None
 
     user_instructions = dict()
     user_instructions['model_version'] = '%03.1f' % KenVar.MODEL_VERSION
@@ -245,9 +245,9 @@ def _get_options():
     user_instructions['run_validate'] = True
     user_instructions['run_build'] = True
 
-    if options.checkpoint_name:
+    if args.checkpoint_name:
         user_instructions['run_checkpoint'] = True
-        user_instructions['checkpoint_name'] = options.checkpoint_name
+        user_instructions['checkpoint_name'] = args.checkpoint_name
     else:
         user_instructions['run_checkpoint'] = False
         user_instructions['checkpoint_name'] = None
@@ -260,42 +260,42 @@ def _get_options():
     user_instructions['checkpointers'] = all_checkpointers
     user_instructions['finalizers'] = all_finalizers
 
-    user_instructions['ansible_input_path'] = options.ansible_input_path
-    user_instructions['icinga_input_path'] = options.icinga_input_path
-    user_instructions['cloud_input_path'] = options.cloud_input_path
-    user_instructions['site_input_path'] = options.site_input_path
-    user_instructions['cloud_schema_path'] = options.cloud_schema_path
+    user_instructions['ansible_input_path'] = args.ansible_input_path
+    user_instructions['icinga_input_path'] = args.icinga_input_path
+    user_instructions['cloud_input_path'] = args.cloud_input_path
+    user_instructions['site_input_path'] = args.site_input_path
+    user_instructions['cloud_schema_path'] = args.cloud_schema_path
     user_instructions[
-        'site_config_path'] = options.cloud_schema_path + '/../Config'
-    user_instructions['output_path'] = options.output_path
-    user_instructions['log_dir'] = options.log_dir
+        'site_config_path'] = args.cloud_schema_path + '/../Config'
+    user_instructions['output_path'] = args.output_path
+    user_instructions['log_dir'] = args.log_dir
     user_instructions['json_builder'] = dict()
 
-    user_instructions['refresh_all_secrets'] = options.refresh_all_secrets
-    user_instructions['store_internal_model'] = options.store_internal_model
-    user_instructions['verbose'] = options.verbose
+    user_instructions['refresh_all_secrets'] = args.refresh_all_secrets
+    user_instructions['store_internal_model'] = args.store_internal_model
+    user_instructions['verbose'] = args.verbose
     user_instructions['clean'] = True
-    user_instructions['quiet'] = options.quiet
-    user_instructions['remove_deleted_servers'] = options.remove_deleted_servers
-    user_instructions['free_unused_addresses'] = options.free_unused_addresses
-    user_instructions['credential_change_path'] = options.credential_change_path
+    user_instructions['quiet'] = args.quiet
+    user_instructions['remove_deleted_servers'] = args.remove_deleted_servers
+    user_instructions['free_unused_addresses'] = args.free_unused_addresses
+    user_instructions['credential_change_path'] = args.credential_change_path
 
-    if options.encryption_key_input:
+    if args.encryption_key_input:
         user_instructions['encryption_key_input'] = \
-            options.encryption_key_input
-    if options.old_encryption_key_input:
+            args.encryption_key_input
+    if args.old_encryption_key_input:
         user_instructions['old_encryption_key_input'] = \
-            options.old_encryption_key_input
+            args.old_encryption_key_input
 
-    if not options.local:
+    if not args.local:
         user_instructions['cloud_output_path'] = \
-            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/stage' % options.output_path
+            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/stage' % args.output_path
         user_instructions['network_output_path'] = \
-            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/stage/net' % options.output_path
+            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/stage/net' % args.output_path
         user_instructions['cloud_checkpoint_path'] = \
-            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/checkpoint' % options.output_path
+            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/checkpoint' % args.output_path
         user_instructions['persistent_state'] = \
-            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/persistent_state/' % options.output_path
+            '%s/@CLOUD_NAME@/@CLOUD_VERSION@/persistent_state/' % args.output_path
     else:
         user_instructions['cloud_output_path'] = './stage'
         user_instructions['network_output_path'] = './stage/net'
@@ -311,15 +311,15 @@ def _get_options():
     user_instructions['interfaces_builder'] = dict()
     user_instructions['interfaces_builder']['dirname'] = 'intf'
 
-    if options.use_service_names:
+    if args.use_service_names:
         user_instructions['use_service_names'] = True
 
     user_instructions['uppercase_hostnames'] = True
-    if options.lowercase_hostnames:
+    if args.lowercase_hostnames:
         user_instructions['uppercase_hostnames'] = False
 
-    if options.encryption_key_change:
-        options.encryption = True
+    if args.encryption_key_change:
+        args.encryption = True
         print('')
         user_instructions['previous_encryption_key'] = \
             user_instructions['previous_encryption_key'] = \
@@ -330,9 +330,9 @@ def _get_options():
                 if not user_instructions['quiet'] else
                 user_instructions['old_encryption_key_input'])
 
-    if options.encryption:
+    if args.encryption:
         print('')
-        if options.encryption_key_change:
+        if args.encryption_key_change:
             key_type = 'NEW'
         else:
             key_type = 'current'
