@@ -22,7 +22,7 @@ and ardana-input-model-ref repos.
 3. Prepare the virtual environment:
 
     python setup.py sdist
-    pip install dist/* ansible git-review coverage
+    pip install dist/ardana-configurationprocessor-0.3.0.tar.gz ansible git-review coverage
 
 4. Create a test ardana configuration processor environment:
 
@@ -33,9 +33,24 @@ and ardana-input-model-ref repos.
     bash Scripts/setup-ardana-cp.sh ARD-001
 
    This will create the ARD-001 directory containing the input models.
-   If the models exist at the same directory level as the a-c-p,
+
+   If the models repo exists at the same directory level as the a-c-p,
    they will be copied to ARD-001. Otherwise, they will be cloned
-   into ARD-001.  A fresh clone can be triggered by using the -p option.
+   into ARD-001.
+
+   If you want to use a branch other than master, you can set it for each of the
+   following repos:
+
+    ardana-input-model
+    ardana-input-model-ref
+    ardana-extensions-dcn
+    ardana-extensions-odl
+
+   Also, if you want to use a locally cloned copy but not reset back to the source branch
+   you use the -x option
+
+   A fresh clone can be triggered by using the -p option.
+
    The a-c-p will check each "example" model to create a baseline.
    This step can be skipped by using the -n option.
 
