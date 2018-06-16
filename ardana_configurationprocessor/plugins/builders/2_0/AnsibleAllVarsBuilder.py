@@ -182,8 +182,7 @@ class AnsibleAllVarsBuilder(BuilderPlugin):
         global_vars['cp_tempest_data'] = self._get_tempest_vars(control_planes)
         global_vars['cp_tempest_test_plans'] = self._get_tempest_test_plans(control_planes)
 
-        # This will be overwritten in the RPM package
-        global_vars['deployer_media_legacy_layout'] = True
+        global_vars['deployer_media_legacy_layout'] = False
         with open(filename, 'w') as fp:
             yaml.dump(global_vars, fp, default_flow_style=False, indent=4)
 
