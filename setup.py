@@ -19,7 +19,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ardana-configurationprocessor',
-    version='0.3.0',
+    version='0.3.1',
     author='SUSE LLC',
     author_email='ardana@googlegroups.com',
     packages=find_packages(),
