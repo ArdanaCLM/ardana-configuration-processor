@@ -18,5 +18,5 @@ simplejson>=3.6.5
 sh>=1.11
 pycrypto>=2.6.1
 cryptography>=0.8
-jsonschema>=2.4.0,<2.6.0
+jsonschema>=2.4.0
 pyyaml
