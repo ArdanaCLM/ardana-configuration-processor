@@ -6,3 +6,4 @@ model/cp_opts.generated
 model/cp_opts.existing_state
 README.txt
 README.md
+MANIFEST.in
