@@ -29,7 +29,7 @@ setup(
     license='Apache-2.0',
     description='Configuration Processor for Ardana CLM',
     long_description=open('README.txt').read(),
-    install_requires=['six', 'stevedore', 'netaddr',
+    install_requires=['six', 'stevedore', 'netaddr', 'pycryptodome',
                       'cryptography', 'simplejson', 'jsonschema', 'html',
                       'PyYAML', 'pbs' if os.name == 'nt' else 'sh'],
     zip_safe=False,
