@@ -19,7 +19,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ardana-configurationprocessor',
-    version='0.3.1',
+    version='0.4.0',
     author='SUSE LLC',
     author_email='ardana@googlegroups.com',
     packages=find_packages(),
@@ -29,7 +29,7 @@ setup(
     license='Apache-2.0',
     description='Configuration Processor for Ardana CLM',
     long_description=open('README.txt').read(),
-    install_requires=['six', 'stevedore', 'netaddr', 'pycrypto',
+    install_requires=['six', 'stevedore', 'netaddr',
                       'cryptography', 'simplejson', 'jsonschema', 'html',
                       'PyYAML', 'pbs' if os.name == 'nt' else 'sh'],
     zip_safe=False,
