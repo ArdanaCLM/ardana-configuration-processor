@@ -17,7 +17,10 @@
 import logging
 import logging.config
 
-from Crypto.PublicKey import RSA, DSA
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import dsa
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
 
 from ardana_configurationprocessor.cp.model.VariablePlugin \
     import VariablePlugin
@@ -70,15 +73,31 @@ class RandomSshKeyVariable(VariablePlugin):
         passphrase = payload['passphrase']
         comment = payload['comment']
 
-        if algorithm == 'RSA':
-            key = RSA.generate(length)
+        if algorithm == 'DSA':
+            new_key = dsa.generate_private_key(
+                key_size=length, backend=default_backend())
+        else:
+            new_key = rsa.generate_private_key(
+                public_exponent=3, key_size=length, backend=default_backend())
 
-        elif algorithm == 'DSA':
-            key = DSA.generate(length)
+        key_encryption = serialization.NoEncryption()
+        if passphrase:
+            key_encryption = serialization.BestAvailableEncryption(
+                passphrase)
+
+        private_key = new_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=key_encryption
+            )
+        public_key = new_key.public_key().public_bytes(
+            encoding=serialization.Encoding.OpenSSH,
+            format=serialization.PublicFormat.OpenSSH
+            )
 
         value = {
-            'private': key.exportKey('PEM', passphrase=passphrase),
-            'public': key.publickey().exportKey('OpenSSH'),
+            'private': private_key,
+            'public': public_key,
         }
 
         if comment is not None:
