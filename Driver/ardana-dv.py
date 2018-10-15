@@ -1,1 +1,1 @@
-../ConfigurationProcessor/ardana_configurationprocessor/cmd/ardana_cp_decrypt.py
+../ardana_configurationprocessor/cmd/ardana_cp_decrypt.py
