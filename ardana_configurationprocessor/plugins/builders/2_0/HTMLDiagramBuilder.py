@@ -16,7 +16,41 @@
 import os
 import logging
 import logging.config
-from html import HTML
+
+try:
+    from html import HTML
+except ImportError, e:
+    # if python-future package has been installed we may fail to import
+    # the desired html module because the python-future package installs
+    # a html directory under site-packages whose __init__.py is preferred
+    # over the html.py file in site-packages that python-html installed.
+    import imp
+    import sys
+
+    # search sys.path directories for a html.py file
+    py_files = [py for py in [os.path.join(p, 'html.py') for p in sys.path]
+                if os.path.exists(py)]
+
+    # re-raise import error if we didn't find exactly one matching file
+    if len(py_files) != 1:
+        raise
+
+    # setup the file we will be importing
+    imp_file = py_files[0]
+    imp_mode = 'rU'
+    imp_type = imp.PY_SOURCE
+
+    # use the compiled module if it exists
+    if os.path.exists(imp_file + 'c'):
+        imp_file = imp_file + 'c'
+        imp_type = imp.PY_COMPILED
+
+    # import the found file as html_py
+    html_py = imp.load_module('html_py', open(imp_file, imp_mode), imp_file,
+                              (imp_file.split(os.path.extsep)[-1], imp_mode,
+                               imp_type))
+
+    HTML = html_py.HTML
 
 from ardana_configurationprocessor.cp.model.v2_0.ArdanaPaths \
     import ArdanaPaths
