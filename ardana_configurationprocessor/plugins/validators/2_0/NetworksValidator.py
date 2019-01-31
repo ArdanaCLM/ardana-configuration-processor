@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015, 2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017-2018 SUSE LLC
+# (c) Copyright 2017-2019 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -35,6 +35,7 @@ class NetworksValidator(ValidatorPlugin):
         self._valid = False
         self._valid_cidr = True
         self._ipsets = {}
+        self._ip_version = 0
         LOG.info('%s()' % KenLog.fcn())
 
     def validate(self):
@@ -46,6 +47,7 @@ class NetworksValidator(ValidatorPlugin):
 
         if self._valid:
             networks = input.get('networks', [])
+            self._get_ip_version(networks)
             self._validate_names(networks)
             for net in networks:
                 self._validate_vlans(net)
@@ -95,12 +97,37 @@ class NetworksValidator(ValidatorPlugin):
                         self.add_error(msg)
                         self._valid = False
 
+    def _get_ip_version(self, networks):
+        for net in networks:
+            for ip_attribute in ['gateway-ip', 'start-address', 'end-address']:
+                if ip_attribute in net:
+                    try:
+                        _ip = IPAddress(net[ip_attribute])
+                        self._ip_version = _ip.version
+                        return
+                    except AddrFormatError:
+                        msg = ("Encountered invalid IP address for Network %s: %s"
+                               " '%s' while getting IP version." %
+                               (net['name'], net[ip_attribute], ip_attribute))
+                        self.add_error(msg)
+                        self._valid = False
+
+    def _validate_ip_version(self, in_version, msg=None):
+        if in_version != self._ip_version:
+            _msg = ("Address for %s is not IP version %d. "
+                   "Kindly make sure all IP addresses are of the same version."
+                   % (msg, self._ip_version))
+            self.add_warning(_msg)
+
     def _validate_ip_addresses(self, net):
         is_valid = True
         for ip_attribute in ['gateway-ip', 'start-address', 'end-address']:
             if ip_attribute in net:
                 try:
-                    IPAddress(net[ip_attribute])
+                    _ip = IPAddress(net[ip_attribute])
+                    msg = ("network %s '%s': %s" %
+                           (net['name'], ip_attribute, net[ip_attribute]))
+                    self._validate_ip_version(_ip.version, msg)
                 except AddrFormatError:
                     msg = ("Network %s: %s is not a valid IP address for '%s'." %
                            (net['name'], net[ip_attribute], ip_attribute))
@@ -117,6 +144,8 @@ class NetworksValidator(ValidatorPlugin):
             try:
                 ip_net = IPNetwork(unicode(net['cidr']))
                 ip_version = ip_net.version
+                msg = ("Network %s: %s CIDR" % (net['name'], net['cidr']))
+                self._validate_ip_version(ip_version, msg)
             except AddrFormatError:
                 msg = ("Network %s: %s is not a valid CIDR."
                        % (net['name'], net['cidr']))
@@ -185,6 +214,9 @@ class NetworksValidator(ValidatorPlugin):
                 else:
                     try:
                         addr = IPAddress(vip_addr)
+                        msg = ("Network %s vip address %s"
+                               % (net['name'], vip_addr))
+                        self._validate_ip_version(network, msg)
                     except AddrFormatError:
                         msg = ("Network %s vip address %s is not a valid "
                                "address." % (net['name'], vip_addr))
