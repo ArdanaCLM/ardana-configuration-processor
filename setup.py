@@ -30,7 +30,7 @@ setup(
     description='Configuration Processor for Ardana CLM',
     long_description=open('README.txt').read(),
     install_requires=['six', 'stevedore', 'netaddr', 'pycryptodome',
-                      'cryptography', 'simplejson', 'jsonschema', 'html',
+                      'cryptography', 'simplejson', 'jsonschema>=2.4,<3.0', 'html',
                       'PyYAML', 'pbs' if os.name == 'nt' else 'sh'],
     zip_safe=False,
     entry_points={
