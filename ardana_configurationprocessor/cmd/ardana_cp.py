@@ -73,7 +73,8 @@ all_validators = ['encryption-key',
                   'deployer-network-lifecycle-mgr-2.0',
                   'config-data-2.0',
                   'load-balancer-2.0',
-                  'vm-factory-2.0'
+                  'vm-factory-2.0',
+                  'physnet-check-2.0'
                   ]
 
 all_builders = ['ans-encr-artifacts',

@@ -518,7 +518,11 @@ setup(
 
             'vm-factory-2.0 = '
             'ardana_configurationprocessor.plugins.validators.2_0.'
-            'VMFactoryValidator:VMFactoryValidator'
+            'VMFactoryValidator:VMFactoryValidator',
+
+            'physnet-check-2.0 = '
+            'ardana_configurationprocessor.plugins.validators.2_0.'
+            'NeutronProviderNetworkValidator:NeutronProviderNetworkValidator'
         ],
 
         'ardana.configurationprocessor.variable': [
