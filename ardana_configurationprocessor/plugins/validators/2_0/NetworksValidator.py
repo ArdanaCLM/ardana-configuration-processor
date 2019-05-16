@@ -216,7 +216,7 @@ class NetworksValidator(ValidatorPlugin):
                         addr = IPAddress(vip_addr)
                         msg = ("Network %s vip address %s"
                                % (net['name'], vip_addr))
-                        self._validate_ip_version(network, msg)
+                        self._validate_ip_version(addr.version, msg)
                     except AddrFormatError:
                         msg = ("Network %s vip address %s is not a valid "
                                "address." % (net['name'], vip_addr))
