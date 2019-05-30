@@ -39,6 +39,9 @@ from ardana_configurationprocessor.cp.model.StatePersistor \
 from ardana_configurationprocessor.cp.model.v2_0.ArdanaPaths \
     import ArdanaPaths
 
+from ardana_configurationprocessor.cp.lib.utils \
+    import wrap_ip
+
 
 from copy import deepcopy
 from netaddr import IPNetwork, IPAddress, IPRange, IPSet
@@ -1346,7 +1349,8 @@ class CloudCpLiteGenerator(GeneratorPlugin):
                             # Use IP address for URLs in keystone
                             url = "%s://%s:%s" % (
                                 protocol,
-                                vip_data.get('external-name', vip_data['address']),
+                                vip_data.get('external-name',
+                                             wrap_ip(vip_data['address'])),
                                 vip_data['vip-port'])
 
                             data = {

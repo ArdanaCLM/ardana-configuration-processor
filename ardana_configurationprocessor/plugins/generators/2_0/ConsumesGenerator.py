@@ -28,6 +28,8 @@ from ardana_configurationprocessor.cp.model.v2_0.CloudModel \
     import CloudModel
 from ardana_configurationprocessor.cp.model.v2_0.ArdanaVariable \
     import ArdanaVariable
+from ardana_configurationprocessor.cp.lib.utils \
+    import wrap_ip
 
 
 LOG = logging.getLogger(__name__)
@@ -218,7 +220,7 @@ class ConsumesGenerator(GeneratorPlugin):
                         else:
                             protocol = consumer.get('nontls_protocol', 'http')
                         url = "%s://%s:%s" % (protocol,
-                                              data['access']['hostname'],
+                                              wrap_ip(data['access']['hostname']),
                                               data['access']['port'])
                         if 'vips' not in consumes:
                             consumes['vips'] = {}
