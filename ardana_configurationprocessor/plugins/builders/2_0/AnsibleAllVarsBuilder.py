@@ -35,6 +35,11 @@ from ardana_configurationprocessor.cp.model.BuilderPlugin \
 from ardana_configurationprocessor.cp.lib.DataTransformer \
     import DataTransformer
 
+try:
+        from urllib.parse import urlparse
+except ImportError:
+        from urlparse import urlparse
+
 LOG = logging.getLogger(__name__)
 
 
@@ -222,13 +227,9 @@ class AnsibleAllVarsBuilder(BuilderPlugin):
                         for region_name in endpoint.get('regions', []):
                             if 'public_endpoints' not in result[region_name]:
                                 result[region_name]['public_endpoints'] = {}
-                            url = endpoint['public_url'].split(':')
-                            if len(url) > 2:
-                                port = url[2].split('/')[0]
-                            else:
-                                port = ""
+                            url = urlparse(endpoint['public_url'])
                             result[region_name]['public_endpoints'][endpoint['service_name']] =\
-                                ('%s:%s:%s' % (url[0], url[1], port))
+                                ('%s://%s' % (url.scheme, url.netloc))
 
             external_nets = []
             flat_nets = []
