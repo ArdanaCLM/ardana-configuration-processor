@@ -540,6 +540,7 @@ class AnsHostVarsBuilder(BuilderPlugin):
 
             interface_is_ethernet = self._interface_is_ethernet(interface_attrs)
             interface_is_bond, bond_is_ovs = self._interface_is_bond(interface_attrs)
+            interface_is_management = self._interface_is_management(interface_attrs)
             interface_is_passthrough = self._interface_is_passthrough(interface_attrs)
             interface_is_dpdk, dpdk_needs_bridge = self._interface_is_dpdk(interface_attrs)
 
@@ -653,6 +654,8 @@ class AnsHostVarsBuilder(BuilderPlugin):
                         lower_bridge_dictionary['port'] = lower_bridge_port
                         lower_bridge_dictionary['route'] = []
                         lower_bridge_dictionary['bootproto'] = self.getBootProto("")
+                        lower_bridge_dictionary['forward_normal_on_post_up'] = bool(interface_is_management)
+
                         self._set_interface_mtu(lower_bridge_dictionary,
                                                 interface_explicit_mtu,
                                                 interface_max_mtu)
@@ -880,6 +883,7 @@ class AnsHostVarsBuilder(BuilderPlugin):
                             upper_bridge_dictionary['device'] = upper_bridge_name
                             upper_bridge_dictionary['route'] = []
                             upper_bridge_dictionary['bootproto'] = self.getBootProto("")
+                            upper_bridge_dictionary['forward_normal_on_post_up'] = bool(interface_is_management)
 
                             self._set_mtu_or_default(upper_bridge_dictionary,
                                                      explicit_mtu,
@@ -890,6 +894,7 @@ class AnsHostVarsBuilder(BuilderPlugin):
                             self.getInterfaceInfo(upper_bridge_dictionary, network_attrs)
 
                             tagged_service_tag_dict = {}
+
                             if needs_base_bridge:    # has-base-bridge in this case
                                 # OVS-Bridged-VLAN over lower-bridge (inc. OVS-bond)
                                 upper_bridge_dictionary['port'] = lower_bridge_name
@@ -1038,6 +1043,9 @@ class AnsHostVarsBuilder(BuilderPlugin):
             return True, bond_data.get('provider', '') == 'openvswitch'
         else:
             return False, False
+
+    def _interface_is_management(self, interface_attrs):
+        return 'MANAGEMENT' in interface_attrs.get('network-groups', [])
 
     def _interface_is_passthrough(self, interface_attrs):
         return len(interface_attrs.get('passthrough-network-groups', [])) > 0

@@ -88,6 +88,10 @@ class NetworkGroupsValidator(ValidatorPlugin):
             else:
                 names.add(group['name'])
 
+        if 'MANAGEMENT' not in names:
+            self.add_error('A network group named MANAGEMENT must be defined '
+                           'for the input model to be valid.')
+
     def _validate_components(self, network_groups, components):
 
         connected_components = {}
