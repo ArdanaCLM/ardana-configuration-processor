@@ -95,19 +95,22 @@ class ServersValidator(ValidatorPlugin):
                 id_set[s['id']] = [s['ip-addr']]
 
     def _validate_baremetal_net(self, baremetal):
-        try:
-            IPNetwork(baremetal['subnet'])
-        except AddrFormatError:
-            msg = ("Invalid baremetal subnet: %s" % baremetal['subnet'])
-            self.add_error(msg)
-            self._valid = False
+        if 'cidr' in baremetal:
+            try:
+                IPNetwork(baremetal['cidr'])
+            except AddrFormatError:
+                msg = ("Invalid baremetal cidr: %s " % baremetal['cidr'])
+                self.add_error(msg)
+                self._valid = False
 
-        try:
-            IPNetwork(baremetal['netmask'])
-        except AddrFormatError:
-            msg = ("Invalid baremetal netmask: %s" % baremetal['netmask'])
-            self.add_error(msg)
-            self._valid = False
+        if 'subnet' in baremetal:
+            try:
+                IPNetwork('/'.join([baremetal['subnet'], baremetal['netmask']]))
+            except AddrFormatError:
+                msg = ("Invalid baremetal subnet / netmask: %s / %s"
+                       % (baremetal['subnet'], baremetal['netmask']))
+                self.add_error(msg)
+                self._valid = False
 
     def _validate_ip_addresses(self, servers):
         for server in servers:
