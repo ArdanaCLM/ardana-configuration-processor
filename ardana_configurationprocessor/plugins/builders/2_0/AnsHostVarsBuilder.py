@@ -584,6 +584,7 @@ class AnsHostVarsBuilder(BuilderPlugin):
             bond_dictionary = {}
             ether_dictionary = {}
             lower_bridge_dictionary = {}
+            lower_bridge_dictionary['forward_normal_on_post_up'] = bool(interface_is_management)
 
             # A 'base-bridge' is a bridge directly over the interface,
             # and can be required for the following reasons.
@@ -654,7 +655,6 @@ class AnsHostVarsBuilder(BuilderPlugin):
                         lower_bridge_dictionary['port'] = lower_bridge_port
                         lower_bridge_dictionary['route'] = []
                         lower_bridge_dictionary['bootproto'] = self.getBootProto("")
-                        lower_bridge_dictionary['forward_normal_on_post_up'] = bool(interface_is_management)
 
                         self._set_interface_mtu(lower_bridge_dictionary,
                                                 interface_explicit_mtu,
