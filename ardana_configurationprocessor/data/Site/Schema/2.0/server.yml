@@ -76,11 +76,23 @@ properties:
         type: string
       netmask:
         type: string
+      cidr:
+        type: string
       server-interface:
         type: string
-    required:
-    - subnet
-    - netmask
+    oneOf:
+      - required:
+         - subnet
+         - netmask
+      - allOf:
+        - required:
+           - cidr
+        - not:
+            required:
+              - subnet
+        - not:
+            required:
+              - netmask
 required:
 - product
 - servers
